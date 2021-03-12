@@ -19,9 +19,9 @@ class TestGame(unittest.TestCase):
         }
         result_color_amount = {}
 
-        dice_set = self.game.create_dice_set()
+        self.game.create_dice_set()
 
-        for die in dice_set:
+        for die in self.game.dice_set:
             die_color_amount = result_color_amount.setdefault(die.color, 0)
             die_color_amount += 1
 
