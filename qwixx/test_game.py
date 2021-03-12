@@ -39,7 +39,11 @@ class TestGame(unittest.TestCase):
 
     @patch.object(Player, 'mark_number', return_value=True)
     @patch.object(Game, 'remove_die')
-    def test_check_row_locked(self, mark_number_patched, remove_die_patched):
+    def test_remove_die_when_row_locked(
+        self,
+        mark_number_patched,
+        remove_die_patched,
+    ):
         color_locked = self.game.current_player.mark_number(12, 'red')
 
         if color_locked:
