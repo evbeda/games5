@@ -50,3 +50,11 @@ class TestGame(unittest.TestCase):
             self.game.remove_die('red')
 
         assert remove_die_patched.called_with_args('red')
+
+    def test_new_game_player_count(self):
+        new_game = Game(2)
+        self.assertEqual(new_game.player_amount, 2)
+
+    def test_new_game_player_limit(self):
+        with self.assertRaises(Exception):
+            Game(5)
