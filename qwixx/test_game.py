@@ -30,3 +30,8 @@ class TestGame(unittest.TestCase):
                 result_color_amount[expected_color],
                 expected_amount
             )
+
+    def test_remove_dice_from_set(self):
+        self.game.create_dice_set()
+        self.game.remove_dice('blue')
+        self.assertNotIn('blue', [die.color for die in self.game.dice_set])
