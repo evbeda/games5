@@ -15,5 +15,5 @@ class TestDie(unittest.TestCase):
             self.assertEqual(randint_patched.call_args[0][1], 6)
 
     def test_has_color(self):
-        die = Die('Blue')
+        die = Die('blue')
         self.assertEqual(die.color, 'blue')
