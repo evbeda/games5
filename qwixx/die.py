@@ -1,7 +1,10 @@
+import random
+
+
 class Die:
 
     def __init__(self, color):
-        raise NotImplementedError
+        self.color = color
 
     def roll_die(self):
-        raise NotImplementedError
+        return random.randint(1, 6)
