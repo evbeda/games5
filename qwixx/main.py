@@ -1,7 +1,7 @@
 class Qwixx:
 
     name = 'Qwixx'
-    input_args = 1
+    input_args = 2
 
     def __init__(self):
         pass
