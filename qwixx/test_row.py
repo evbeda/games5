@@ -33,19 +33,22 @@ class TestRow(unittest.TestCase):
         self.assertEqual(row.row, expected)
 
     def test_Contain_Values_Blue(self):
+        valuesRow = (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+        colorRow = "blue"
         expected = (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
-        self.assertEqual(self.row.row, expected)
+        row = Row(valuesRow, colorRow)
+        self.assertEqual(row.row, expected)
 
     def test_Upward(self):
         valuesRow = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         colorRow = "yellow"
-        expected = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+        expected = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         row = Row(valuesRow, colorRow)
         self.assertEqual(sorted(row.row), expected)
 
     def test_Falling(self):
         valuesRow = (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
         colorRow = "blue"
-        expected = (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+        expected = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
         row = Row(valuesRow, colorRow)
         self.assertEqual(sorted(row.row, reverse=True), expected)
