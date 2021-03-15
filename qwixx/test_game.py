@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
 
 from game import Game
 from player import Player
@@ -33,7 +34,22 @@ class TestGame(unittest.TestCase):
             )
 
     def test_remove_die_from_set(self):
-        self.game.create_dice_set()
+        self.game.dice_set = []
+
+        colors = [
+            'white',
+            'white',
+            'red',
+            'yellow',
+            'green',
+            'blue',
+        ]
+
+        for color in colors:
+            die = Mock()
+            die.color = color
+            self.game.dice_set.append(die)
+
         self.game.remove_dice('blue')
         self.assertNotIn('blue', [die.color for die in self.game.dice_set])
 
