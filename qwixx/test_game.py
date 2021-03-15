@@ -50,7 +50,7 @@ class TestGame(unittest.TestCase):
             die.color = color
             self.game.dice_set.append(die)
 
-        self.game.remove_dice('blue')
+        self.game.remove_die('blue')
         self.assertNotIn('blue', [die.color for die in self.game.dice_set])
 
     @patch.object(Player, 'mark_number', return_value=True)
