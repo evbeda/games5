@@ -7,17 +7,17 @@ class TestRow(unittest.TestCase):
         valuesRow = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         colorRow = "red"
         self.row = Row(valuesRow, colorRow)
-    
+
     def test_Lock_Row(self):
         self.assertEqual(self.row.lock_Row(), True)
-       
+
     def test_Contain_Values_Red(self):
         valuesRow = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         colorRow = "red"
         expected = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         row = Row(valuesRow, colorRow)
         self.assertEqual(row.row, expected)
-    
+
     def test_Contain_Values_Yellow(self):
         valuesRow = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         colorRow = "yellow"
@@ -35,7 +35,7 @@ class TestRow(unittest.TestCase):
     def test_Contain_Values_Blue(self):
         expected = (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
         self.assertEqual(self.row.row, expected)
-    
+
     def test_Upward(self):
         valuesRow = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         colorRow = "yellow"
@@ -49,5 +49,3 @@ class TestRow(unittest.TestCase):
         expected = (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
         row = Row(valuesRow, colorRow)
         self.assertEqual(sorted(row.row, reverse=True), expected)
-    
-
