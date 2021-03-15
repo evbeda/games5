@@ -60,7 +60,7 @@ class TestGame(unittest.TestCase):
         mark_number_patched,
         remove_die_patched,
     ):
-        color_locked = self.game.current_player.mark_number(12, 'red')
+        color_locked = self.game.players[self.game.current_player].mark_number(12, 'red')
 
         if color_locked:
             self.game.remove_die('red')
@@ -69,7 +69,7 @@ class TestGame(unittest.TestCase):
 
     def test_new_game_player_count(self):
         new_game = Game(2)
-        self.assertEqual(new_game.player_amount, 2)
+        self.assertEqual(len(new_game.players), 2)
 
     def test_new_game_player_limit(self):
         with self.assertRaises(Exception):
