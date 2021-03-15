@@ -1,10 +1,5 @@
 import unittest
-
-
-class Tile:
-    def _init_(self, letter, score):
-        self.letter = letter
-        self.score = score
+from game.tile import Tile
 
 
 class TestTile(unittest.TestCase):
