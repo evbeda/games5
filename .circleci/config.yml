@@ -13,7 +13,8 @@ jobs:
       - python/save-cache
       - run:
           name: Running Tests
-          command: python test_suite.py
+          command: coverage run test_suite.py && coverage report
+
 
 workflows:
   main:
