@@ -58,7 +58,7 @@ class TestSetTiles(unittest.TestCase):
         # set variables
         tiles_stair = SetTiles([Tile(t[0], t[1]) for t in tiles])
         result = tiles_stair.is_a_stair()
-        
+
         # assert
         self.assertEqual(result, expected)
 
