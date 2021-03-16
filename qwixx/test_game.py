@@ -54,6 +54,8 @@ class TestGame(unittest.TestCase):
         self.game.remove_die('blue')
         self.assertNotIn('blue', [die.color for die in self.game.dice_set])
 
+    # El orden de los mocks no es al reves?
+    # Por que no utilizan el mock de remove die patched?
     @patch.object(Player, 'mark_number', return_value=True)
     @patch.object(Game, 'remove_die')
     def test_remove_die_when_row_locked(
@@ -75,3 +77,8 @@ class TestGame(unittest.TestCase):
     def test_new_game_player_limit(self):
         with self.assertRaises(Exception):
             Game(5)
+
+    def test_end_game(self):
+        mock = add_penalty() --> True
+        play() # deberia terminar
+    
