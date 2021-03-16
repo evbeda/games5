@@ -15,7 +15,7 @@ class TestRow(unittest.TestCase):
         ('blue', tuple(reversed(range(2,13)))),
         ('green', tuple(reversed(range(2,13)))),
     ])
-    def test_contain_values(self, color_row, expected):
+    def test_correct_row_generation(self, color_row, expected):
             row_example = Row(color_row)
             self.assertEqual(row_example.numbers, expected)
 
@@ -39,9 +39,11 @@ class TestRow(unittest.TestCase):
 
     @parameterized.expand([
         ('red', [2, 3, 6], 7, True),
-        # ('', [2, 3, 6], True),
-        # ('red', [2, 3, 6], True),
-        # ('red', [2, 3, 6], True),
+        ('red', [2, 4, 6], 3, False),
+        ('yellow', [3, 4, 6], 2, False),
+        ('blue', [6, 5, 4], 3, True),
+        ('blue', [6, 5, 4], 7, False),
+        ('green', [7, 5, 4], 6, False),
     ])
     def test_can_mark(self, color, marks, number, expected):
         r = Row(color)

@@ -1,4 +1,4 @@
-from row import Row
+from .row import Row
 
 
 class ScorePad:
