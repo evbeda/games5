@@ -6,10 +6,10 @@ from ..game.tile import Tile
 
 class TestTile(unittest.TestCase):
     def test_tile(self):
-        tile = Tile('A')
+        tile = Tile('a')
         self.assertEqual(
             tile.letter,
-            'A',
+            'a',
         )
         self.assertEqual(
             tile.score,
