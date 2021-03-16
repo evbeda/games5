@@ -33,4 +33,4 @@ class TestTile(unittest.TestCase):
 
     def test_get_letter_dist_to_a(self):
         tile = Tile('b')
-        self.assertEqual(tile_1.order, 1)
+        self.assertEqual(tile.order, 1)
