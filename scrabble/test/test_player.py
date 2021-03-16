@@ -46,3 +46,4 @@ class TestPlayer(unittest.TestCase):
         self.player_test.complete_hand_draw(tiles_test)
         self.assertEqual(len(self.player_test.tiles_in_hand), 7)
         self.assertEqual(len(tiles_test), 15)
+
