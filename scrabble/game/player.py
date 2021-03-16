@@ -12,7 +12,7 @@ class Player:
         tile_to_draw = tiles_sack.pop(index)
         self.tiles_in_hand.append(tile_to_draw)
 
-    def complete_hand_draw(self, tiles_sack):
+    def full_draw(self, tiles_sack):
         diff = 7 - len(self.tiles_in_hand)
         while diff != 0:
             self.one_draw(tiles_sack)
