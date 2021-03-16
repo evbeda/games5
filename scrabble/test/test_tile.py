@@ -6,14 +6,14 @@ from ..game.tile import Tile
 
 class TestTile(unittest.TestCase):
     def test_tile(self):
-        tile = Tile('A', 2)
+        tile = Tile('A')
         self.assertEqual(
             tile.letter,
             'A',
         )
         self.assertEqual(
             tile.score,
-            2,
+            1,
         )
 
     @parameterized([
