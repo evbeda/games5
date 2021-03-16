@@ -1,4 +1,4 @@
-from game.spot import Spot
+from .spot import Spot
 
 
 class Board:

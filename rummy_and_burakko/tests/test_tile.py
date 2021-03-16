@@ -1,5 +1,5 @@
 import unittest
-from tile import Tile
+from ..tile import Tile
 from parameterized import parameterized
 
 
@@ -17,5 +17,3 @@ class TestTiles(unittest.TestCase):
         self.assertEqual(example_tile.color, color)
         self.assertEqual(example_tile.number, number)
         self.assertEqual(example_tile.is_joker, is_joker)
-
-

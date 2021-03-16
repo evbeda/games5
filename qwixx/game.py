@@ -1,4 +1,4 @@
-import player
+from .player import Player
 
 
 class Game:
@@ -6,7 +6,7 @@ class Game:
         if player_amount not in range(1, 5):
             raise Exception
 
-        self.players = [player.Player() for _ in range(player_amount)]
+        self.players = [Player() for _ in range(player_amount)]
         self.current_player = 0
         self.dice_set = {}
 

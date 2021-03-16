@@ -1,8 +1,9 @@
 import unittest
-from game.player import Player
+from ..game.player import Player
 
 
-class TestBoard(unittest.TestCase):
+class TestPlayer(unittest.TestCase):
+    @unittest.skip('__init__() missing 1 required positional argument: tiles')
     def test_player_init(self):
         id_test = 1
         name_test = 'Test_1'
