@@ -1,4 +1,3 @@
-
 class Spot:
-    def __init__(self, tile):
-        self.tile = tile
+    def __init__(self, Tile):
+        self.tile = Tile
