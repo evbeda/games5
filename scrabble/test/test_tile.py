@@ -30,3 +30,7 @@ class TestTile(unittest.TestCase):
         tiles = [Tile(letter) for letter in letter_list]
         for tile in tiles:
             self.assertEqual(tile.score, score)
+
+    def test_get_letter_dist_to_a(self):
+        tile = Tile('b')
+        self.assertEqual(tile_1.order, 1)
