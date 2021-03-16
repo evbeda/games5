@@ -24,7 +24,7 @@ jobs:
           name: Running Tests
           command: |
               ./cc-test-reporter before-build
-              coverage run test_suite.py && coverage xml && coverage report
+              coverage run test_suite.py && coverage xml --omit=*/site-packages/*,tests/* && coverage report
               ./cc-test-reporter after-build -t coverage.py
 
 workflows:
