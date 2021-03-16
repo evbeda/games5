@@ -16,7 +16,7 @@ class TestTile(unittest.TestCase):
             1,
         )
 
-    @parameterized([
+    @parameterized.expand([
         # Letters, Score
         (['a', 'e', 'o', 'i', 's', 'n', 'l', 'r', 'u', 't'], 1),
         (['d', 'g'], 2),
