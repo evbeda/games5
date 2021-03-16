@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
-from set_tiles import SetTiles
-from tile import Tile
+from ..set_tiles import SetTiles
+from ..tile import Tile
 from parameterized import parameterized
 
 
@@ -52,6 +52,6 @@ class TestSetTiles(unittest.TestCase):
         # set variables
         tiles_leg = SetTiles([Tile(t[0], t[1]) for t in tiles])
         result = tiles_leg.is_a_leg()
-        
+
         # assert
         self.assertEqual(result, expected)

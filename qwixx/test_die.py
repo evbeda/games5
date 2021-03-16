@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from die import Die
+from .die import Die
 
 
 class TestDie(unittest.TestCase):
