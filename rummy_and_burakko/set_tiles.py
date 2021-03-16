@@ -8,6 +8,8 @@ class SetTiles():
 
     def is_a_leg(self):
         colors = set([c.color for c in self.tiles])
+        if len(colors) < 3 or len(colors) > 4:
+            return False
         dif_color = len(colors) == len(self.tiles)
         # optimizar esta linea para solucionar error joker
         reference = (sorted(
@@ -21,5 +23,21 @@ class SetTiles():
         return dif_color and same_digit
 
     def is_a_stair(self):
-        return False
-
+        number = sorted(list([t.number for t in self.tiles]))
+        size = len(number)
+        if size < 3 or size > 13:
+            return False
+        for i in range(size-1):
+            if number[i] != number[i+1]-1:
+                if number[i] != 0:
+                    return False
+        colors = list([c.color for c in self.tiles])
+        if colors.count('*') == 1:
+            if colors[0] == '*' and colors.count(colors[1]) == len(colors)-1:
+                return True
+            elif colors.count(colors[0]) == len(colors)-1:
+                return True
+        elif colors.count('*') == 0 and colors.count(colors[0]) == len(colors):
+            return True
+        else:
+            return False
