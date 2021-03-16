@@ -8,12 +8,24 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - python/load-cache
+      # - python/load-cache
       - python/install-deps
-      - python/save-cache
+      # - python/save-cache
+      - run:
+          name: Create test reports directory
+          command: mkdir /tmp/test-artifacts
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+              # download test reporter as a static binary
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              chmod +x ./cc-test-reporter
       - run:
           name: Running Tests
-          command: python test_suite.py
+          command: |
+              ./cc-test-reporter before-build
+              coverage run test_suite.py && coverage xml --omit=*/site-packages/*,tests/* && coverage report
+              ./cc-test-reporter after-build -t coverage.py
 
 workflows:
   main:
