@@ -10,3 +10,6 @@ class Game:
 
     def create_players(self, names):
         self.players = [Player(name) for name in names]
+
+    def next_turn(self):
+        self.current_turn = (self.current_turn + 1) % len(self.players)
