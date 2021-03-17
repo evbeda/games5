@@ -22,11 +22,11 @@ class TestSetTiles(unittest.TestCase):
     @patch.object(SetTiles, 'is_a_leg', return_value=False)   # 2 argument
     @patch.object(SetTiles, 'is_a_stair', return_value=True)  # 1 argument
     def test_valid_F_T(self, mock_stair, mock_leg):
-        tiles_leg = SetTiles([])
-        valid_leg = tiles_leg.is_valid()
+        tiles_stair = SetTiles([])
+        valid_stair = tiles_stair.is_valid()
 
         # assert
-        self.assertTrue(valid_leg)
+        self.assertTrue(valid_stair)
         # mock_leg.assert_called_once_with()
         mock_stair.assert_called_once_with()
 
