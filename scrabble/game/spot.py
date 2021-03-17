@@ -1,5 +1,3 @@
-
-    
 class Spot:
     def __init__(self, mult_value, mult_type):
         self.tile = None
@@ -8,5 +6,3 @@ class Spot:
 
     def set_tile(self, tile):
         self.tile = tile
-    
-
