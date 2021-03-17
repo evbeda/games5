@@ -1,4 +1,5 @@
 import unittest
+from parameterized import parameterized
 from .score_pad import ScorePad
 
 
@@ -34,11 +35,15 @@ class TestScorePad(unittest.TestCase):
             self.assertEqual(row.numbers, expected[i][1])
 
     def test_calculate_marks(self):
-
         for row in self.scorepad.rows:
-            row.marks = [1, 3, 5, 8, 10]
+            row.marks = [2, 3, 5, 8, 10]
         result = self.scorepad.calculate_marks()
         self.assertEqual(result, 60)
 
-
-# def test_calculate_score(self):
+    @parameterized.expand([
+        (17, 2, 7),
+        (40, 3, 10),
+    ])
+    def test_calculate_score(self, score, penalty, expected):
+        result = self.scorepad.calculate_score()
+        self.assertEqual(result, expected)
