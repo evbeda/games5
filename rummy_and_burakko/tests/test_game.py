@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from parameterized import parameterized
 
 from ..game import Game
 
@@ -25,10 +26,16 @@ class TestGame(unittest.TestCase):
         self.assertEqual(len(self.game.players), 3)
         player_patched.assert_called()
 
-    def test_change_turn(self):
-        self.game.players = [1, 2, 3, 4]
-        self.game.current_turn = 0
+    @parameterized.expand([
+        # Players, Current, Next
+        (3, 0, 1),
+        (4, 3, 0),
+        (3, 2, 0),
+    ])
+    def test_change_turn(self, players, current_turn, next_turn):
+        self.game.players = [""] * players
+        self.game.current_turn = current_turn
 
         self.game.next_turn()
 
-        self.assertEqual(self.game.current_turn, 1)
+        self.assertEqual(self.game.current_turn, next_turn)
