@@ -62,7 +62,7 @@ class TestSetTiles(unittest.TestCase):
     def test_is_a_stair(self, expected, tiles):
         # set variables
         id_for_set = 1
-        tiles_stair = SetTiles([Tile(t[0], t[1], id_for_set) for t in tiles])
+        tiles_stair = SetTiles([Tile(t[0], t[1]) for t in tiles], id_for_set)
         result = tiles_stair.is_a_stair()
 
         # assert
@@ -82,7 +82,7 @@ class TestSetTiles(unittest.TestCase):
     def test_is_a_leg(self, expected, tiles):
         # set variables
         id_for_set = 1
-        tiles_leg = SetTiles([Tile(t[0], t[1], id_for_set) for t in tiles])
+        tiles_leg = SetTiles([Tile(t[0], t[1]) for t in tiles], id_for_set)
         result = tiles_leg.is_a_leg()
 
         # assert
