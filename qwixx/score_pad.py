@@ -10,7 +10,6 @@ class ScorePad:
         all_rows = []
         for color in ['red', 'yellow', 'blue', 'green']:
             all_rows.append(Row(color))
-
         return all_rows
 
     def add_penalty(self):

@@ -11,6 +11,7 @@ class TestDice(unittest.TestCase):
             self.assertEqual(result, 3)
             self.assertEqual(randint_patched.call_args[0][0], 1)
             self.assertEqual(randint_patched.call_args[0][1], 6)
+            # randint_patched.assert_called_once_with(1, 6)
 
     def test_has_color(self):
         dice = Dice('blue')
