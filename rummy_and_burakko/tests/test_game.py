@@ -57,10 +57,11 @@ class TestGame(unittest.TestCase):
         for color, number_list in tile_list.items():
             for number in number_list:
                 tile_patched.assert_any_call(color, number)
-        (["1", "2"]),
-        (["1", "2", "3", "4", "5"]),
-    ])
 
+    @parameterized.expand([
+        (["1"],),
+        (["1", "2", "3", "4", "5"],),
+    ])
     def test_player_limit(self, players):
         with self.assertRaises(Exception):
             self.game.create_players(players)
