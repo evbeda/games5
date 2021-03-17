@@ -6,13 +6,7 @@ class Board:
         self.spots = self.set_spots()
 
     def set_spots(self):
-        board_matrix = [[None]*15 for _ in range(15)]
-        for x in range(15):
-            for y in range(15):
-                mult_value, mult_type = self.multiplier(x,y) # ::(value, type)
-                board_matrix[x][y] = Spot(mult_value, mult_type)
-        return board_matrix
-
+        return [[Spot(*self.multiplier(x, y)) for y in range(15)] for x in range(15)]
         
     def multiplier(self, x, y):
         mult = (0, 'c')
@@ -65,5 +59,6 @@ class Board:
             for value in set_mult[0]:
                 if (x,y) == value:
                     return set_mult[1]
-        
+
+
         return mult

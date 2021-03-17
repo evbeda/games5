@@ -1,13 +1,19 @@
 import unittest
 from ..game.board import Board
 from parameterized import parameterized
+from unittest.mock import patch
 
 
 class TestBoard(unittest.TestCase):
     def test_board(self):
-        board = Board()
-        self.assertEqual(len(board.spots), 15)
-        self.assertEqual(len(board.spots[0]), 15)
+        b = Board()
+        self.assertEqual(len(b.spots), 15)
+        self.assertEqual(len(b.spots[0]), 15)
+
+    @patch.object(Board,'multiplier',return_value = (0,'c'))
+    def test_set_spots(self, multiplier_mock):
+        b = Board()
+        self.assertEqual(multiplier_mock.call_count, 225)
 
     @parameterized.expand([
         (0, 1, (0,'c')),    # common spot
