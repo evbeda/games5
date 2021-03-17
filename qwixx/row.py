@@ -6,7 +6,7 @@ class Row:
         self.marks = []
 
     def create_row_numbers(self):
-        return (tuple(range(2, 13)) 
+        return (tuple(range(2, 13))
             if self.color in ['red', 'yellow']
             else tuple(reversed(range(2, 13))))
 
