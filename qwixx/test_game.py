@@ -1,13 +1,10 @@
 import unittest
-from unittest.mock import patch
-from unittest.mock import Mock
-
+from unittest.mock import patch, Mock
 from .game import Game
 from .player import Player
 
 
 class TestGame(unittest.TestCase):
-
     def setUp(self):
         self.game = Game()
 
@@ -21,7 +18,6 @@ class TestGame(unittest.TestCase):
             'blue': 1,
         }
         result_color_amount = {}
-
         self.game.create_dice_set()
 
         for die in self.game.dice_set:
@@ -81,4 +77,3 @@ class TestGame(unittest.TestCase):
     # def test_end_game(self):
     #     mock = add_penalty() --> True
     #     play() # deberia terminar
-    
