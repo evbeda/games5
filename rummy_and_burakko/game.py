@@ -12,7 +12,10 @@ class Game:
         self.current_turn = 0
 
     def create_players(self, names):
-        self.players = [Player(name) for name in names]
+        if 2 <= len(names) <= 4:
+            self.players = [Player(name) for name in names]
+        else:
+            raise Exception
 
     def next_turn(self):
         self.current_turn = (self.current_turn + 1) % len(self.players)
