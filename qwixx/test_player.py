@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+# from unittest.mock import patch
 from .player import Player
 
 
@@ -10,4 +10,3 @@ class TestPlayer(unittest.TestCase):
 
     # def test_constructor(self):
         # self.assertEqual(self.t_player.name, 'Test_name')
-

@@ -34,15 +34,14 @@ class ScorePad:
             11: 66,
             12: 78,
         }
+        score = 0
         for i in self.rows:
             m = len(i.marks)
             subt = dict_marks(m)
             score += subt
         return score
 
-
-     def calculate_score(self):
-        score = calculate_marks()
-        penalty =self.penalty * 5
-
+    def calculate_score(self):
+        score = self.calculate_marks()
+        penalty = self.penalty * 5
         return score - penalty
