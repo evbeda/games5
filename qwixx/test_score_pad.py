@@ -32,3 +32,13 @@ class TestScorePad(unittest.TestCase):
         for i, row in enumerate(scrpad.create_rows()):
             self.assertEqual(row.color, expected[i][0])
             self.assertEqual(row.numbers, expected[i][1])
+
+    def test_calculate_marks(self):
+
+        for row in self.scorepad.rows:
+            row.marks = [1, 3, 5, 8, 10]
+        result = self.scorepad.calculate_marks()
+        self.assertEqual(result, 60)
+
+
+# def test_calculate_score(self):

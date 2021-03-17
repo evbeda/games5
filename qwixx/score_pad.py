@@ -37,7 +37,7 @@ class ScorePad:
         score = 0
         for i in self.rows:
             m = len(i.marks)
-            subt = dict_marks(m)
+            subt = dict_marks[m]
             score += subt
         return score
 
