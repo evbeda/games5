@@ -1,10 +1,9 @@
 import random
 
 
-class Die:
-
+class Dice:
     def __init__(self, color):
         self.color = color
 
-    def roll_die(self):
+    def roll_dice(self):
         return random.randint(1, 6)

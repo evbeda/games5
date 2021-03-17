@@ -2,7 +2,7 @@ import unittest
 
 from guess_number_game.test_guess_number_game import TestGuessNumberGame
 
-from qwixx.test_die import TestDie
+from qwixx.test_dice import TestDice
 from qwixx.test_game import TestGame
 from qwixx.test_row import TestRow
 from qwixx.test_score_pad import TestScorePad
@@ -21,7 +21,7 @@ def suite():
     # guess number game
     test_suite.addTest(unittest.makeSuite(TestGuessNumberGame))
     # qwixx
-    test_suite.addTest(unittest.makeSuite(TestDie))
+    test_suite.addTest(unittest.makeSuite(TestDice))
     test_suite.addTest(unittest.makeSuite(TestGame))
     test_suite.addTest(unittest.makeSuite(TestRow))
     test_suite.addTest(unittest.makeSuite(TestScorePad))

@@ -10,14 +10,14 @@ class TestRow(unittest.TestCase):
         self.assertEqual(self.row.lock_Row(), True)
 
     @parameterized.expand([
-        ('red', tuple(range(2,13))),
-        ('yellow', tuple(range(2,13))),
-        ('blue', tuple(reversed(range(2,13)))),
-        ('green', tuple(reversed(range(2,13)))),
+        ('red', tuple(range(2, 13))),
+        ('yellow', tuple(range(2, 13))),
+        ('blue', tuple(reversed(range(2, 13)))),
+        ('green', tuple(reversed(range(2, 13)))),
     ])
     def test_correct_row_generation(self, color_row, expected):
-            row_example = Row(color_row)
-            self.assertEqual(row_example.numbers, expected)
+        row_example = Row(color_row)
+        self.assertEqual(row_example.numbers, expected)
 
     def test_can_mark_last_more_5(self):
         row_example = Row('red')
