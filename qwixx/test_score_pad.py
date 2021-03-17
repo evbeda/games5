@@ -34,15 +34,21 @@ class TestScorePad(unittest.TestCase):
             self.assertEqual(row.color, expected[i][0])
             self.assertEqual(row.numbers, expected[i][1])
 
-    def test_calculate_marks(self):
+    @parameterized.expand([
+        ([2, 3, 5, 8, 10, 11], 84),
+    ])
+    def test_calculate_marks(self, marks, expected):
         for row in self.scorepad.rows:
-            row.marks = [2, 3, 5, 8, 10]
+            row.marks = marks
         result = self.scorepad.calculate_marks()
-        self.assertEqual(result, 60)
+        self.assertEqual(result, expected)
 
-    def test_calculate_score(self):
+    @parameterized.expand([
+        ([2, 3, 5, 8, 10, 11], 3, 69),
+    ])
+    def test_calculate_score(self, marks, penalty, expected):
         for row in self.scorepad.rows:
-            row.marks = [2, 3, 5, 8, 10, 11]
-        self.scorepad.penalty = 3
+            row.marks = marks
+        self.scorepad.penalty = penalty
         result = self.scorepad.calculate_score()
-        self.assertEqual(result, 69)
+        self.assertEqual(result, expected)
