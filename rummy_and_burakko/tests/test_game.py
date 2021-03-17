@@ -24,3 +24,11 @@ class TestGame(unittest.TestCase):
 
         self.assertEqual(len(self.game.players), 3)
         player_patched.assert_called()
+
+    def test_change_turn(self):
+        self.game.players = [1, 2, 3, 4]
+        self.game.current_turn = 0
+
+        self.game.next_turn()
+
+        self.assertEqual(self.game.current_turn, 1)
