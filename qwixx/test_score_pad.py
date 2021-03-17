@@ -40,10 +40,9 @@ class TestScorePad(unittest.TestCase):
         result = self.scorepad.calculate_marks()
         self.assertEqual(result, 60)
 
-    @parameterized.expand([
-        (17, 2, 7),
-        (40, 3, 10),
-    ])
-    def test_calculate_score(self, score, penalty, expected):
+    def test_calculate_score(self):
+        for row in self.scorepad.rows:
+            row.marks = [2, 3, 5, 8, 10, 11]
+        self.scorepad.penalty = 3
         result = self.scorepad.calculate_score()
-        self.assertEqual(result, expected)
+        self.assertEqual(result, 69)
