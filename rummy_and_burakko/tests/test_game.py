@@ -13,7 +13,7 @@ class TestGame(unittest.TestCase):
     def test_game_attributes(self):
         game = Game()
 
-        self.assertEqual(game.remaining_tiles, 106)
+        self.assertEqual(game.remaining_tiles, [])
         self.assertEqual(game.players, [])
         self.assertEqual(game.current_turn, 0)
 
@@ -39,3 +39,21 @@ class TestGame(unittest.TestCase):
         self.game.next_turn()
 
         self.assertEqual(self.game.current_turn, next_turn)
+        
+    def test_create_tiles(self):
+        with patch('rummy_and_burakko.game.Tile') as tile_patched:
+            self.game.create_tiles()
+
+        self.assertEqual(len(self.game.remaining_tiles), 106)
+
+        tile_list = {
+            'r': list(range(1,14)),
+            'y': list(range(1,14)),
+            'w': list(range(1,14)),
+            'b': list(range(1,14)),
+            '*': [0] * 2,
+        }
+
+        for color, number_list in tile_list.items():
+            for number in number_list:
+                tile_patched.assert_any_call(color, number)
