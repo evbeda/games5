@@ -19,4 +19,5 @@ class Tile:
        
     @property
     def order(self):
-        return ord(self.letter) - ord('a')
+
+        return ord(self.letter[0]) - ord('a')
