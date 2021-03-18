@@ -32,3 +32,5 @@ class Game:
         for i in self.players:
             i.add_tiles(self.remaining_tiles[:14])
             self.remaining_tiles = self.remaining_tiles[15:]
+    
+    #next_turn

@@ -13,3 +13,4 @@ class Player:
                 self.hand.remove(tile)
             else:
                 raise Exception
+
