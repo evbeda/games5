@@ -7,3 +7,7 @@ PyYAML==5.4.1
 requests==2.25.1
 six==1.15.0
 urllib3==1.26.4
+
+
+
+Para afirmar que se llama a un método module.func en un método de prueba unitaria, primero parche el objeto en el método agregando el decorador @ unittest.mock.patch.object (módulo, "func") inmediatamente antes de definir el método de prueba unitaria. Agregue otro parámetro al método de prueba unitaria. Cuando se llama al método de prueba unitaria, se pasará un objeto unittest.mock.Mock que imita module.func al último parámetro del método de prueba unitaria. Para afirmar que se llama a module.func, llame a unittest.mock.Mock.assert_called () en el objeto unittest.mock.Mock creado anteriormente en el cuerpo del método de prueba unitaria. Si se llama a module.func en cualquier parte del método, la aserción pasará y el método se completará. De lo contrario, la aserción fallará y se imprimirá un error.
