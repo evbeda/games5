@@ -1,7 +1,6 @@
 class SetTiles():
-    def __init__(self, tiles, set_id):
+    def __init__(self, tiles):
         self.tiles = tiles.copy()
-        self.set_id = set_id
 
     # create an atribute containing the tiles
     def is_valid(self):
@@ -42,3 +41,6 @@ class SetTiles():
             return True
         else:
             return False
+
+    def remove_tile(self, tile):
+        pass
