@@ -35,6 +35,18 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.tiles_test), 15)
 
     @patch('random.randint')
+    def test_put_2_draw_2(self, mock_random):
+        # data
+        self.player_test.tiles_in_hand = list(range(1, 8))
+        t_index = [1, 5]
+        # process
+        self.player_test.put_2_draw_2(self.tiles_test, t_index)
+        # assert
+        self.assertNotEqual(self.player_test.tiles_in_hand, list(range(1, 8)))
+        self.assertEqual(mock_random.call_count, 2)
+        self.assertEqual(len(self.player_test.tiles_in_hand), 7)
+
+    @patch('random.randint')
     def test_one_draw_random(self, mock_random):
         # data
         start = 0
