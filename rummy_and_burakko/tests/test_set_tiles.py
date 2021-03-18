@@ -82,3 +82,11 @@ class TestSetTiles(unittest.TestCase):
 
         # assert
         self.assertEqual(result, expected)
+
+    def test_remove_tile_from_set(self):
+        t1 = Tile('r', 3)
+        t2 = Tile('b', 3)
+        t3 = Tile('y', 3)
+        tile_set = SetTiles([t1, t2, t3])
+        tile_set.remove_tile(t2)
+        self.assertNotIn(t2, tile_set.tiles)
