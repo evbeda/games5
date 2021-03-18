@@ -31,22 +31,19 @@ class TestRow(unittest.TestCase):
         result = row_example.can_mark_last()
         self.assertFalse(result)
 
-    # def test_can_mark(self):
-    #     r = Row('red')
-    #     r.marks = [2, 3, 6]
-
-    #     self.assertTrue(r.can_mark(7))
-
     @parameterized.expand([
-        ('red', [2, 3, 6], 7, True),
-        ('red', [2, 4, 6], 3, False),
-        ('yellow', [3, 4, 6], 2, False),
-        ('blue', [6, 5, 4], 3, True),
-        ('blue', [6, 5, 4], 7, False),
-        ('green', [7, 5, 4], 6, False),
+        ('red', [2, 3, 6], 7, False, True),
+        ('red', [2, 4, 6], 3, False, False),
+        ('yellow', [3, 4, 6], 2, False, False),
+        ('blue', [6, 5, 4], 3, False, True),
+        ('blue', [6, 5, 4], 7, False, False),
+        ('green', [7, 5, 4], 6, False, False),
+        ('blue', [6, 5, 4], 3, True, False),
+        ('red', [2, 3, 6], 7, True, False),
     ])
-    def test_can_mark(self, color, marks, number, expected):
+    def test_can_mark(self, color, marks, number, is_locked, expected):
         r = Row(color)
+        r.is_locked = is_locked
         r.marks = marks
 
         self.assertEqual(r.can_mark(number), expected)
