@@ -43,4 +43,4 @@ class SetTiles():
             return False
 
     def remove_tile(self, tile):
-        pass
+        self.tiles.remove(tile)
