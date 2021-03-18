@@ -10,8 +10,7 @@ class TestSetTiles(unittest.TestCase):
     @patch.object(SetTiles, 'is_a_leg', return_value=True)   # 2 argument
     @patch.object(SetTiles, 'is_a_stair', return_value=False)  # 1 argument
     def test_valid_T_F(self, mock_stair, mock_leg):
-        id_for_set = 1
-        tiles_leg = SetTiles([], id_for_set)
+        tiles_leg = SetTiles([])
         valid_leg = tiles_leg.is_valid()
 
         # assert
@@ -23,8 +22,7 @@ class TestSetTiles(unittest.TestCase):
     @patch.object(SetTiles, 'is_a_leg', return_value=False)   # 2 argument
     @patch.object(SetTiles, 'is_a_stair', return_value=True)  # 1 argument
     def test_valid_F_T(self, mock_stair, mock_leg):
-        id_for_set = 1
-        tiles_stair = SetTiles([], id_for_set)
+        tiles_stair = SetTiles([])
         valid_stair = tiles_stair.is_valid()
 
         # assert
@@ -36,8 +34,7 @@ class TestSetTiles(unittest.TestCase):
     @patch.object(SetTiles, 'is_a_leg', return_value=False)
     @patch.object(SetTiles, 'is_a_stair', return_value=False)
     def test_valid_F_F(self, mock_stair, mock_leg):
-        id_for_set = 1
-        tiles_not_set = SetTiles([], id_for_set)
+        tiles_not_set = SetTiles([])
         valid_set = tiles_not_set.is_valid()
 
         # assert
@@ -61,8 +58,7 @@ class TestSetTiles(unittest.TestCase):
     ])
     def test_is_a_stair(self, expected, tiles):
         # set variables
-        id_for_set = 1
-        tiles_stair = SetTiles([Tile(t[0], t[1]) for t in tiles], id_for_set)
+        tiles_stair = SetTiles([Tile(t[0], t[1]) for t in tiles])
         result = tiles_stair.is_a_stair()
 
         # assert
@@ -81,8 +77,7 @@ class TestSetTiles(unittest.TestCase):
     ])
     def test_is_a_leg(self, expected, tiles):
         # set variables
-        id_for_set = 1
-        tiles_leg = SetTiles([Tile(t[0], t[1]) for t in tiles], id_for_set)
+        tiles_leg = SetTiles([Tile(t[0], t[1]) for t in tiles])
         result = tiles_leg.is_a_leg()
 
         # assert

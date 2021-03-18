@@ -1,3 +1,6 @@
+from .set_tiles import SetTiles
+
+
 class Board():
     def __init__(self):
         self.sets = {}
@@ -6,14 +9,13 @@ class Board():
     def add_new_play(self, sets):
         new_tile_set = {}
         new_id = self.last_id + 1
-
         for tile_set in sets:
             for tile in tile_set:
                 if tile.set_id != 0:
                     new_set = new_tile_set.get(tile.set_id)
                     if not new_set:
                         mod_set = self.sets[tile.set_id]
-                        new_set = mod_set.copy()
+                        new_set = SetTiles(mod_set.tiles)
                     new_set.remove_tile(tile)
                     new_tile_set.update({tile.set_id: new_set})
             new_tile_set.update({new_id: SetTiles(tile_set)})
@@ -30,7 +32,4 @@ class Board():
             return False
 
     def validate_sets(self, sets):
-        for item in sets:
-            if not(item.is_valid()):
-                return False
-        return True
+        return all([item.is_valid() for item in sets])
