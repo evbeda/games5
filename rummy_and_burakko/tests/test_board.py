@@ -25,11 +25,13 @@ class TestBoard(unittest.TestCase):
         (
             [SetTiles([('red', 5), ('red', 6), ('blue', 7)], 1),
                 SetTiles([('blue', 5), ('blue', 6), ('blue', 7)], 2)],
-            False
+            True
         ),
     ])
-    @patch.object(SetTiles, 'is_valid', return_value=False)
-    def test_validate_sets(self, sets, expected, mock_validate_sets):
+    def test_validate_sets(self, sets, expected):
         board = Board()
-        board.validate_sets(sets)
+        
+        with patch.object(SetTiles, 'is_valid', return_value=expected)
+            board.validate_sets(sets)
+        
         self.assertEqual(board.add_new_play(sets), expected)
