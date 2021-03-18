@@ -8,7 +8,7 @@ class Player:
         self.score_pad = ScorePad()
 
     def mark_number(self, number, color):
-        self.score_pad.rows[color].set_mark(number)
+        self.score_pad.mark_number_in_row(number, color)
 
     def pass_turn(self):
         return self.score_pad.add_penalty()

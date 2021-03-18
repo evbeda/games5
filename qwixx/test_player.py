@@ -1,6 +1,7 @@
 import unittest
-# from unittest.mock import patch
+from unittest.mock import patch
 from .player import Player
+from .score_pad import ScorePad
 # from .score_pad import ScorePad
 
 
@@ -26,12 +27,9 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.t_player.score_pad.penalty, 4)
         self.assertEqual(x, True)
 
-    def test_mark_number(self):
-        # data
-        # rows[0] es la row roja, seria mas facil si rows fuera un diccionario
-        self.t_player.score_pad.rows[0].marks = [2, 3, 7]
+    @patch.object(ScorePad, 'mark_number_in_row')
+    def test_mark_number_mocked(self, mock_mark_number_in_row):
         # process
-        self.t_player.mark_number(10, 'red')
-        # aseert
-        self.assertEqual(self.t_player.score_pad.rows[0].marks, [2, 3, 7, 10])
-        self.assertEqual(self.t_player.score_pad.rows[0].color, 'red')
+        num = 10
+        self.t_player.mark_number(num, 'red')
+        mock_mark_number_in_row.assert_called_once_with(num, 'red')

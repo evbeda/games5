@@ -33,15 +33,10 @@ class Row:
             return False
 
     def can_mark(self, number):
-        if (
+        return(
             (number > self.marks[-1])
             and (self.color in ['red', 'yellow'])
-        ):
-            return True
-        elif (
+        ) or (
             (number < self.marks[-1])
             and (self.color in ['blue', 'green'])
-        ):
-            return True
-        else:
-            return False
+        )
