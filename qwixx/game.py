@@ -13,8 +13,8 @@ class Game:
     def create_dice_set(self):
         raise NotImplementedError
 
-    def remove_die(self, color):
-        for index, die in enumerate(self.dice_set):
-            if die.color == color:
+    def remove_dice(self, color):
+        for index, dice in enumerate(self.dice_set):
+            if dice.color == color:
                 self.dice_set.pop(index)
                 break
