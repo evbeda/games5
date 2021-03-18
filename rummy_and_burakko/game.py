@@ -1,5 +1,5 @@
 import itertools
-
+import random
 from .player import Player
 from .tile import Tile
 
@@ -22,6 +22,13 @@ class Game:
 
     def create_tiles(self):
         self.remaining_tiles = list(itertools.chain(
-            *[[Tile(color, number) for color in ['b', 'r', 'y', 'w']*2] for number in range(1,14)]
+            *[[Tile(color, number) for color in ['b', 'r', 'y', 'w']*2] for
+                number in range(1, 14)]
         ))
         self.remaining_tiles += [Tile('*', 0), Tile('*', 0)]
+
+    def asign_tiles(self):
+        random.shuffle(self.remaining_tiles)
+        for i in self.players:
+            i.add_tiles(self.remaining_tiles[:14])
+            self.remaining_tiles = self.remaining_tiles[15:]

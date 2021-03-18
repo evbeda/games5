@@ -14,6 +14,16 @@ class Player:
 
     def full_draw(self, tiles_sack):
         diff = 7 - len(self.tiles_in_hand)
+        # Por si quedan menos fichas en el pozo que diff
+        if diff > len(tiles_sack):
+            diff = len(tiles_sack)
         while diff != 0:
             self.one_draw(tiles_sack)
             diff -= 1
+
+    def put_2_draw_2(self, tiles_sack, indexs):
+        indexs.sort(reverse=True)
+        for index in indexs:
+            tile = self.tiles_in_hand.pop(index)
+            tiles_sack.append(tile)
+        self.full_draw(tiles_sack)

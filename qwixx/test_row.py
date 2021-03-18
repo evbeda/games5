@@ -1,6 +1,7 @@
 import unittest
 from parameterized import parameterized
 from .row import Row
+from unittest.mock import patch
 
 
 class TestRow(unittest.TestCase):
@@ -31,11 +32,17 @@ class TestRow(unittest.TestCase):
         result = row_example.can_mark_last()
         self.assertFalse(result)
 
-    # def test_can_mark(self):
-    #     r = Row('red')
-    #     r.marks = [2, 3, 6]
-
-    #     self.assertTrue(r.can_mark(7))
+    @parameterized.expand([
+        ('red', False, 1, True),
+        ('red', True, 0, False),
+    ])
+    @patch.object(Row, 'can_mark')
+    def test_check_row_lock(self, color, is_locked, call_count_mock, expected, mock_can_mark):
+        r = Row(color)
+        r.is_locked = is_locked
+        r.check_row_lock(5)
+        # Como testear el return de la funcion check_row_lock
+        self.assertEqual(mock_can_mark.call_count, call_count_mock, expected)
 
     @parameterized.expand([
         ('red', [2, 3, 6], 7, True),
