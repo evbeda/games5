@@ -56,3 +56,17 @@ class TestBoard(unittest.TestCase):
         with patch.object(SetTiles, 'remove_tile') as remove_tile_patched:
             board.add_new_play([set_2])
             remove_tile_patched.assert_called()
+
+    def test_board_format(self):
+        board = Board()
+        board.sets = {
+            1: SetTiles(Tile('r', 5), Tile('b', 5), Tile('y', 5)),
+            2: SetTiles(Tile('r', 3), Tile('b', 3), Tile('y', 3), Tile('w', 3)),
+            3: SetTiles(Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)),
+        }
+
+        board_str = '''0: L[ r5 b5 y5 ]
+        1: L[r3 b3 y3 w3]
+        2: S[r3 r4 r5 r6]'''
+
+        self.assertEqual(board.get_board(), board_str)
