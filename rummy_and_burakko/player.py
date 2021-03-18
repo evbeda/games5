@@ -13,3 +13,9 @@ class Player:
                 self.hand.remove(tile)
             else:
                 raise Exception
+
+    def get_hand(self):
+        return f'{self.name}> ' + ' '.join([
+            f'{index}:{tile.color}{tile.number}'
+            for index, tile in enumerate(self.hand)
+        ])

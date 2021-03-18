@@ -1,6 +1,7 @@
 import unittest
 
 from ..player import Player
+from ..tile import Tile
 
 
 class TestPlayer(unittest.TestCase):
@@ -31,3 +32,9 @@ class TestPlayer(unittest.TestCase):
 
         with self.assertRaises(Exception):
             self.player.remove_tiles([4])
+
+    def test_hand_format(self):
+        player = Player("Pedro")
+        player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
+
+        self.assertEqual(player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
