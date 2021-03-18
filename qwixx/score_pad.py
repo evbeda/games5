@@ -7,7 +7,12 @@ class ScorePad:
         self.penalty = 0
 
     def create_rows(self):
-        return [Row(color) for color in ['red', 'yellow', 'blue', 'green']]
+        return (
+                {
+                    color: Row(color)
+                    for color in ['red', 'yellow', 'blue', 'green']
+                }
+            )
 
     def add_penalty(self):
         self.penalty += 1
@@ -32,7 +37,7 @@ class ScorePad:
             12: 78,
         }
         score = 0
-        for i in self.rows:
+        for _, i in self.rows.items():
             m = len(i.marks)
             subt = dict_marks[m]
             score += subt
@@ -42,3 +47,6 @@ class ScorePad:
         score = self.calculate_marks()
         penalty = self.penalty * 5
         return score - penalty
+
+    def mark_number_in_row(self, number, color):
+        self.rows[color].set_mark(number)
