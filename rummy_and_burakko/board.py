@@ -33,3 +33,9 @@ class Board():
 
     def validate_sets(self, sets):
         return all([item.is_valid() for item in sets])
+
+    def get_board(self):
+        return '\n'.join([
+            f'{index}: {tile_set.get_tiles()}'
+            for index, tile_set in self.sets.items()
+        ])

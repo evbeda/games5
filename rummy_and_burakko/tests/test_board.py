@@ -60,13 +60,11 @@ class TestBoard(unittest.TestCase):
     def test_board_format(self):
         board = Board()
         board.sets = {
-            1: SetTiles(Tile('r', 5), Tile('b', 5), Tile('y', 5)),
-            2: SetTiles(Tile('r', 3), Tile('b', 3), Tile('y', 3), Tile('w', 3)),
-            3: SetTiles(Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)),
+            1: SetTiles([Tile('r', 5), Tile('b', 5), Tile('y', 5)]),
+            2: SetTiles([Tile('r', 3), Tile('b', 3), Tile('y', 3), Tile('w', 3)]),
+            3: SetTiles([Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)]),
         }
 
-        board_str = '''0: L[ r5 b5 y5 ]
-        1: L[r3 b3 y3 w3]
-        2: S[r3 r4 r5 r6]'''
+        board_str = '1: L[ 0:r5 1:b5 2:y5 ]\n2: L[ 0:r3 1:b3 2:y3 3:w3 ]\n3: S[ 0:r3 1:r4 2:r5 3:r6 ]'
 
         self.assertEqual(board.get_board(), board_str)
