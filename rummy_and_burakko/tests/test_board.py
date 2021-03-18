@@ -36,10 +36,8 @@ class TestBoard(unittest.TestCase):
     def test_validate_sets(self, sets, expected):
         board = Board()
         
-        with patch.object(SetTiles, 'is_valid', return_value=expected)
+        with patch.object(SetTiles, 'is_valid', return_value=expected):
             board.validate_sets(sets)
-        
-        self.assertEqual(board.add_new_play(sets), expected)
 
     @patch('rummy_and_burakko.tile.Tile', create=True)
     @patch.object(Board, 'validate_sets', return_value=True)
