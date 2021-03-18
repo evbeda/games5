@@ -90,3 +90,10 @@ class TestSetTiles(unittest.TestCase):
         tile_set = SetTiles([t1, t2, t3])
         tile_set.remove_tile(t2)
         self.assertNotIn(t2, tile_set.tiles)
+
+    @parameterized.expand([
+        (SetTiles([Tile('r', 3), Tile('b', 3), Tile('y', 3)]), 'L[ 0:r3 1:b3 2:y3 ]'),
+        # (SetTiles([Tile('r', 3), Tile('r', 4), Tile('r', 5)]), 'S[ 0:r3 1:r4 2:r5 ]'),
+    ])
+    def test_hand_format(self, tile_set, expected):
+        self.assertEqual(tile_set.get_tiles(), expected)

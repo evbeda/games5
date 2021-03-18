@@ -44,3 +44,13 @@ class SetTiles():
 
     def remove_tile(self, tile):
         self.tiles.remove(tile)
+
+    def get_tiles(self):
+        return (
+            f'{"L" if self.is_a_leg() else "S"}[ '
+            + ' '.join([
+                f'{index}:{tile.color}{tile.number}'
+                for index, tile in enumerate(self.tiles)
+            ])
+            + ' ]'
+        )
