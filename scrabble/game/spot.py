@@ -8,4 +8,9 @@ class Spot:
         self.tile = tile
 
     def get_spot(self):
-        return f' {self.tile.letter} ' if self.tile else f'x{self.mult_value}{self.mult_type}' if self.mult_value else '   '
+        return (
+            f' {self.tile.letter} '
+            if self.tile else
+            f'{self.mult_value}x{self.mult_type.upper()}'
+            if self.mult_value else '   '
+        )

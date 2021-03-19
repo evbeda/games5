@@ -19,13 +19,13 @@ class TestSpot(unittest.TestCase):
 
     @parameterized.expand([
         (Spot(0, 'c'), Tile('a'), ' a '),
-        (Spot(2, 'l'), None, 'x2l'),
+        (Spot(2, 'l'), None, '2xL'),
         (Spot(2, 'l'), Tile('a'), ' a '),
-        (Spot(2, 'w'), None, 'x2w'),
+        (Spot(2, 'w'), None, '2xW'),
         (Spot(2, 'l'), Tile('a'), ' a '),
-        (Spot(3, 'w'), None, 'x3w'),
+        (Spot(3, 'w'), None, '3xW'),
         (Spot(2, 'l'), Tile('a'), ' a '),
-        (Spot(3, 'l'), None, 'x3l'),
+        (Spot(3, 'l'), None, '3xL'),
         (Spot(2, 'l'), Tile('a'), ' a '),
         (Spot(0, 'c'), None, '   '),
     ])
