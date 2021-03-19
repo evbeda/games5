@@ -70,3 +70,26 @@ class Board:
         board_str += '- - ' * len(self.spots[0]) + '-'
 
         return board_str
+
+    def place_word(self, word, row, col, direction):
+        if self.first and self.can_place_first_word(word, row, col, direction):
+            self.place_letters(word, row, col, direction, range(len(word)))
+        else:
+            indexes = self.can_place_word(word, row, col, direction)
+            self.place_letters(word, row, col, direction, indexes)
+
+    def can_place_first_word(self, word, row, col, direction):
+        return (
+            (direction and row == 7 and col <= 7 <= col+len(word)) or
+            (not direction and col == 7 and row <= 7 <= row+len(word))
+        )
+
+    def can_place_word(self, word, row, col, direction):
+        pass
+
+    def place_letters(self, word, row, col, direction, indexes):
+        for i in indexes:
+            if direction:
+                self.spots[row][col+i].set_tile(word[i])
+            else:
+                self.spots[row+i][col].set_tile(word[i])
