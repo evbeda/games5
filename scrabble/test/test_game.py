@@ -3,6 +3,7 @@ from unittest.mock import patch
 from ..game.game import Game
 from ..game.player import Player
 from ..game.tile import Tile
+from ..game.board import Board
 
 
 class TestGame(unittest.TestCase):
@@ -40,3 +41,8 @@ class TestGame(unittest.TestCase):
     #         x = t_game.first_player()
     #         self.assertEqual(mock_one_draw.call_count, 3)
     #         self.assertEqual(x, 0)
+
+    @patch.object(Board, 'get_board')
+    def test_print_board(self, get_board_patched):
+        self.t_game.print_board()
+        get_board_patched.assert_called()

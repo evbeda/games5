@@ -26,3 +26,6 @@ class Game:
     #         value = player.tiles_in_hand[0].order
     #         ref.append((value))
     #     return ref.index(min(ref))
+
+    def print_board(self):
+        return self.board.get_board()
