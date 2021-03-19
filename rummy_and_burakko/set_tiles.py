@@ -11,9 +11,11 @@ class SetTiles():
         if len(colors) < 3 or len(colors) > 4:
             return False
         dif_color = len(colors) == len(self.tiles)
-        # optimizar esta linea para solucionar error joker
-        reference = (sorted(
-            list(t.number for t in self.tiles), reverse=True))[0]
+        # Evitamos que tomemos como ref a un joker
+        for tile in self.tiles:
+            if tile.number != 0:
+                reference = tile.number
+                break
         same_digit = all(
             obj.number == reference
             for obj in self.tiles
