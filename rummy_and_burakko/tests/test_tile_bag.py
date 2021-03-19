@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch
 from ..player import Player
 from ..tile_bag import TileBag
+from parameterized import parameterized
 
 
 class TestTileBag(unittest.TestCase):
@@ -47,10 +48,16 @@ class TestTileBag(unittest.TestCase):
         self.assertEqual(len(self.players[0].hand), q_tiles)
         self.assertEqual(len(self.t_bag.remaining_tiles), remaining)
 
-    def test_give_one_tile(self):
+    @parameterized.expand([
+        (106, 105, 1),
+        (50, 49, 1),
+        (0, 0, 0)
+    ])
+    def test_give_one_tile(self, top, e_remaining, e_hand):
+        # data
+        self.t_bag.remaining_tiles = self.t_bag.remaining_tiles[:top]
         # process
-
         self.t_bag.give_one_tile(self.players[2])
         # assert
-        self.assertEqual(len(self.players[2].hand), 1)
-        self.assertEqual(len(self.t_bag.remaining_tiles), 105)
+        self.assertEqual(len(self.players[2].hand), e_hand)
+        self.assertEqual(len(self.t_bag.remaining_tiles), e_remaining)

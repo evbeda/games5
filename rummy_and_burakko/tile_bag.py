@@ -22,5 +22,9 @@ class TileBag():
             self.remaining_tiles = self.remaining_tiles[13:]
 
     def give_one_tile(self, player):
-        random.shuffle(self.remaining_tiles)
-        player.add_tiles([self.remaining_tiles.pop()])
+        if len(self.remaining_tiles) > 0:
+            random.shuffle(self.remaining_tiles)
+            player.add_tiles([self.remaining_tiles.pop()])
+            return True
+        else:
+            return False  # Si no puedo robar, obligar al jugador a jugar
