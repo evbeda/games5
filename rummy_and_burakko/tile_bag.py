@@ -18,5 +18,9 @@ class TileBag():
     def assign_tiles(self, players):
         random.shuffle(self.remaining_tiles)
         for i in players:
-            i.add_tiles(self.remaining_tiles[:14])
-            self.remaining_tiles = self.remaining_tiles[14:]
+            i.add_tiles(self.remaining_tiles[:13])
+            self.remaining_tiles = self.remaining_tiles[13:]
+
+    def give_one_tile(self, player):
+        random.shuffle(self.remaining_tiles)
+        player.add_tiles([self.remaining_tiles.pop()])
