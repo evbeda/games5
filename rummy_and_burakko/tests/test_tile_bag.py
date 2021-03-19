@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import patch
 from ..player import Player
 from ..tile_bag import TileBag
-from ..game import Game
 
 
 class TestTileBag(unittest.TestCase):
@@ -29,7 +28,7 @@ class TestTileBag(unittest.TestCase):
 
     # teste de mock
     @patch.object(Player, "add_tiles")
-    def test_call_add_tiles_by_assign_tiles(self, mock):  
+    def test_call_add_tiles_by_assign_tiles(self, mock):
         players = [Player('juan'), Player('pedro')]
         self.t_bag.assign_tiles(players)
         mock.assert_called()
