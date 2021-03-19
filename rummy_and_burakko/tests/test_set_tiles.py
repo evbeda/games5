@@ -73,6 +73,7 @@ class TestSetTiles(unittest.TestCase):
         (False, (('*', 0), ('blue', 5), ('green', 5), ('*', 0))),
         (False, (('blue', 5), ('green', 5))),
         (True, (('*', 0), ('blue', 5), ('green', 5), ('red', 5))),
+        (True, (('blue', 10), ('green', 10), ('red', 10), ('*', 0))),
         (False, (('*', 0), ('blue', 5), ('green', 5), ('red', 5), ('red', 5))),
     ])
     def test_is_a_leg(self, expected, tiles):

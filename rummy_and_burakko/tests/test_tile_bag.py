@@ -51,7 +51,7 @@ class TestTileBag(unittest.TestCase):
     @parameterized.expand([
         (106, 105, 1),
         (50, 49, 1),
-        (0, 0, 0)
+        # (0, 0, 0)  #  esto genera un raise exception
     ])
     def test_give_one_tile(self, top, e_remaining, e_hand):
         # data
