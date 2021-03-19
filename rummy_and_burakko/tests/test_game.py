@@ -47,3 +47,8 @@ class TestGame(unittest.TestCase):
     def test_player_limit(self, players):
         with self.assertRaises(Exception):
             self.game.create_players(players)
+
+    @patch.object(TileBag, "assign_tiles")
+    def test_call_assign_tiles(self, mock):
+        self.game.distribute_tiles()
+        self.assertEqual(mock.call_count, 1)
