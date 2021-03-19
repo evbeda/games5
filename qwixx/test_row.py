@@ -37,7 +37,8 @@ class TestRow(unittest.TestCase):
         ('red', True, 0, False),
     ])
     @patch.object(Row, 'can_mark')
-    def test_check_row_lock(self, color, is_locked, call_count_mock, expected, mock_can_mark):
+    def test_check_row_lock(self, color, is_locked, call_count_mock, expected,
+                            mock_can_mark):
         r = Row(color)
         r.is_locked = is_locked
         r.check_row_lock(5)

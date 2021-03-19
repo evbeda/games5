@@ -60,4 +60,3 @@ class Row:
             (number < self.marks[-1])
             and (self.color in ['blue', 'green'])
         )
-    
