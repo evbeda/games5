@@ -61,3 +61,12 @@ class Board:
                     return set_mult[1]
 
         return mult
+
+    def get_board(self):
+        board_str = ''
+        for row in self.spots:
+            board_str += '- - ' * len(row) + '-\n'
+            board_str += '|' + '|'.join([f'{spot.get_spot()}' for spot in row]) + '|\n'
+        board_str += '- - ' * len(self.spots[0]) + '-'
+
+        return board_str
