@@ -1,3 +1,4 @@
+
 class Row:
     def __init__(self, color):
         self.color = color
@@ -32,6 +33,25 @@ class Row:
         else:
             return False
 
+    def calculate_marks(self):
+        set_marks = (
+            (1, 1),
+            (2, 3),
+            (3, 6),
+            (4, 10),
+            (5, 15),
+            (6, 21),
+            (7, 28),
+            (8, 36),
+            (9, 45),
+            (10, 55),
+            (11, 66),
+            (12, 70),
+        )
+        for mark in set_marks:
+            if len(self.marks) == mark[0]:
+                return mark[1]
+
     def can_mark(self, number):
         return(
             (number > self.marks[-1])
@@ -40,3 +60,4 @@ class Row:
             (number < self.marks[-1])
             and (self.color in ['blue', 'green'])
         )
+    
