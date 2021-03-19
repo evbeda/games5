@@ -58,3 +58,6 @@ class TestBoard(unittest.TestCase):
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 |3xW|   |   |2xL|   |   |   |3xW|   |   |   |2xL|   |   |3xW|
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -'''
+
+        board = Board()
+        self.assertEqual(board.get_board(), expected_board)
