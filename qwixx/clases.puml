@@ -1,0 +1,26 @@
+@startuml
+class Player {
+    name: String
+}
+class ScorePad {
+    penalty: Integer
+}
+class Row {
+    marks: List
+    is_locked: Bool
+    color: String
+    numbers: List
+}
+class Dice{
+    color: String
+}
+class Game{
+    current_player: Integer
+}
+
+ScorePad  --> "4" Row: rows
+Player --> ScorePad: score_pad
+Game --> "1..4" Player: players
+Game --> SetDices
+SetDices --> "6" Dice: dices
+@enduml
