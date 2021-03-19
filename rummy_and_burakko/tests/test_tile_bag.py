@@ -7,6 +7,7 @@ from ..tile_bag import TileBag
 class TestTileBag(unittest.TestCase):
     def setUp(self):
         self.t_bag = TileBag()
+        self.players = [Player('test_1'), Player('test_2'), Player('test_3')]
 
     def test_create_tiles(self):
         with patch('rummy_and_burakko.tile_bag.Tile') as tile_patched:
@@ -29,7 +30,27 @@ class TestTileBag(unittest.TestCase):
     # teste de mock
     @patch.object(Player, "add_tiles")
     def test_call_add_tiles_by_assign_tiles(self, mock):
-        players = [Player('juan'), Player('pedro')]
-        self.t_bag.assign_tiles(players)
-        mock.assert_called()
-        self.assertEqual(mock.call_count, 2)
+        self.t_bag.assign_tiles(self.players)
+        self.assertEqual(mock.call_count, 3)
+
+    # result test
+    def test_assign_tiles(self):
+        # data
+        q_tiles = 13
+        q_starting_sack = 106
+        # process
+        self.assertEqual(len(self.players[0].hand), 0)
+        self.assertEqual(len(self.t_bag.remaining_tiles), q_starting_sack)
+        self.t_bag.assign_tiles(self.players)
+        remaining = q_starting_sack - q_tiles * len(self.players)
+        # assert
+        self.assertEqual(len(self.players[0].hand), q_tiles)
+        self.assertEqual(len(self.t_bag.remaining_tiles), remaining)
+
+    def test_give_one_tile(self):
+        # process
+
+        self.t_bag.give_one_tile(self.players[2])
+        # assert
+        self.assertEqual(len(self.players[2].hand), 1)
+        self.assertEqual(len(self.t_bag.remaining_tiles), 105)

@@ -17,16 +17,13 @@ class TestPlayer(unittest.TestCase):
 
     def test_add_tiles_to_hand(self):
         self.player.add_tiles([1, 2, 5])
-        
         [self.assertIn(tile, self.player.hand) for tile in [1, 2, 5]]
 
     def test_take_tiles_from_hand(self):
         self.player.hand = [2, 6, 7, 8]
-        
         self.player.remove_tiles([6, 8])
-
         [self.assertNotIn(tile, self.player.hand) for tile in [6, 8]]
-        
+
     def test_take_tile_not_in_hand(self):
         self.player.hand = [1, 2, 3]
 
