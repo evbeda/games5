@@ -1,5 +1,6 @@
 from .player import Player
 from .tile_bag import TileBag
+import random
 
 
 class Game:
@@ -20,3 +21,6 @@ class Game:
 
     def distribute_tiles(self):
         self.tile_bag.assign_tiles(self.players)
+
+    def random_order(self):
+        random.shuffle(self.players)

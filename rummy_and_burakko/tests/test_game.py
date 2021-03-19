@@ -52,3 +52,11 @@ class TestGame(unittest.TestCase):
     def test_call_assign_tiles(self, mock):
         self.game.distribute_tiles()
         self.assertEqual(mock.call_count, 1)
+
+    @patch('random.shuffle')
+    def test_start_order(self, mock):
+        # data
+        first_order = self.game.players.copy()
+        # process
+        self.game.random_order()
+        mock.assert_called_once_with(first_order)
