@@ -12,7 +12,9 @@ class Scrabble:
 
     def __init__(self):
         self.is_playing = True
-        self.game = Game()
+        self.game = None
+        self.create_game = True
+        self.input_players = False
         self.play_word = False
         self.change_letters = False
         self.challenge = False
@@ -34,7 +36,13 @@ class Scrabble:
         return query
 
     def play(self, *args):
-        if self.play_word:
+        if self.create_game:
+            # 1 args, player count
+            pass
+        elif self.input_players:
+            # x args, player names
+            pass
+        elif self.play_word:
             # 4 args
             pass
         elif self.change_letters:
