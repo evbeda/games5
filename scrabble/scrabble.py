@@ -5,16 +5,21 @@ class Scrabble:
 
     @property
     def input_args(self):
-        if self.play_word:
-            return 4
+        if self.input_players:
+            args = self.input_player_args
+        elif self.play_word:
+            args = 4
         else:
-            return 1
+            args = 1
+
+        return args
 
     def __init__(self):
         self.is_playing = True
         self.game = None
         self.create_game = True
         self.input_players = False
+        self.input_player_args = 0
         self.play_word = False
         self.change_letters = False
         self.challenge = False
@@ -26,7 +31,7 @@ class Scrabble:
 
     def next_turn(self):
         # if game_over -> self.is_playing = False
-        query = self.game.get_current_player_hand() + '\n'
+        query = self.game.get_current_player_hand() + '\n\n'
 
         if self.play_word:
             query += 'X, Y, V/H, word'
