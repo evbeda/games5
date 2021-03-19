@@ -38,3 +38,8 @@ class TileBag():
 
         return [Tile(letter) for letter in letters]
 
+    def add_tile(self, tile):
+        self.tiles.append(tile)
+
+    def draw_tile(self, index):
+        return self.tiles.pop(index)

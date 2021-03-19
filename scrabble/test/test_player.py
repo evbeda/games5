@@ -1,6 +1,8 @@
 import unittest
 from unittest.mock import patch
 from ..game.player import Player
+from ..game.tile_bag import TileBag
+from ..game.tile import Tile
 
 
 class TestPlayer(unittest.TestCase):
@@ -9,7 +11,7 @@ class TestPlayer(unittest.TestCase):
         self.id_test = 1
         self.name_test = 'Test_1'
         self.player_test = Player(self.id_test, self.name_test)
-        self.tiles_test = list(range(0, 20))
+        self.t_bag = TileBag()
 
     def test_player_init(self):
         self.assertEqual(self.player_test.id, self.id_test)
@@ -17,9 +19,9 @@ class TestPlayer(unittest.TestCase):
 
     def test_one_draw(self):
         # process
-        self.player_test.one_draw(self.tiles_test)
+        self.player_test.one_draw(self.t_bag)
         # assert
-        self.assertEqual(len(self.tiles_test), 19)
+        self.assertEqual(len(self.t_bag.tiles), 99)
         self.assertEqual(len(self.player_test.tiles_in_hand), 1)
 
     def test_full_draw(self):
@@ -27,22 +29,23 @@ class TestPlayer(unittest.TestCase):
         self.player_test.tiles_in_hand = [9, 99]
         # process
         self.assertEqual(len(self.player_test.tiles_in_hand), 2)
-        self.assertEqual(len(self.tiles_test), 20)
+        self.assertEqual(len(self.t_bag.tiles), 100)
 
-        self.player_test.full_draw(self.tiles_test)
+        self.player_test.full_draw(self.t_bag)
         # assert
         self.assertEqual(len(self.player_test.tiles_in_hand), 7)
-        self.assertEqual(len(self.tiles_test), 15)
+        self.assertEqual(len(self.t_bag.tiles), 95)
 
     @patch('random.randint')
-    def test_put_2_draw_2(self, mock_random):
+    def test_put_t_draw_t(self, mock_random):
         # data
-        self.player_test.tiles_in_hand = list(range(1, 8))
+        tiles = [Tile('a') for _ in range(7)]
+        self.player_test.tiles_in_hand = tiles.copy()
         t_index = [1, 5]
         # process
-        self.player_test.put_2_draw_2(self.tiles_test, t_index)
+        self.player_test.put_t_draw_t(self.t_bag, t_index)
         # assert
-        self.assertNotEqual(self.player_test.tiles_in_hand, list(range(1, 8)))
+        self.assertNotEqual(self.player_test.tiles_in_hand, tiles)
         self.assertEqual(mock_random.call_count, 2)
         self.assertEqual(len(self.player_test.tiles_in_hand), 7)
 
@@ -50,9 +53,9 @@ class TestPlayer(unittest.TestCase):
     def test_one_draw_random(self, mock_random):
         # data
         start = 0
-        end = len(self.tiles_test) - 1
+        end = len(self.t_bag.tiles) - 1
         # process
-        self.player_test.one_draw(self.tiles_test)
+        self.player_test.one_draw(self.t_bag)
         # assert
         mock_random.assert_called_once_with(start, end)
 
@@ -61,6 +64,6 @@ class TestPlayer(unittest.TestCase):
         # data
         self.player_test.tiles_in_hand = [3, 7, 17]
         # process
-        self.player_test.full_draw(self.tiles_test)
+        self.player_test.full_draw(self.t_bag)
         # assert
         self.assertEqual(mock_draw_one.call_count, 4)
