@@ -12,12 +12,6 @@ class TestScorePad(unittest.TestCase):
     def test_add_penalty(self):
         self.assertEqual(self.score_pad.add_penalty(), 1)
 
-    # def test_calculate_score(self):
-    #     self.assertEqual(Score_Pad.calculate_score(), 38)
-
-    # def test_calculate_row(self):
-    #     raise NotImplementedError
-
     def test_max_penalty(self):
         for _ in range(3):
             self.score_pad.add_penalty()
@@ -37,19 +31,10 @@ class TestScorePad(unittest.TestCase):
             # self.assertEqual(row.numbers, expected[i][1])
 
     @parameterized.expand([
-        ([2, 3, 5, 8, 10, 11], 84),
-    ])
-    def test_calculate_marks(self, marks, expected):
-        for key, row in self.score_pad.rows.items():
-            row.marks = marks
-        result = self.score_pad.calculate_marks()
-        self.assertEqual(result, expected)
-
-    @parameterized.expand([
         ([2, 3, 5, 8, 10, 11], 3, 69),
     ])
     def test_calculate_score(self, marks, penalty, expected):
-        for _, row in self.score_pad.rows.items():
+        for row in self.score_pad.rows.values():
             row.marks = marks
         self.score_pad.penalty = penalty
         result = self.score_pad.calculate_score()

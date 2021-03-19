@@ -58,6 +58,14 @@ class TestRow(unittest.TestCase):
 
         self.assertEqual(r.can_mark(number), expected)
 
+    @parameterized.expand([
+        ('red', [2, 3, 6], 6),
+    ])
+    def test_calculate_marks(self, color, marks, expected):
+        r = Row(color)
+        r.marks = marks
+        self.assertEqual(r.calculate_marks(), expected)
+
 
 '''
 class TestMockCantMarkLockRow(TestCase):
