@@ -11,20 +11,18 @@ class TestGuessNumberGame(unittest.TestCase):
     def test_initial_status(self):
         self.assertTrue(self.game.is_playing)
 
+    def _test_play(self, number, expected_result, expected_is_playing):
+        self.assertEqual(self.game.play(number), expected_result)
+        self.assertEqual(self.game.is_playing, expected_is_playing)
+
     def test_play_lower(self):
-        play_result = self.game.play(10)
-        self.assertEqual(play_result, 'too low')
-        self.assertTrue(self.game.is_playing)
+        self._test_play(10, 'too low', True)
 
     def test_play_higher(self):
-        play_result = self.game.play(80)
-        self.assertEqual(play_result, 'too high')
-        self.assertTrue(self.game.is_playing)
+        self._test_play(80, 'too high', True)
 
     def test_play_equal(self):
-        play_result = self.game.play(50)
-        self.assertEqual(play_result, 'you win')
-        self.assertFalse(self.game.is_playing)
+        self._test_play(50, 'you win', False)
 
     def test_initial_next_turn(self):
         self.assertEqual(
@@ -32,19 +30,18 @@ class TestGuessNumberGame(unittest.TestCase):
             'Give me a number from 0 to 100',
         )
 
-    def test_next_turn_after_play(self):
-        self.game.play(10)
+    def _test_next_turn(self, number, expected_message):
+        self.game.play(number)
         self.assertEqual(
             self.game.next_turn(),
-            'Give me a number from 0 to 100',
+            expected_message,
         )
 
+    def test_next_turn_after_play(self):
+        self._test_next_turn(10, 'Give me a number from 0 to 100')
+
     def test_next_turn_after_win(self):
-        self.game.play(50)
-        self.assertEqual(
-            self.game.next_turn(),
-            'Game Over',
-        )
+        self._test_next_turn(50, 'Game Over')
 
     def test_get_board(self):
         self.assertEqual(
