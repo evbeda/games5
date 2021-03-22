@@ -91,3 +91,15 @@ class TestMain(unittest.TestCase):
 
         self.assertFalse(self.scrabble.change_letters)
         change_tiles_patched.assert_called_with(4)
+
+    @patch.object(Game, 'place_word')
+    def test_play_add_word(self, play_word_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.create_game = False
+        self.scrabble.play_word = True
+
+        self.scrabble.play('5', '7', 'h', 'word')
+
+        self.assertFalse(self.scrabble.play_word)
+        play_word_patched.assert_called_with(5, 7, True, 'word')

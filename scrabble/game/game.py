@@ -33,3 +33,6 @@ class Game:
 
     def change_player_tiles(self, tile_amount):
         self.players.get(self.current_player).put_t_draw_t(tile_amount)
+
+    def place_word(x, y, horizontal, word):
+        self.board.place_word(word, y, x, horizontal)
