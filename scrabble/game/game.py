@@ -36,3 +36,7 @@ class Game:
 
     def place_word(x, y, horizontal, word):
         self.board.place_word(word, y, x, horizontal)
+
+    @property
+    def player_count(self):
+        return len(self.players)
