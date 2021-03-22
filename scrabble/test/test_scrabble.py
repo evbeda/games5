@@ -78,3 +78,16 @@ class TestMain(unittest.TestCase):
 
         self.assertFalse(self.scrabble.input_players)
         self.assertIsNotNone(self.scrabble.game)
+
+    @patch.object(Game, 'change_player_tiles')
+    def test_play_change_tiles(self, change_tiles_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.create_game = False
+        self.scrabble.change_letters = True
+        tile_number = 4
+
+        self.scrabble.play(tile_number)
+
+        self.assertFalse(self.scrabble.change_letters)
+        change_tiles_patched.assert_called_with(4)
