@@ -68,12 +68,15 @@ class Scrabble:
             letter_amount = int(args[0])
             self.game.change_player_tiles(letter_amount)
             self.change_letters = False
+            self.change_turn = True
         elif self.challenge:
             # 1 args, challenger player -> receives penalty if word is correct
             # challenge round
             if args[0].isnumeric():
                 player_index = int(args[0])
             elif args[0] == 'no':
+                self.challenge = False
+                self.change_turn = True
                 return
             try:
                 self.challenger_player = int(args[0])

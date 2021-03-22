@@ -90,6 +90,7 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.play(tile_number)
 
         self.assertFalse(self.scrabble.change_letters)
+        self.assertTrue(self.scrabble.change_turn)
         change_tiles_patched.assert_called_with(4)
 
     @patch.object(Game, 'place_word')
@@ -137,3 +138,15 @@ class TestScrabble(unittest.TestCase):
         self.assertFalse(self.scrabble.challenge)
         self.assertTrue(self.scrabble.in_challenge)
         self.assertEqual(self.scrabble.challenger_player, 1)
+
+    def test_play_challenge_invalid(self):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.create_game = False
+        self.scrabble.challenge = True
+
+        self.scrabble.play('no')
+
+        self.assertFalse(self.scrabble.challenge)
+        self.assertFalse(self.scrabble.in_challenge)
+        self.assertTrue(self.scrabble.change_turn)
