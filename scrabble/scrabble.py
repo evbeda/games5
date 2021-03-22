@@ -24,6 +24,7 @@ class Scrabble:
         self.change_letters = False
         self.challenge = False
         self.in_challenge = False
+        self.change_turn = False
  
     @property
     def board(self):
@@ -75,6 +76,11 @@ class Scrabble:
         else:
             # 1 args, play, change or pass
             # if play, set self.play_word = True
+            if args[0] == 'play':
+                self.play_word = True
             # if change, set self.change_letters
+            elif args[0] == 'change':
+                self.change_letters = True
             # if pass do challenge round
-            pass
+            elif args[0] == 'pass':
+                self.change_turn = True
