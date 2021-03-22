@@ -59,9 +59,9 @@ class Tile {
     order()
 }
 
-Game::create_player <-- Player
-Game::board o-- Board
-Game::tile_bag o-- TileBag
-Board::set_spots <-- Spot
-TileBag::create_tile <-- Tile
+Game::create_player --> Player
+Game::board --> Board
+Game::tile_bag --> TileBag
+Board::set_spots --> Spot
+TileBag::create_tile --> Tile
 @enduml
