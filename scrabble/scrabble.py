@@ -53,8 +53,13 @@ class Scrabble:
             self.input_players = False
             self.game = Game(args)
         elif self.play_word:
-            # 4 args
-            pass
+            # 4 args: X, Y, V/H, word
+            x = int(args[0])
+            y = int(args[1])
+            horizontal = args[2] == 'h'
+            word = args[3]
+            self.game.place_word(x, y, horizontal, word)
+            self.play_word = False
         elif self.change_letters:
             # 1 args, how many
             letter_amount = int(args[0])
