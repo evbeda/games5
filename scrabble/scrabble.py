@@ -72,18 +72,13 @@ class Scrabble:
         elif self.challenge:
             # 1 args, challenger player -> receives penalty if word is correct
             # challenge round
-            if args[0].isnumeric():
-                player_index = int(args[0])
+            if args[0].isnumeric() and 0 <= int(args[0]) < self.game.player_count:
+                    self.challenger_player = int(args[0])
+                    self.challenge = False
+                    self.in_challenge = True
             elif args[0] == 'no':
                 self.challenge = False
                 self.change_turn = True
-                return
-            try:
-                self.challenger_player = int(args[0])
-                self.challenge = False
-                self.in_challenge = True
-            except Exception:
-                return
         elif self.in_challenge:
             # 1 args, challenge result and apply penalty
             pass
