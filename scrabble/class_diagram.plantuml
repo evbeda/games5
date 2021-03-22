@@ -1,7 +1,7 @@
 @startuml scrabble
 
 class Game{
-    players
+    players = list
     board = class Board
     tile_bag = class TileBag
     first = int
@@ -22,7 +22,7 @@ class Player {
 }
 
 class Board {
-    spots
+    spots = list
 
     set_spots()
     multiplier(x, y)
@@ -34,7 +34,7 @@ class Board {
 }
 
 class TileBag{
-    tiles
+    tiles = list
 
     create_tile()
     add_tile(tile)
@@ -42,7 +42,7 @@ class TileBag{
 }
 
 class Spot {
-    tile_bag
+    tile = Boolean
     mult_value = int
     mult_type = string
 
@@ -59,9 +59,9 @@ class Tile {
     order()
 }
 
-Game<|-- Player
-Game<|-- Board
-Game<|-- TileBag
-Board<|-- Spot
-TileBag<|-- Tile
+Game::create_player <-- Player
+Game::board o-- Board
+Game::tile_bag o-- TileBag
+Board::set_spots <-- Spot
+TileBag::create_tile <-- Tile
 @enduml
