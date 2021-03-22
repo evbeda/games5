@@ -23,6 +23,7 @@ class Scrabble:
         self.play_word = False
         self.change_letters = False
         self.challenge = False
+        self.challenger_player = 0
         self.in_challenge = False
         self.change_turn = False
  
@@ -61,6 +62,7 @@ class Scrabble:
             word = args[3]
             self.game.place_word(x, y, horizontal, word)
             self.play_word = False
+            self.challenge = True
         elif self.change_letters:
             # 1 args, how many
             letter_amount = int(args[0])
@@ -69,7 +71,16 @@ class Scrabble:
         elif self.challenge:
             # 1 args, challenger player -> receives penalty if word is correct
             # challenge round
-            pass
+            if args[0].isnumeric():
+                player_index = int(args[0])
+            elif args[0] == 'no':
+                return
+            try:
+                self.challenger_player = int(args[0])
+                self.challenge = False
+                self.in_challenge = True
+            except Exception:
+                return
         elif self.in_challenge:
             # 1 args, challenge result and apply penalty
             pass
