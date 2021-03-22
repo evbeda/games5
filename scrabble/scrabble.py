@@ -57,7 +57,9 @@ class Scrabble:
             pass
         elif self.change_letters:
             # 1 args, how many
-            pass
+            letter_amount = int(args[0])
+            self.game.change_player_tiles(letter_amount)
+            self.change_letters = False
         elif self.challenge:
             # 1 args, challenger player -> receives penalty if word is correct
             # challenge round

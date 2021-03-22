@@ -29,3 +29,6 @@ class Game:
 
     def print_board(self):
         return self.board.get_board()
+
+    def change_player_tiles(self):
+        pass
