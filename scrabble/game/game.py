@@ -40,3 +40,6 @@ class Game:
     @property
     def player_count(self):
         return len(self.players)
+
+    def resolve_challenge(self, result):
+        pass

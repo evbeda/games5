@@ -149,3 +149,29 @@ class TestScrabble(unittest.TestCase):
         self.assertFalse(self.scrabble.challenge)
         self.assertFalse(self.scrabble.in_challenge)
         self.assertTrue(self.scrabble.change_turn)
+
+    @patch.object(Game, 'resolve_challenge')
+    def test_play_challenge_result(self, resolve_challenge_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.create_game = False
+        self.scrabble.in_challenge = True
+        self.scrabble.challenger_player = 1
+
+        self.scrabble.play('yes')
+
+        self.assertFalse(self.scrabble.in_challenge)
+        resolve_challenge_patched.assert_called_with(True)
+
+    @patch.object(Game, 'resolve_challenge')
+    def test_play_challenge_result(self, resolve_challenge_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.create_game = False
+        self.scrabble.in_challenge = True
+        self.scrabble.challenger_player = 1
+
+        self.scrabble.play('no')
+
+        self.assertFalse(self.scrabble.in_challenge)
+        resolve_challenge_patched.assert_called_with(False)

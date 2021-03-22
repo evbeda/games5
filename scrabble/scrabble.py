@@ -81,7 +81,9 @@ class Scrabble:
                 self.change_turn = True
         elif self.in_challenge:
             # 1 args, challenge result and apply penalty
-            pass
+            self.game.resolve_challenge(args[0] == 'yes')
+            self.in_challenge = False
+            self.change_turn = True
         else:
             # 1 args, play, change or pass
             # if play, set self.play_word = True
