@@ -13,6 +13,7 @@ class Game:
         self.tile_bag = TileBag()
         self.first = 0
         self.skipped_turns = 0
+        self.current_player = 0
 
     def create_player(self, name_players):
         return [Player(j, name) for j, name in enumerate(name_players)]
@@ -30,5 +31,5 @@ class Game:
     def print_board(self):
         return self.board.get_board()
 
-    def change_player_tiles(self):
-        pass
+    def change_player_tiles(self, tile_amount):
+        self.players.get(self.current_player).put_t_draw_t(tile_amount)
