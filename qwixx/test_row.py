@@ -67,15 +67,13 @@ class TestRow(unittest.TestCase):
         r.marks = marks
         self.assertEqual(r.calculate_marks(), expected)
 
-
-'''
-class TestMockCantMarkLockRow(TestCase):
-@mock.patch(row.lock_row)
     @parameterized.expand([
-            (True, alguien intenta marcar, False),
-            (False, alguien intenta, marcar, True),
-        ])
-    def test_lockrow_notmark(self, mock_response, expected):
-        mock_response.return_value = True
-        # self.assertEqual(r.can_mark(number), expected)
-'''
+        ('red', [2, 3, 6], 7, [2, 3, 6, 7]),
+        ('red', [4], 7, [4, 7]),
+        ('yellow', [0], 7, [0, 7]),
+    ])
+    def test_set_mark(self, color, marks, number, expected):
+        r = Row(color)
+        r.marks = marks
+        r.set_mark(number)
+        self.assertEqual((r.marks), expected)
