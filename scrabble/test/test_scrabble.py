@@ -61,8 +61,20 @@ class TestMain(unittest.TestCase):
     
     def test_play_create_game(self):
         player_count = 5
+
         self.scrabble.play(player_count)
 
         self.assertTrue(self.scrabble.create_game)
         self.assertFalse(self.scrabble.input_players)
         self.assertEqual(self.scrabble.input_player_args, 0)
+
+    def test_play_setup_players(self):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.create_game = False
+        self.scrabble.input_players = True
+        self.scrabble.input_player_args = len(player_names)
+
+        self.scrabble.play(player_names)
+
+        self.assertFalse(self.scrabble.input_players)
+        self.assertIsNotNone(self.scrabble.game)
