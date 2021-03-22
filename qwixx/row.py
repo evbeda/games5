@@ -22,7 +22,7 @@ class Row:
 
     def set_mark(self, number):
         if self.check_row_lock(number):
-            self.marks.append(number)
+            return self.marks.append(number)
 
     def check_row_lock(self, number):
         if (
