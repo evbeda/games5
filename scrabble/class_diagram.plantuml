@@ -1,0 +1,67 @@
+@startuml scrabble
+
+class Game{
+    players
+    board = class Board
+    tile_bag = class TileBag
+    first = int
+    skipped_turns = int
+
+    create_player(name_players)
+    print_board()
+}
+
+class Player {
+    id = int
+    name = string
+    tiles_in_hand = list
+
+    one_draw(tiles_sack)
+    full_draw(tiles_sack)
+    put_t_draw(tiles_sack, indexs)
+}
+
+class Board {
+    spots
+
+    set_spots()
+    multiplier(x, y)
+    get_board()
+    place_word(word, row, col, direction)
+    can_place_first_word(word, row, col, direction)
+    can_place_word(word, row, col, direction)
+    place_letters(word, row, col, direction, indexes)
+}
+
+class TileBag{
+    tiles
+
+    create_tile()
+    add_tile(tile)
+    draw_tile(index)
+}
+
+class Spot {
+    tile_bag
+    mult_value = int
+    mult_type = string
+
+    set_tile(tile)
+    get_spot()
+}
+
+class Tile {
+    set_tile
+
+    letter = string
+    score = int
+
+    order()
+}
+
+Game<|-- Player
+Game<|-- Board
+Game<|-- TileBag
+Board<|-- Spot
+TileBag<|-- Tile
+@enduml
