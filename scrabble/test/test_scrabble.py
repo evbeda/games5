@@ -103,3 +103,24 @@ class TestScrabble(unittest.TestCase):
 
         self.assertFalse(self.scrabble.play_word)
         play_word_patched.assert_called_with(5, 7, True, 'word')
+
+    def test_play_action_pass(self, pass_turn_patched):
+        self.scrabble.create_game = False
+
+        self.scrabble.play('pass')
+
+        self.assertTrue(self.scrabble.change_turn)
+
+    def test_play_action_play_word(self):
+        self.scrabble.create_game = False
+        
+        self.scrabble.play('play')
+
+        self.assertTrue(self.scrabble.play_word)
+
+    def test_play_action_change_letters(self):
+        self.scrabble.create_game = False
+
+        self.scrabble.play('change')
+
+        self.assertTrue(self.scrabble.change_letters)
