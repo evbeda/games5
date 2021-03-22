@@ -6,7 +6,7 @@ from ..game.game import Game
 from ..game.player import Player
 
 
-class TestMain(unittest.TestCase):
+class TestScrabble(unittest.TestCase):
 
     def setUp(self):
         self.scrabble = Scrabble()
