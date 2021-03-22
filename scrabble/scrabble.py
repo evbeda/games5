@@ -43,10 +43,13 @@ class Scrabble:
     def play(self, *args):
         if self.create_game:
             # 1 args, player count
-            pass
+            self.create_game = False
+            self.input_players = True
+            self.input_player_args = args[0]
         elif self.input_players:
             # x args, player names
-            pass
+            self.input_players = False
+            self.game = Game(args)
         elif self.play_word:
             # 4 args
             pass
