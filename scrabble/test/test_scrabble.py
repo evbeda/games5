@@ -52,12 +52,11 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.in_challenge = False
 
     def test_play_create_game(self):
-        player_count = 3
-        self.scrabble.play(player_count)
+        self.scrabble.play('3')
 
         self.assertFalse(self.scrabble.create_game)
         self.assertTrue(self.scrabble.input_players)
-        self.assertEqual(self.scrabble.input_player_args, player_count)
+        self.assertEqual(self.scrabble.input_player_args, 3)
     
     def test_play_create_game(self):
         player_count = 5
