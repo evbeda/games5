@@ -5,6 +5,7 @@ class GuessNumberGame(object):
 
     name = 'Guess Number Game'
     input_args = 1
+    input_are_ints = True
 
     def __init__(self):
         self._guess_number = randint(0, 100)
@@ -18,10 +19,6 @@ class GuessNumberGame(object):
             return 'Game Over'
 
     def play(self, number):
-        try:
-            number = int(number)
-        except Exception:
-            return 'not a number'
         self.played_numbers.append(number)
         if number < self._guess_number:
             return 'too low'
