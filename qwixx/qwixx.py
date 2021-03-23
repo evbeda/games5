@@ -1,4 +1,4 @@
-from .player import Player
+from .score_pad import ScorePad
 WHITE = 'white'
 COLOR = 'color'
 
@@ -11,14 +11,16 @@ class Qwixx:
         self.state = WHITE
         self.input_args = 2
         self.input_are_ints = False
-        self.players = None
+        self.score_pad = None
         self.current_player = 0
         self.dice_set = {}
 
-    def create_player(self, player_amount):
+    def create_scored_pad(self, player_amount):
         if player_amount not in range(1, 5):
             raise Exception
-        self.players = [Player() for _ in range(player_amount)]
+        for indice_Player in range(player_amount):
+            self.score_pad = ScorePad()
+            self.score_pad.id_player = indice_Player
 
     def remove_dice(self, color):
         for index, dice in enumerate(self.dice_set):

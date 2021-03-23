@@ -3,8 +3,9 @@ from .row import Row
 
 class ScorePad:
     def __init__(self):
+        self.id_player = None
         self.rows = self.create_rows()
-        self.penalty = 0
+        self.penalty = None
 
     def create_rows(self):
         return (
@@ -31,3 +32,8 @@ class ScorePad:
     def mark_number_in_row(self, number, color):
         self.rows[color].set_mark(number)
 
+    def mark_number(self, number, color):
+        self.score_pad.mark_number_in_row(number, color)
+
+    def pass_turn(self):
+        return self.score_pad.add_penalty()
