@@ -86,3 +86,17 @@ class TestGame(unittest.TestCase):
         self.assertEqual(result, expected)
         mock_board.assert_called_once()
         mock_player.assert_called_once()
+
+    @patch.object(Player, "validate_hand", return_value=True)
+    @patch.object(Board, "validate_sets", return_value=False)
+    def test_valid_turn(self, mock_valid_hand, mock_valid_sets):
+        # data
+        expected = False
+        # process
+        self.game.create_players(["player_1", "player_2"])
+        self.game.distribute_tiles()
+        result = self.game.valid_turn()
+        # assert
+        self.assertEqual(mock_valid_hand.call_count, 1)
+        self.assertEqual(mock_valid_sets.call_count, 1)
+        self.assertEqual(result, expected)
