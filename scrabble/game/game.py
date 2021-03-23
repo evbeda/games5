@@ -49,7 +49,7 @@ class Game:
         return f'{curr_player.name}:\n{curr_player.get_hand()}'
 
     def change_turn(self):
-        pass
+        self.current_player = (self.current_player + 1) % self.player_count
 
     def skip_turn(self):
         if self.skipped_turns < self.player_count * 2:
@@ -57,6 +57,6 @@ class Game:
         else:
             self.game_over()
         self.change_turn()
-        
+
     def game_over(self):
         pass
