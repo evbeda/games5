@@ -27,4 +27,3 @@ class TileBag():
             player.add_tiles([self.remaining_tiles.pop()])
         else:
             raise Exception
-
