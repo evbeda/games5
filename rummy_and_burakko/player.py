@@ -28,6 +28,7 @@ class Player:
     def valid_hand(self):
         if len(self.hand) <= len(self.temp_hand):
             return False
+
         count = 0
         h_tiles_comp = self.hand.copy()
         for t_tile in self.temp_hand:
