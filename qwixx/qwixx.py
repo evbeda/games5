@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from .score_pad import ScorePad
+=======
+
+>>>>>>> 207b19ee2f47829c25e18c2f217d941cbda28653
 WHITE = 'white'
 COLOR = 'color'
 
@@ -11,6 +15,7 @@ class Qwixx:
         self.state = WHITE
         self.input_args = 2
         self.input_are_ints = False
+<<<<<<< HEAD
         self.score_pad = None
         self.current_player = 0
         self.dice_set = {}
@@ -21,6 +26,16 @@ class Qwixx:
         for indice_Player in range(player_amount):
             self.score_pad = ScorePad()
             self.score_pad.id_player = indice_Player
+=======
+        self.players = None
+        self.current_player = 0
+        self.dice_set = {}
+
+    def create_player(self, player_amount):
+        if player_amount not in range(1, 5):
+            raise Exception
+        self.players = [Player() for _ in range(player_amount)]
+>>>>>>> 207b19ee2f47829c25e18c2f217d941cbda28653
 
     def remove_dice(self, color):
         for index, dice in enumerate(self.dice_set):
@@ -42,6 +57,7 @@ class Qwixx:
             if self.state == WHITE:
                 self.input_args = 1
                 self.input_are_ints = True
+<<<<<<< HEAD
                 # return messages('Choose in which row you want to mark the
                 # common dice (0/3) or not (99)?')
             if self.state == COLOR:
@@ -50,6 +66,13 @@ class Qwixx:
                 # return messages("Choose in which row you want to mark a
                 # common die with a colored die (0/3),common die (0/1) and
                 # color die(0/3) or Penalty (99/99)?")
+=======
+                # return messages('Choose in which row you want to mark the common dice (0/3) or not (99)?')
+            if self.state == COLOR:
+                self.input_args = 3
+                self.input_are_ints = True
+                # return messages("Choose in which row you want to mark a common die with a colored die (0/3),common die (0/1) and color die(0/3) or Penalty (99/99)?")
+>>>>>>> 207b19ee2f47829c25e18c2f217d941cbda28653
 
     def play(self, row, die_color, die_white):
         if self.state == WHITE:
