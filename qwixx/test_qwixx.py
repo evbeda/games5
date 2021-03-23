@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, Mock
-from .player import Player
 from .qwixx import Qwixx
+from .score_pad import ScorePad
 
 
 class TestQwixx(unittest.TestCase):
@@ -50,27 +50,10 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.remove_dice('blue')
         self.assertNotIn('blue', [dice.color for dice in self.qwixx.dice_set])
 
-    # El orden de los mocks no es al reves?
-    # Por que no utilizan el mock de remove dice patched?
-    @patch.object(Player, 'mark_number', return_value=True)
-    @patch.object(Qwixx, 'remove_dice')
-    def test_remove_dice_when_row_locked(
-        self,
-        mark_number_patched,
-        remove_dice_patched,
-    ):
-        self.qwixx.create_player(4)
-        color_locked = self.qwixx.players[self.qwixx.current_player].mark_number(12, 'red')
-
-        if color_locked:
-            self.qwixx.remove_dice('red')
-
-        assert remove_dice_patched.called_with_args('red')
-
     def test_new_game_player_count(self):
         qwixx = Qwixx()
-        qwixx.create_player(2)
-        self.assertEqual(len(qwixx.players), 2)
+        qwixx.create_scored_pad(2)
+        self.assertEqual(len(qwixx.score_pad), 2)
 
     def test_new_game_player_limit(self):
         with self.assertRaises(Exception):
