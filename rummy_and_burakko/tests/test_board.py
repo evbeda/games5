@@ -9,17 +9,6 @@ from parameterized import parameterized
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board = Board()
-    # @patch('rummy_and_burakko.tile.Tile', create=True)
-    # @patch('rummy_and_burakko.board.SetTiles', create=True)
-    # @patch.object(Board, 'validate_sets', return_value=True)
-    # def test_add_new_play(
-    #     self, mock_validate_sets, set_tile_patched, tile_patched
-    # ):
-    #     board = Board()
-    #     set_one = [Tile('r', 5), Tile('r', 6), Tile('r', 7)]
-    #     board.add_new_play([set_one])
-    #     set_tile_patched.assert_called_with(set_one)
-    #     self.assertEqual(len(board.sets), 1)
 
     @parameterized.expand([
         (
@@ -54,23 +43,6 @@ class TestBoard(unittest.TestCase):
         # assert
         self.assertEqual(result, expected)
 
-    # @patch('rummy_and_burakko.tile.Tile', create=True)
-    # @patch.object(Board, 'validate_sets', return_value=True)
-    # def test_remove_reused_tiles(self, board_patched, tiles_patched):
-    #     board = Board()
-
-    #     (t1, t2, t3, t4, t5, t6) = [Tile('*', 0) for _ in range(6)]
-    #     [t.assign_set_id(1) for t in (t1, t2, t3, t4)]
-
-    #     with patch('rummy_and_burakko.tests.test_board.SetTiles', create=True):
-    #         set_1 = SetTiles([t1, t2, t3, t4])
-
-    #     board.sets = {1: set_1}
-    #     set_2 = [t2, t5, t6]
-
-    #     with patch.object(SetTiles, 'remove_tile') as remove_tile_patched:
-    #         board.add_new_play([set_2])
-    #         remove_tile_patched.assert_called()
 
     def test_board_format(self):
         self.board.sets = {
@@ -96,3 +68,34 @@ class TestBoard(unittest.TestCase):
             )
 
         self.assertEqual(self.board.get_board(), board_str)
+
+    # REWORKEAR
+    @patch('rummy_and_burakko.tile.Tile', create=True)
+    @patch('rummy_and_burakko.board.SetTiles', create=True)
+    @patch.object(Board, 'valid_sets', return_value=True)
+    def test_add_new_play(
+        self, mock_validate_sets, set_tile_patched, tile_patched
+    ):
+        board = Board()
+        set_one = [Tile('r', 5), Tile('r', 6), Tile('r', 7)]
+        board.add_new_play([set_one])
+        set_tile_patched.assert_called_with(set_one)
+        self.assertEqual(len(board.sets), 1)
+
+    @patch('rummy_and_burakko.tile.Tile', create=True)
+    @patch.object(Board, 'valid_sets', return_value=True)
+    def test_remove_reused_tiles(self, board_patched, tiles_patched):
+        board = Board()
+
+        (t1, t2, t3, t4, t5, t6) = [Tile('*', 0) for _ in range(6)]
+        [t.assign_set_id(1) for t in (t1, t2, t3, t4)]
+
+        with patch('rummy_and_burakko.tests.test_board.SetTiles', create=True):
+            set_1 = SetTiles([t1, t2, t3, t4])
+
+        board.sets = {1: set_1}
+        set_2 = [t2, t5, t6]
+
+        with patch.object(SetTiles, 'remove_tile') as remove_tile_patched:
+            board.add_new_play([set_2])
+            remove_tile_patched.assert_called()
