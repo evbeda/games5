@@ -45,4 +45,8 @@ class Game:
         pass
 
     def get_current_player_hand(self):
-        return self.players[self.current_player].get_hand()
+        curr_player = self.players[self.current_player]
+        return f'{curr_player.name}:\n{curr_player.get_hand()}'
+
+    def change_turn(self):
+        pass
