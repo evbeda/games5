@@ -118,3 +118,16 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.play(user_input)
         self.assertEqual(self.scrabble.game_state, 'change_turn')
         resolve_challenge_patched.assert_called_with(expected_param)
+
+    @parameterized.expand([
+        ('create_game', True),
+        ('input_players', False),
+        ('play_word', False),
+        ('change_letters', False),
+        ('ask_challenge', True),
+        ('in_challenge', False),
+        ('select_action', False),
+    ])
+    def test_input_are_ints(self, state, expected):
+        self.scrabble.game_state = state
+        self.assertEqual(self.scrabble.input_are_ints, expected)
