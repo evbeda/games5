@@ -13,23 +13,44 @@ class TestBoard(unittest.TestCase):
     @parameterized.expand([
         (
             [
-                SetTiles([Tile('red', 5), Tile('blue', 6), Tile('red', 10)]),
-                SetTiles([Tile('blue', 5), Tile('blue', 6), Tile('blue', 7)]),
+                SetTiles(
+                    [Tile('red', 5), Tile('blue', 6), Tile('red', 10)]
+                ),
+                SetTiles(
+                    [Tile('blue', 5), Tile('blue', 6), Tile('blue', 7)]
+                ),
             ],
             False
         ),
         (
             [
-                SetTiles([Tile('red', 5), Tile('red', 6), Tile('blue', 7)]),
-                SetTiles([Tile('blue', 5), Tile('blue', 6), Tile('blue', 7)]),
+                SetTiles(
+                    [Tile('red', 5), Tile('red', 6), Tile('blue', 7)]
+                ),
+                SetTiles(
+                    [Tile('blue', 5), Tile('blue', 6), Tile('blue', 7)]
+                ),
             ],
             False
         ),
         (
             [
-                SetTiles([Tile('red', 5), Tile('red', 6), Tile('red', 7)]),
-                SetTiles([Tile('blue', 10), Tile('blue', 11), Tile('blue', 12)]),
-                SetTiles([Tile('green', 7), Tile('blue', 7), Tile('red', 7), Tile('black', 7)]),
+                SetTiles([
+                    Tile('red', 5),
+                    Tile('red', 6),
+                    Tile('red', 7)]
+                ),
+                SetTiles([
+                    Tile('blue', 10),
+                    Tile('blue', 11),
+                    Tile('blue', 12)]
+                ),
+                SetTiles([
+                    Tile('green', 7),
+                    Tile('blue', 7),
+                    Tile('red', 7),
+                    Tile('black', 7)]
+                ),
             ],
             True
         ),
@@ -42,7 +63,6 @@ class TestBoard(unittest.TestCase):
         result = self.board.valid_sets()
         # assert
         self.assertEqual(result, expected)
-
 
     def test_board_format(self):
         self.board.sets = {

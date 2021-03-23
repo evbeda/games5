@@ -44,7 +44,12 @@ class TestPlayer(unittest.TestCase):
     ])
     def test_valid_hand(self, temp_hand, expected):
         # data
-        self.player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)]
+        self.player.hand = [
+            Tile('r', 7),
+            Tile('b', 4),
+            Tile('y', 5),
+            Tile('*', 0)
+        ]
         self.player.temp_hand = temp_hand
         # process
         result = self.player.valid_hand()
