@@ -14,8 +14,14 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.hand, [])
 
     def test_add_tiles_to_hand(self):
+        # To hand
         self.player.add_tiles([1, 2, 5])
         [self.assertIn(tile, self.player.hand) for tile in [1, 2, 5]]
+
+        # To temp_hand
+        self.player.is_playing = True
+        self.player.add_tiles([7, 8, 12, 13])
+        [self.assertIn(tile, self.player.temp_hand) for tile in [7, 8, 12, 13]]
 
     def test_take_tiles_from_hand(self):
         self.player.temp_hand = [2, 6, 7, 8]
