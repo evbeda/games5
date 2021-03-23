@@ -1,5 +1,4 @@
 import unittest
-
 from ..player import Player
 from ..tile import Tile
 
@@ -35,3 +34,6 @@ class TestPlayer(unittest.TestCase):
         player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
 
         self.assertEqual(player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
+
+    # def test_validate_hand(self):
+    #     player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]

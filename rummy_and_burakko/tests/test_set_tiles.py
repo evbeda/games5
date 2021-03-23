@@ -45,6 +45,7 @@ class TestSetTiles(unittest.TestCase):
     # Procedure test to approve stair
     @parameterized.expand([
         (True, (('red', 5), ('red', 6), ('red', 7))),
+        (False, (('red', 5), ('red', 6), ('red', 8))),
         (False, (('red', 5), ('blue', 6), ('green', 5))),
         (True, (('blue', 1), ('blue', 2), ('blue', 3))),
         (True, (('*', 0), ('blue', 5), ('blue', 6))),
@@ -60,9 +61,11 @@ class TestSetTiles(unittest.TestCase):
         # set variables
         tiles_stair = SetTiles([Tile(t[0], t[1]) for t in tiles])
         result = tiles_stair.is_a_stair()
-
+        result_2 = tiles_stair.is_valid()
         # assert
         self.assertEqual(result, expected)
+        self.assertEqual(result_2, expected)
+
 
     # Pocedure test to approve a leg
     @parameterized.expand([
