@@ -131,3 +131,17 @@ class TestScrabble(unittest.TestCase):
     def test_input_are_ints(self, state, expected):
         self.scrabble.game_state = state
         self.assertEqual(self.scrabble.input_are_ints, expected)
+
+    @parameterized.expand([
+        ('create_game', 'Enter number of players'),
+        ('input_players', 'Enter player names'),
+        ('change_letters', 'Which letters do you want to change?'),
+        ('play_word', 'Enter start coordinates, orientation and word\nx  y  h/v  word'),
+        ('ask_challenge', 'Any player wants to challenge'),
+        ('in_challenge', 'Look up new words in a dictionary. Are they correct?'),
+        ('select_action', 'Enter "play" to play a new word, "pass" to end your turn or any number to change that amount of tiles'),
+    ])
+    def test_next_turn_state_query(self, state, expected):
+        self.scrabble.game_state = state
+        text = self.scrabble.next_turn_state_query()
+        self.assertEqual(text, expected)

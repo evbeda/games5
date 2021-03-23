@@ -44,15 +44,20 @@ class Scrabble:
     def board(self):
         return self.game.print_board()
 
+    def next_turn_state_query(self):
+        game_state_next_turn = {
+            GAME_STATE_CREATE_GAME: 'Enter number of players',
+            GAME_STATE_INPUT_PLAYERS: 'Enter player names',
+            GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?',
+            GAME_STATE_PLAY_WORD: 'Enter start coordinates, orientation and word\nx  y  h/v  word',
+            GAME_STATE_ASK_CHALLENGE: 'Any player wants to challenge',
+            GAME_STATE_IN_CHALLENGE: 'Look up new words in a dictionary. Are they correct?',
+            GAME_STATE_SELECT_ACTION: 'Enter "play" to play a new word, "pass" to end your turn or any number to change that amount of tiles',
+        }
+        return game_state_next_turn[self.game_state]
+
     def next_turn(self):
-        # if game_over -> self.is_playing = False
-        query = self.game.get_current_player_hand() + '\n\n'
-
-        if self.play_word:
-            query += 'X, Y, V/H, word'
-        else:
-            query += 'Do you want to play a word?'
-
+        query = self.next_turn_state_query()
         return query
 
     def play_create_game(self, player_count):
