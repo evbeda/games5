@@ -32,13 +32,31 @@ class TestGame(unittest.TestCase):
         (4, 3, 0),
         (3, 2, 0),
     ])
-    def test_change_turn(self, players, current_turn, next_turn):
+    def test_next_turn(self, players, current_turn, next_turn):
         self.game.players = [Player("Pedro")] * players
         self.game.current_turn = current_turn
 
         self.game.next_turn()
 
         self.assertEqual(self.game.current_turn, next_turn)
+
+    @patch.object(Player, "temporary_hand")
+    @patch.object(Board, "temporary_sets")
+    @patch.object(Player, "change_state")
+    def test_next_turn_calls(
+        self,
+        m_change_state,
+        m_temporary_sets,
+        m_temporary_hand,
+    ):
+        # data
+        self.game.players = [Player("Pedro")]
+        # process
+        self.game.next_turn()
+        # assert
+        m_change_state.assert_called_once_with()
+        m_temporary_sets.assert_called_once_with()
+        m_temporary_hand.assert_called_once_with()
 
     @parameterized.expand([
         (["1"],),

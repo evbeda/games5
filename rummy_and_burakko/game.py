@@ -19,6 +19,7 @@ class Game:
             raise Exception
 
     def next_turn(self):
+        self.players[self.current_turn].change_state()
         self.current_turn = (self.current_turn + 1) % len(self.players)
         self.board.temporary_sets()
         self.players[self.current_turn].temporary_hand()

@@ -61,3 +61,8 @@ class TestPlayer(unittest.TestCase):
         result = self.player.valid_hand()
         # assert
         self.assertEqual(result, expected)
+
+    def test_change_state(self):
+        self.assertFalse(self.player.is_playing)
+        self.player.change_state()
+        self.assertTrue(self.player.is_playing)

@@ -51,3 +51,6 @@ class Player:
 
     def validate_turn(self):
         self.hand = self.temp_hand.copy()
+
+    def change_state(self):
+        self.is_playing = not self.is_playing
