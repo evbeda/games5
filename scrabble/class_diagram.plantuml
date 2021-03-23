@@ -58,7 +58,7 @@ class Tile {
 
     order()
 }
-
+' Game --> Player: players
 Game::create_player --> Player
 Game::board --> Board
 Game::tile_bag --> TileBag
