@@ -51,3 +51,9 @@ class TestGame(unittest.TestCase):
     def test_get_current_player_hand(self, get_hand_patched):
         self.t_game.get_current_player_hand()
         get_hand_patched.assert_called()
+
+    @patch.object(Game, 'change_turn')
+    def test_skip_turn(self, change_turn_patched):
+        self.t_game.skip_turn()
+        self.assertEqual(self.t_game.skipped_turns, 1)
+        change_turn_patched.assert_called()
