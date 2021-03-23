@@ -4,6 +4,7 @@ from .set_tiles import SetTiles
 class Board():
     def __init__(self):
         self.sets = {}
+        self.temp_sets = {}
         self.last_id = 0
 
     def add_new_play(self, sets):
@@ -39,3 +40,6 @@ class Board():
             f'{index}: {tile_set.get_tiles()}'
             for index, tile_set in self.sets.items()
         ])
+
+    def temporary_sets(self):
+        self.temp_sets = self.sets.copy()

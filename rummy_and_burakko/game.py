@@ -1,5 +1,6 @@
 from .player import Player
 from .tile_bag import TileBag
+from .board import Board
 import random
 
 
@@ -9,6 +10,7 @@ class Game:
         self.players = []
         self.current_turn = 0
         self.tile_bag = TileBag()
+        self.board = Board()
 
     def create_players(self, names):
         if 2 <= len(names) <= 4:
@@ -24,3 +26,11 @@ class Game:
 
     def random_order(self):
         random.shuffle(self.players)
+
+    def show_game(self):
+        return "\n".join([
+            "Mesa",
+            self.board.get_board(),
+            "Mano\n",
+            self.players[self.current_turn].get_hand(),
+        ])

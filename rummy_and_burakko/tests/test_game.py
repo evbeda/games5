@@ -3,6 +3,8 @@ from unittest.mock import patch
 from parameterized import parameterized
 from ..tile_bag import TileBag
 from ..game import Game
+from ..player import Player
+from ..board import Board
 
 
 class TestGame(unittest.TestCase):
@@ -11,11 +13,9 @@ class TestGame(unittest.TestCase):
         self.game = Game()
 
     def test_game_attributes(self):
-        game = Game()
-
-        self.assertEqual(type(game.tile_bag), type(TileBag()))
-        self.assertEqual(game.players, [])
-        self.assertEqual(game.current_turn, 0)
+        self.assertEqual(type(self.game.tile_bag), type(TileBag()))
+        self.assertEqual(self.game.players, [])
+        self.assertEqual(self.game.current_turn, 0)
 
     def test_create_players(self):
         player_names = ["Pedro", "Juana", "Mia"]
@@ -60,3 +60,27 @@ class TestGame(unittest.TestCase):
         # process
         self.game.random_order()
         mock.assert_called_once_with(first_order)
+
+    board = (
+            "1: L[ 0:r5 1:b5 2:y5 ]\n" +
+            "2: L[ 0:r3 1:b3 2:y3 3:w3 ]\n" +
+            "3: S[ 0:r3 1:r4 2:r5 3:r6 ]"
+    )
+    hand = "player_1> 0:r11 1:y2 2:y13 3:b5"
+
+    @patch.object(Player, "get_hand", return_value=hand)
+    @patch.object(Board, "get_board", return_value=board)
+    def test_show_game(self, mock_board, mock_player):
+        # data
+        expected = (
+            "Mesa\n" +
+            mock_board.return_value +
+            "\nMano\n\n" +
+            mock_player.return_value
+        )
+        # process
+        self.game.create_players(["test_1", "test_2"])
+        self.game.distribute_tiles()
+        result = self.game.show_game()
+        # assert
+        self.assertEqual(result, expected)
