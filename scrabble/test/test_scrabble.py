@@ -78,7 +78,7 @@ class TestScrabble(unittest.TestCase):
     def test_play_action_pass(self):
         self.scrabble.game_state = 'select_action'
         self.scrabble.play('pass')
-        self.assertEqual(self.scrabble.game_state, 'change_turn')
+        self.assertEqual(self.scrabble.game_state, 'skip_turn')
 
     def test_play_action_play_word(self):
         self.scrabble.game_state = 'select_action'
