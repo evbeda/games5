@@ -33,7 +33,9 @@ class Player:
         h_tiles_comp = self.hand.copy()
         for t_tile in self.temp_hand:
             for h_tile in h_tiles_comp:
-                if t_tile.color == h_tile.color and t_tile.number == h_tile.number:
+                comp_1 = (t_tile.color, t_tile.number)
+                comp_2 = (h_tile.color, h_tile.number)
+                if comp_1 == comp_2:
                     h_tiles_comp.remove(h_tile)
                     count += 1
                     break
