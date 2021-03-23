@@ -37,16 +37,16 @@ class Game:
             self.players[self.current_turn].get_hand(),
         ])
 
-    def hand_to_board(self, indexes):
-        pass
+    # def hand_to_board(self, indexes):
+    #     pass
 
-    def board_to_hand(self):
-        pass
+    # def board_to_hand(self):
+    #     pass
 
     def end_turn(self):
-        if self.valid_turn:
-            self.board.valid_turn()
-            self.players[self.current_turn].valid_turn()
+        if self.valid_turn():
+            self.players[self.current_turn].validate_turn()
+            self.board.validate_turn()
         else:
             self.tile_bag.give_one_tile(self.players[self.current_turn])
 

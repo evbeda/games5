@@ -41,5 +41,5 @@ class Player:
         else:
             return False
 
-    def valid_turn(self):
+    def validate_turn(self):
         self.hand = self.temp_hand.copy()

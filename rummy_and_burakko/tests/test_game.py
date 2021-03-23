@@ -100,3 +100,45 @@ class TestGame(unittest.TestCase):
         self.assertEqual(mock_valid_hand.call_count, 1)
         self.assertEqual(mock_valid_sets.call_count, 1)
         self.assertEqual(result, expected)
+
+    @patch.object(TileBag, "give_one_tile")
+    @patch.object(Player, "validate_turn")
+    @patch.object(Board, "validate_turn")
+    @patch.object(Game, "valid_turn", return_value=True)
+    def test_end_turn_valid(
+        self,
+        mock_v_t,
+        mock_board,
+        mock_player,
+        mock_bag
+    ):
+        # process
+        self.game.create_players(["player_1", "player_2"])
+        self.game.distribute_tiles()
+        self.game.end_turn()
+        # assert
+        mock_v_t.assert_called_once()
+        mock_board.assert_called_once()
+        mock_player.assert_called_once()
+        mock_bag.assert_not_called()
+
+    @patch.object(TileBag, "give_one_tile")
+    @patch.object(Player, "validate_turn")
+    @patch.object(Board, "validate_turn")
+    @patch.object(Game, "valid_turn", return_value=False)
+    def test_end_turn_not_valid(
+        self,
+        mock_v_t,
+        mock_board,
+        mock_player,
+        mock_bag
+    ):
+        # process
+        self.game.create_players(["player_1", "player_2"])
+        self.game.distribute_tiles()
+        self.game.end_turn()
+        # assert
+        mock_v_t.assert_called_once()
+        mock_board.assert_not_called()
+        mock_player.assert_not_called()
+        mock_bag.assert_called_once()
