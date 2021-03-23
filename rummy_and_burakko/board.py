@@ -50,7 +50,7 @@ class Board():
         self.sets = self.temp_sets.copy()
 
     def give_one_tile_from_board(self, player, set_id, index):
-        if len(self.sets[set_id]) > 0:
+        if len(self.sets[set_id].tiles) > 0:
             player.add_tiles(
                     [self.sets[set_id].extract_one_tile(index)]
                 )
