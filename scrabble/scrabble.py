@@ -56,6 +56,9 @@ class Scrabble:
         }
         return game_state_next_turn[self.game_state]
 
+    def next_turn_show_hand(self):
+        return self.game.get_current_player_hand()
+        
     def next_turn(self):
         query = self.next_turn_state_query()
         return query
