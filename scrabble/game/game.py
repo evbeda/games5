@@ -14,6 +14,7 @@ class Game:
         self.first = 0
         self.skipped_turns = 0
         self.current_player = 0
+        self.is_playing = True
 
     def create_player(self, name_players):
         return [Player(j, name) for j, name in enumerate(name_players)]
