@@ -18,9 +18,9 @@ class TestQwixx(unittest.TestCase):
             'blue': 1,
         }
         result_color_amount = {}
-        self.game.create_dice_set()
+        self.qwixx.create_dice_set()
 
-        for dice in self.game.dice_set:
+        for dice in self.qwixx.dice_set:
             dice_color_amount = result_color_amount.setdefault(dice.color, 0)
             dice_color_amount += 1
 
@@ -31,7 +31,7 @@ class TestQwixx(unittest.TestCase):
             )
 
     def test_remove_dice_from_set(self):
-        self.game.dice_set = []
+        self.qwixx.dice_set = []
 
         colors = [
             'white',
@@ -45,31 +45,33 @@ class TestQwixx(unittest.TestCase):
         for color in colors:
             dice = Mock()
             dice.color = color
-            self.game.dice_set.append(dice)
+            self.qwixx.dice_set.append(dice)
 
-        self.game.remove_dice('blue')
-        self.assertNotIn('blue', [dice.color for dice in self.game.dice_set])
+        self.qwixx.remove_dice('blue')
+        self.assertNotIn('blue', [dice.color for dice in self.qwixx.dice_set])
 
     # El orden de los mocks no es al reves?
     # Por que no utilizan el mock de remove dice patched?
     @patch.object(Player, 'mark_number', return_value=True)
-    @patch.object(Game, 'remove_dice')
+    @patch.object(Qwixx, 'remove_dice')
     def test_remove_dice_when_row_locked(
         self,
         mark_number_patched,
         remove_dice_patched,
     ):
-        color_locked = self.game.players[self.game.current_player].mark_number(12, 'red')
+        self.qwixx.create_player(4)
+        color_locked = self.qwixx.players[self.qwixx.current_player].mark_number(12, 'red')
 
         if color_locked:
-            self.game.remove_dice('red')
+            self.qwixx.remove_dice('red')
 
         assert remove_dice_patched.called_with_args('red')
 
     def test_new_game_player_count(self):
-        new_game = Game(2)
-        self.assertEqual(len(new_game.players), 2)
+        qwixx = Qwixx()
+        qwixx.create_player(2)
+        self.assertEqual(len(qwixx.players), 2)
 
     def test_new_game_player_limit(self):
         with self.assertRaises(Exception):
-            Game(5)
+            Qwixx(5)
