@@ -28,3 +28,6 @@ class Player:
             tiles_sack.add_tile(tile)
             # tiles_sack.append(tile)
         self.full_draw(tiles_sack)
+
+    def get_hand(self):
+        pass

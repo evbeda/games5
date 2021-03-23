@@ -43,3 +43,6 @@ class Game:
 
     def resolve_challenge(self, result):
         pass
+
+    def get_current_player_hand(self):
+        return self.players[self.current_player].get_hand()
