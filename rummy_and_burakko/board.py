@@ -43,7 +43,7 @@ class Board():
 
     def temporary_sets(self):
         self.temp_sets = self.sets.copy()
-        
+
     def give_one_tile(self, player, set_id, index):
         if len(self.sets[set_id]) > 0:
             player.add_tiles(
