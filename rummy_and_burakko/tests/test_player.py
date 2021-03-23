@@ -1,6 +1,7 @@
 import unittest
 from ..player import Player
 from ..tile import Tile
+from parameterized import parameterized
 
 
 class TestPlayer(unittest.TestCase):
@@ -32,5 +33,20 @@ class TestPlayer(unittest.TestCase):
 
         self.assertEqual(self.player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
 
-    # def test_validate_hand(self):
-    #     player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
+    @parameterized.expand([
+        # temp_hand, expected
+        ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)], False),
+        ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0), Tile('r', 13)], False),
+        ([Tile('r', 7), Tile('b', 4)], True),
+        ([Tile('r', 7), Tile('b', 4), Tile('y', 1)], False),
+        ([Tile('r', 7), Tile('b', 4), Tile('r', 7)], False),
+        ([], True),
+    ])
+    def test_validate_hand(self, temp_hand, expected):
+        # data
+        self.player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)]
+        self.player.temp_hand = temp_hand
+        # process
+        result = self.player.validate_hand()
+        # assert
+        self.assertEqual(result, expected)

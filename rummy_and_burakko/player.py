@@ -28,10 +28,18 @@ class Player:
     def validate_hand(self):
         if len(self.hand) <= len(self.temp_hand):
             return False
-        for tile in self.temp_hand:
-            if not (tile in self.hand):
-                return False
-        return True
+        count = 0
+        h_tiles_comp = self.hand.copy()
+        for t_tile in self.temp_hand:
+            for h_tile in h_tiles_comp:
+                if t_tile.color == h_tile.color and t_tile.number == h_tile.number:
+                    h_tiles_comp.remove(h_tile)
+                    count += 1
+                    break
+        if count == len(self.temp_hand):
+            return True
+        else:
+            return False
 
     def valid_turn(self):
         self.hand = self.temp_hand.copy()
