@@ -42,11 +42,11 @@ class TestPlayer(unittest.TestCase):
         ([Tile('r', 7), Tile('b', 4), Tile('r', 7)], False),
         ([], True),
     ])
-    def test_validate_hand(self, temp_hand, expected):
+    def test_valid_hand(self, temp_hand, expected):
         # data
         self.player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)]
         self.player.temp_hand = temp_hand
         # process
-        result = self.player.validate_hand()
+        result = self.player.valid_hand()
         # assert
         self.assertEqual(result, expected)

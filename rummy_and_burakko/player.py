@@ -25,7 +25,7 @@ class Player:
         self.temp_hand = self.hand.copy()
 
     # valida si tengo menos fichas que antes y ni una nueva ficha en mano
-    def validate_hand(self):
+    def valid_hand(self):
         if len(self.hand) <= len(self.temp_hand):
             return False
         count = 0

@@ -87,8 +87,8 @@ class TestGame(unittest.TestCase):
         mock_board.assert_called_once()
         mock_player.assert_called_once()
 
-    @patch.object(Player, "validate_hand", return_value=True)
-    @patch.object(Board, "validate_sets", return_value=False)
+    @patch.object(Player, "valid_hand", return_value=True)
+    @patch.object(Board, "valid_sets", return_value=False)
     def test_valid_turn(self, mock_valid_hand, mock_valid_sets):
         # data
         expected = False
