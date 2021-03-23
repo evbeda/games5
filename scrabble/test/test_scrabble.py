@@ -147,15 +147,9 @@ class TestScrabble(unittest.TestCase):
         text = self.scrabble.next_turn_state_query()
         self.assertEqual(text, expected)
 
-    @parameterized.expand([
-        ('abcdefg', 'a | b | c | d | e | f | g'),
-    ])
-    def test_next_turn_show_hand(self, letters, expected):
+    @patch.object(Game, 'get_current_player_hand')
+    def test_next_turn_show_hand(self, get_current_player_hand_patched):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
-        self.scrabble.game.current_player = 0
-        self.scrabble.game.players[0].tiles_in_hand = [
-            Tile(letter) for letter in letters
-        ]
-        hand_str = self.scrabble.next_turn_show_hand()
-        self.assertEqual(hand_str, expected)
+        self.scrabble.next_turn_show_hand()
+        get_current_player_hand_patched.assert_called()
