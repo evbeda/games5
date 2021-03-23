@@ -3,7 +3,7 @@ import unittest
 from guess_number_game.test_guess_number_game import TestGuessNumberGame
 
 from qwixx.test_dice import TestDice
-from qwixx.test_qwixx import TestQwixx as QwixxTestQwixx
+# from qwixx.test_qwixx import TestQwixx as QwixxTestQwixx
 from qwixx.test_row import TestRow
 from qwixx.test_score_pad import TestScorePad
 from qwixx.test_set_dices import TestSetDices
@@ -33,7 +33,7 @@ def suite():
     test_suite.addTest(unittest.makeSuite(TestGuessNumberGame))
     # qwixx
     test_suite.addTest(unittest.makeSuite(TestDice))
-    test_suite.addTest(unittest.makeSuite(QwixxTestQwixx))
+    # test_suite.addTest(unittest.makeSuite(QwixxTestQwixx))
     test_suite.addTest(unittest.makeSuite(TestRow))
     test_suite.addTest(unittest.makeSuite(TestScorePad))
     test_suite.addTest(unittest.makeSuite(TestSetDices))
