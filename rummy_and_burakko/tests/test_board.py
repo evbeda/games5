@@ -153,7 +153,6 @@ class TestBoard(unittest.TestCase):
 
         @parameterized.expand([
             (SetTiles([Tile('r', 3), Tile('r', 4)]), 3),
-            (SetTiles([]), 3),
         ])
         def test_give_one_tile_from_board_fail(self, set_tile, index):
             self.board.sets = {
@@ -161,3 +160,8 @@ class TestBoard(unittest.TestCase):
             }
             with self.assertRaises(Exception):
                 self.board.give_one_tile_from_board(self.players[2], 1, index)
+
+        def test_give_one_tile_from_board_fail_empty_array(self):
+            self.board.sets = {}
+            with self.assertRaises(Exception):
+                self.board.give_one_tile_from_board(self.players[2], 1, 1)
