@@ -5,14 +5,12 @@ from ..tile import Tile
 
 class TestPlayer(unittest.TestCase):
     def setUp(self):
-        self.player = Player("")
+        self.player = Player("Pedro")
 
     def test_player_attributes(self):
-        player = Player("Pedro")
-
-        self.assertEqual(player.name, "Pedro")
-        self.assertEqual(player.first_move, True)
-        self.assertEqual(player.hand, [])
+        self.assertEqual(self.player.name, "Pedro")
+        self.assertEqual(self.player.first_move, True)
+        self.assertEqual(self.player.hand, [])
 
     def test_add_tiles_to_hand(self):
         self.player.add_tiles([1, 2, 5])
@@ -30,10 +28,9 @@ class TestPlayer(unittest.TestCase):
             self.player.remove_tiles([4])
 
     def test_hand_format(self):
-        player = Player("Pedro")
-        player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
+        self.player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
 
-        self.assertEqual(player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
+        self.assertEqual(self.player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
 
     # def test_validate_hand(self):
     #     player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
