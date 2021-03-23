@@ -141,12 +141,12 @@ class TestBoard(unittest.TestCase):
                 None
             ),
         ])
-        def test_take_one_tile_from_board(self, set_tile, index, chosen_tile):
+        def test_give_one_tile_from_board(self, set_tile, index, chosen_tile):
             original_len = len(set_tile)
             self.board.sets = {
                 1: set_tile,
             }
-            self.board.give_one_tile(self.players[2], 1, index)
+            self.board.give_one_tile_from_board(self.players[2], 1, index)
 
             self.assertEqual(self.players[2].hand, [chosen_tile])
             self.assertEqual(len(self.t_bag.remaining_tiles), original_len - 1)
@@ -155,9 +155,9 @@ class TestBoard(unittest.TestCase):
             (SetTiles([Tile('r', 3), Tile('r', 4)]), 3),
             (SetTiles([]), 3),
         ])
-        def test_take_one_tile_from_board_fail(self, set_tile, index):
+        def test_give_one_tile_from_board_fail(self, set_tile, index):
             self.board.sets = {
                 1: set_tile,
             }
             with self.assertRaises(Exception):
-                self.board.give_one_tile(self.players[2], 1, index)
+                self.board.give_one_tile_from_board(self.players[2], 1, index)
