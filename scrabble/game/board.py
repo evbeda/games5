@@ -113,3 +113,6 @@ class Board:
             if direction
             else [self.spots[row+i][col] for i in range(len_word)]
         )
+
+    def tiles_in_board(self, spots):
+        return ([(i, s.tile.letter) for i, s in enumerate(spots) if s.tile])

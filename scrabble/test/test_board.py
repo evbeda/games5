@@ -1,5 +1,6 @@
 import unittest
 from ..game.board import Board
+from ..game.spot import Spot
 from ..game.tile import Tile
 from parameterized import parameterized
 from unittest.mock import patch
@@ -130,3 +131,21 @@ class TestBoard(unittest.TestCase):
                 self.assertEqual(sfw.tile.letter, exp)
             else:
                 self.assertEqual(sfw.tile, exp)
+
+    @parameterized.expand([
+        ([None, Tile('p'), None], [(1, 'p')],),
+        ([None, Tile('a'), Tile('c')], [(1, 'a'), (2, 'c')],),
+        ([None, None, None, None], [],),
+    ])
+    def test_tiles_in_board(self, tiles, expected):
+        b = Board()
+        spots = []
+        for t in tiles:
+            spot = Spot(0, 'c')
+            if t:
+                spot.set_tile(t)
+            spots.append(spot)
+
+        spots_with_tile = b.tiles_in_board(spots)
+        for swt, exp in zip(spots_with_tile, expected):
+            self.assertEqual(swt, exp)
