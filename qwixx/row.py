@@ -1,9 +1,10 @@
 
 class Row:
+    blocked_rows = []
+
     def __init__(self, color):
         self.color = color
         self.numbers = self.create_row_numbers()
-        self.is_locked = False
         self.marks = []
 
     def create_row_numbers(self):
@@ -14,8 +15,12 @@ class Row:
             )
 
     def lock_Row(self):
-        self.is_locked = True
-        return True
+        return self.blocked_rows.append(self.color)
+
+    @property
+    def is_locked(self):
+        if self.color in self.blocked_rows:
+            return True
 
     def can_mark_last(self):
         return len(self.marks) >= 5
@@ -26,7 +31,7 @@ class Row:
 
     def check_row_lock(self, number):
         if (
-            (not self.is_locked)
+            (self.is_locked is None)
             and (number not in self.marks)
         ):
             return self.can_mark(number)
