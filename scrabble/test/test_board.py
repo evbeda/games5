@@ -137,7 +137,7 @@ class TestBoard(unittest.TestCase):
         ([None, Tile('a'), Tile('c')], ['a', 'c'],),
         ([None, None, None, None], [],),
     ])
-    def test_tiles_not_in_board(self, tiles, expected):
+    def test_tiles_in_board(self, tiles, expected):
         b = Board()
         spots = []
         for t in tiles:
