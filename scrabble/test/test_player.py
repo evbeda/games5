@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from parameterized import parameterized
 from ..game.player import Player
 from ..game.tile_bag import TileBag
 from ..game.tile import Tile
@@ -67,3 +68,12 @@ class TestPlayer(unittest.TestCase):
         self.player_test.full_draw(self.t_bag)
         # assert
         self.assertEqual(mock_draw_one.call_count, 4)
+
+    @parameterized.expand([
+        ('abcdefg', 'a | b | c | d | e | f | g'),
+    ])
+    def test_get_hand(self, letters, expected):
+        self.player_test.tiles_in_hand = [
+            Tile(letter) for letter in letters
+        ]
+        self.assertEqual(self.player_test.get_hand(), expected)

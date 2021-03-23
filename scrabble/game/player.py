@@ -30,4 +30,4 @@ class Player:
         self.full_draw(tiles_sack)
 
     def get_hand(self):
-        pass
+        return ' | '.join([tile.letter for tile in self.tiles_in_hand])
