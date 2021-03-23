@@ -28,19 +28,29 @@ class Player:
     def valid_hand(self):
         return self.q_tiles() and self.new_tiles()
 
+    # def new_tiles(self):
+    #     count = 0
+    #     h_tiles_comp = self.hand.copy()
+    #     for t_tile in self.temp_hand:
+    #         for h_tile in h_tiles_comp:
+    #             if t_tile == h_tile:
+    #                 h_tiles_comp.remove(h_tile)
+    #                 count += 1
+    #                 break
+
+    #     if count == len(self.temp_hand):
+    #         return True
+    #     else:
+    #         return False
     def new_tiles(self):
-        count = 0
         h_tiles_comp = self.hand.copy()
         for t_tile in self.temp_hand:
-            for h_tile in h_tiles_comp:
-                if t_tile == h_tile:
-                    h_tiles_comp.remove(h_tile)
-                    count += 1
-                    break
-        if count == len(self.temp_hand):
-            return True
-        else:
-            return False
+            try:
+                h_tiles_comp.remove(t_tile)
+            except: 
+                return False
+
+        return True
 
     def q_tiles(self):
         l_hand = len(self.hand)
