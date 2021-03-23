@@ -51,6 +51,6 @@ class Game:
             self.tile_bag.give_one_tile(self.players[self.current_turn])
 
     def valid_turn(self):
-        cond_1 = self.players[self.current_turn].validate_hand()
-        cond_2 = self.board.validate_sets()
+        cond_1 = self.players[self.current_turn].valid_hand()
+        cond_2 = self.board.valid_sets()
         return cond_1 and cond_2

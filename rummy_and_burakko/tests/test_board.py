@@ -45,12 +45,12 @@ class TestBoard(unittest.TestCase):
             True
         ),
     ])
-    def test_validate_sets(self, sets, expected):
+    def test_valid_sets(self, sets, expected):
         # data
         for id, set_tile in enumerate(sets):
             self.board.temp_sets.update({id: set_tile})
         # process
-        result = self.board.validate_sets()
+        result = self.board.valid_sets()
         # assert
         self.assertEqual(result, expected)
 

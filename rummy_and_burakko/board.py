@@ -41,7 +41,7 @@ class Board():
     def temporary_sets(self):
         self.temp_sets = self.sets.copy()
 
-    def validate_sets(self):
+    def valid_sets(self):
         return all([value_set.is_valid() for value_set in self.temp_sets.values()])
 
     def valid_turn(self):
