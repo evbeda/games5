@@ -14,6 +14,10 @@ GAME_STATE_SKIP_TURN = 'skip_turn'
 class Scrabble:
 
     @property
+    def is_playing(self):
+        return self.game.is_playing if self.game is not None else True
+
+    @property
     def input_args(self):
         game_state_args = {
             GAME_STATE_CREATE_GAME: lambda: 1,
@@ -34,7 +38,6 @@ class Scrabble:
         ]
 
     def __init__(self):
-        self.is_playing = True
         self.game = None
         self.game_state = GAME_STATE_CREATE_GAME
         self.input_player_args = 0

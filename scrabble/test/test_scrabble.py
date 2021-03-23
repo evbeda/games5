@@ -189,3 +189,17 @@ class TestScrabble(unittest.TestCase):
         self.assertEqual(show_hand_patched.call_count, 1)
         state_query_patched.assert_called()
         change_turn_patched.assert_not_called()
+
+    def test_is_playing(self):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.assertTrue(self.scrabble.is_playing)
+
+    def test_is_playing_no_game(self):
+        self.assertTrue(self.scrabble.is_playing)
+
+    def test_is_not_playing(self):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game.is_playing = False
+        self.assertFalse(self.scrabble.is_playing)
