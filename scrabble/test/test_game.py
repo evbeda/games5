@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from parameterized import parameterized
 from ..game.game import Game
 from ..game.player import Player
 from ..game.tile import Tile
@@ -57,3 +58,16 @@ class TestGame(unittest.TestCase):
         self.t_game.skip_turn()
         self.assertEqual(self.t_game.skipped_turns, 1)
         change_turn_patched.assert_called()
+
+    @parameterized.expand([
+        (4, 2, 3),
+        (2, 1, 0),
+        (3, 2, 0),
+        (4, 3, 0),
+    ])
+    def test_change_turn(self, player_count, current_player, next_player):
+        players = ["Juan" for _ in range(player_count)]
+        t_game = Game(players)
+        t_game.current_player = current_player
+        t_game.change_turn()
+        self.assertEqual(t_game.current_player, next_player)
