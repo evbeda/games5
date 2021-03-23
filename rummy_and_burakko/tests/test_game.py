@@ -33,7 +33,7 @@ class TestGame(unittest.TestCase):
         (3, 2, 0),
     ])
     def test_change_turn(self, players, current_turn, next_turn):
-        self.game.players = [""] * players
+        self.game.players = [Player("Pedro")] * players
         self.game.current_turn = current_turn
 
         self.game.next_turn()
@@ -79,7 +79,7 @@ class TestGame(unittest.TestCase):
             mock_player.return_value
         )
         # process
-        self.game.create_players(["test_1", "test_2"])
+        self.game.create_players(["player_1", "player_2"])
         self.game.distribute_tiles()
         result = self.game.show_game()
         # assert

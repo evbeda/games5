@@ -20,6 +20,8 @@ class Game:
 
     def next_turn(self):
         self.current_turn = (self.current_turn + 1) % len(self.players)
+        self.board.temporary_sets()
+        self.players[self.current_turn].temporary_hand()
 
     def distribute_tiles(self):
         self.tile_bag.assign_tiles(self.players)
@@ -34,3 +36,16 @@ class Game:
             "Mano\n",
             self.players[self.current_turn].get_hand(),
         ])
+
+    def hand_to_board(self, indexes):
+        pass
+
+    def board_to_hand(self):
+        pass
+
+    def end_turn(self):
+        if self.board.validate_sets() and self.players[self.current_turn].validate_hand():
+            self.board.valid_turn()
+            self.players[self.current_turn].valid_turn()
+        else:
+            self.tile_bag.give_one_tile(self.players[self.current_turn])
