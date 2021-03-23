@@ -4,6 +4,7 @@ from .spot import Spot
 class Board:
     def __init__(self):
         self.spots = self.set_spots()
+        self.first = False
 
     def set_spots(self):
         return [[Spot(*self.multiplier(x, y)) for y in range(15)] for x in range(15)]
@@ -85,7 +86,15 @@ class Board:
         )
 
     def can_place_word(self, word, row, col, direction):
-        pass
+        lw = len(word)
+        spots = (
+            self.spots[row][col:col+lw]
+            if direction
+            else [self.spots[row+i][col] for i in range(lw)]
+        )
+        # result::list((index, letter))
+        result = ([(i, s.tile.letter) for i, s in enumerate(spots) if s.tile])
+        return all([(word[i[0]] == i[1]) for i in result])
 
     def place_letters(self, word, row, col, direction, indexes):
         for i in indexes:
