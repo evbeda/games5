@@ -57,38 +57,38 @@ class Qwixx:
         if self.state == COLOR:
             return self.mark_with_color([row, die_color, die_white])
 
-    @property
-    def board(self):
-        output = " "
-        output += "\n"
-        output += "the player who plays(player)"
-        output += "\n"
-        output += "score pad "
-        for row in self.rows.values():
-            if row.color == 'red':
-                output += 'red'
-                output += ' ' + tuple(range(2, 13))
-                # buscar la forma de representar las marcas en el output
-                output += ' ' + self.is_locked(row)
-            if row.color == 'yellow':
-                output += 'yellow'
-                output += ' ' + tuple(range(2, 13))
-                output += ' ' + self.is_locked(row)
-            if row.color == 'green':
-                output += 'green'
-                output += ' ' + tuple(reversed(range(2, 13)))
-                output += ' ' + self.is_locked(row)
-            if row.color == 'blue':
-                output += 'blue'
-                output += ' ' + tuple(reversed(range(2, 13)))
-                output += ' ' + self.is_locked(row)
-        output += "\n"
-        output += "penalty"
-        output += " " + self.scoredpad.penalty
-        output += "\n"
-        output += "score"
-        output += "" + tuple(range(1, 12))
-        output += "(1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
+    # @property
+    # def board(self):
+    #     output = " "
+    #     output += "\n"
+    #     output += "the player who plays(player)"
+    #     output += "\n"
+    #     output += "score pad "
+    #     for row in self.rows.values():
+    #         if row.color == 'red':
+    #             output += 'red'
+    #             output += ' ' + tuple(range(2, 13))
+    #             # buscar la forma de representar las marcas en el output
+    #             output += ' ' + self.is_locked(row)
+    #         if row.color == 'yellow':
+    #             output += 'yellow'
+    #             output += ' ' + tuple(range(2, 13))
+    #             output += ' ' + self.is_locked(row)
+    #         if row.color == 'green':
+    #             output += 'green'
+    #             output += ' ' + tuple(reversed(range(2, 13)))
+    #             output += ' ' + self.is_locked(row)
+    #         if row.color == 'blue':
+    #             output += 'blue'
+    #             output += ' ' + tuple(reversed(range(2, 13)))
+    #             output += ' ' + self.is_locked(row)
+    #     output += "\n"
+    #     output += "penalty"
+    #     output += " " + self.scoredpad.penalty
+    #     output += "\n"
+    #     output += "score"
+    #     output += "" + tuple(range(1, 12))
+    #     output += "(1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
 
     def is_locked(self, row):
         if self.row.color in self.row.blocked_rows:
