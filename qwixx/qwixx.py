@@ -1,4 +1,4 @@
-from .player import Player
+
 WHITE = 'white'
 COLOR = 'color'
 
