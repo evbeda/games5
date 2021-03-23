@@ -1,31 +1,44 @@
 from .game.game import Game
 
+GAME_STATE_CREATE_GAME = 'create_game'
+GAME_STATE_INPUT_PLAYERS = 'input_players'
+GAME_STATE_PLAY_WORD = 'play_word'
+GAME_STATE_CHANGE_LETTERS = 'change_letters'
+GAME_STATE_ASK_CHALLENGE = 'ask_challenge'
+GAME_STATE_IN_CHALLENGE = 'in_challenge'
+GAME_STATE_CHANGE_TURN = 'change_turn'
+GAME_STATE_SELECT_ACTION = 'select_action'
+
 
 class Scrabble:
 
     @property
     def input_args(self):
-        if self.input_players:
-            args = self.input_player_args
-        elif self.play_word:
-            args = 4
-        else:
-            args = 1
+        game_state_args = {
+            GAME_STATE_CREATE_GAME: lambda: 1,
+            GAME_STATE_INPUT_PLAYERS: lambda: self.input_player_args,
+            GAME_STATE_PLAY_WORD: lambda: 4,
+            GAME_STATE_CHANGE_LETTERS: lambda: self.change_letters,
+            GAME_STATE_ASK_CHALLENGE: lambda: 1,
+            GAME_STATE_IN_CHALLENGE: lambda: 1,
+            GAME_STATE_SELECT_ACTION: lambda: 1,
+        }
+        return game_state_args[self.game_state]()
 
-        return args
+    @property
+    def input_are_ints(self):
+        return self.game_state in [
+            GAME_STATE_CREATE_GAME,
+            GAME_STATE_ASK_CHALLENGE,
+        ]
 
     def __init__(self):
         self.is_playing = True
         self.game = None
-        self.create_game = True
-        self.input_players = False
+        self.game_state = GAME_STATE_CREATE_GAME
         self.input_player_args = 0
-        self.play_word = False
-        self.change_letters = False
-        self.challenge = False
         self.challenger_player = 0
-        self.in_challenge = False
-        self.change_turn = False
+        self.change_letters = 0
  
     @property
     def board(self):
@@ -42,56 +55,47 @@ class Scrabble:
 
         return query
 
+    def play_create_game(self, player_count):
+        if 2 <= player_count <= 4:
+            self.input_player_args = player_count
+            self.game_state = GAME_STATE_INPUT_PLAYERS
+
+    def play_input_players(self, *player_names):
+        self.game = Game(player_names)
+        self.game_state = GAME_STATE_SELECT_ACTION
+
+    def play_play_word(self, x, y, h, word):
+        x = int(x)
+        y = int(y)
+        h = h == 'h'
+        self.game.place_word(x, y, h, word)
+        self.game_state = GAME_STATE_ASK_CHALLENGE
+
+    def play_change_letters(self, *letters):
+        self.game.change_player_tiles(letters)
+        self.game_state = GAME_STATE_CHANGE_TURN
+
+    def play_ask_challenge(self, challenger):
+        if 0 <= challenger <= self.game.player_count:
+            self.challenger_player = challenger
+            self.game_state = GAME_STATE_IN_CHALLENGE
+        elif challenger == 99:
+            self.game_state = GAME_STATE_CHANGE_TURN
+
+    def play_in_challenge(self, result):
+        self.game.resolve_challenge(result == 'yes')
+        self.game_state = GAME_STATE_CHANGE_TURN
+
+    def play_select_action(self, action):
+        if action.isnumeric() and 1 <= int(action) <= 7:
+            self.change_letters = int(action)
+            self.game_state = GAME_STATE_CHANGE_LETTERS
+        elif action == 'play':
+            self.game_state = GAME_STATE_PLAY_WORD
+        elif action == 'pass':
+            self.game_state = GAME_STATE_CHANGE_TURN
+
     def play(self, *args):
-        if self.create_game:
-            # 1 args, player count
-            player_count = int(args[0])
-            if 2 <= player_count <= 4:
-                self.create_game = False
-                self.input_players = True
-                self.input_player_args = player_count
-        elif self.input_players:
-            # x args, player names
-            self.input_players = False
-            self.game = Game(args)
-        elif self.play_word:
-            # 4 args: X, Y, V/H, word
-            x = int(args[0])
-            y = int(args[1])
-            horizontal = args[2] == 'h'
-            word = args[3]
-            self.game.place_word(x, y, horizontal, word)
-            self.play_word = False
-            self.challenge = True
-        elif self.change_letters:
-            # 1 args, how many
-            letter_amount = int(args[0])
-            self.game.change_player_tiles(letter_amount)
-            self.change_letters = False
-            self.change_turn = True
-        elif self.challenge:
-            # 1 args, challenger player -> receives penalty if word is correct
-            # challenge round
-            if args[0].isnumeric() and 0 <= int(args[0]) < self.game.player_count:
-                    self.challenger_player = int(args[0])
-                    self.challenge = False
-                    self.in_challenge = True
-            elif args[0] == 'no':
-                self.challenge = False
-                self.change_turn = True
-        elif self.in_challenge:
-            # 1 args, challenge result and apply penalty
-            self.game.resolve_challenge(args[0] == 'yes')
-            self.in_challenge = False
-            self.change_turn = True
-        else:
-            # 1 args, play, change or pass
-            # if play, set self.play_word = True
-            if args[0] == 'play':
-                self.play_word = True
-            # if change, set self.change_letters
-            elif args[0] == 'change':
-                self.change_letters = True
-            # if pass do challenge round
-            elif args[0] == 'pass':
-                self.change_turn = True
+        method_name = 'play_' + self.game_state
+        method = getattr(self, method_name)
+        method(*args)

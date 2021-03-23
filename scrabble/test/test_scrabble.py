@@ -17,161 +17,104 @@ class TestScrabble(unittest.TestCase):
         board = self.scrabble.board
         print_board_patched.assert_called()
 
-    def test_input_arg_count(self):
+    @parameterized.expand([
+        ('create_game', 1),
+        ('play_word', 4),
+        ('ask_challenge', 1),
+        ('in_challenge', 1),
+        ('select_action', 1),
+    ])
+    def test_input_arg_count(self, state, args):
         # Create game: Number of players
-        self.assertEqual(self.scrabble.input_args, 1)
-        self.scrabble.create_game = False
+        self.scrabble.game_state = state
+        self.assertEqual(self.scrabble.input_args, args)
 
+    def test_input_arg_count_for_input_players(self):
         # Players names: one for each player
-        self.scrabble.input_players = True
+        self.scrabble.game_state = 'input_players'
         self.scrabble.input_player_args = 3
         self.assertEqual(self.scrabble.input_args, 3)
-        self.scrabble.input_players = False
-
-        # Pick action: one of play, change, pass
-        self.assertEqual(self.scrabble.input_args, 1)
-
-        # Play word: x, y, v/h, word
-        self.scrabble.play_word = True
-        self.assertEqual(self.scrabble.input_args, 4)
-        self.scrabble.play_word = False
-        
-        # Change letters: amount to change, up to 7
-        self.scrabble.change_letters = True
-        self.assertEqual(self.scrabble.input_args, 1)
-        self.scrabble.change_letters = False
-        
-        # Challenge words: id of player who challenges (may be penalized)
-        self.scrabble.challenge = True
-        self.assertEqual(self.scrabble.input_args, 1)
-        self.scrabble.challenge = False
-        
-        # Challenge result: Word is correct/incorrect
-        self.scrabble.in_challenge = True
-        self.assertEqual(self.scrabble.input_args, 1)
-        self.scrabble.in_challenge = False
 
     def test_play_create_game(self):
         self.scrabble.play('3')
-
-        self.assertFalse(self.scrabble.create_game)
-        self.assertTrue(self.scrabble.input_players)
         self.assertEqual(self.scrabble.input_player_args, 3)
+        self.assertEqual(self.scrabble.game_state, 'input_players')
     
     def test_play_create_game(self):
         player_count = 5
-
         self.scrabble.play(player_count)
-
-        self.assertTrue(self.scrabble.create_game)
-        self.assertFalse(self.scrabble.input_players)
         self.assertEqual(self.scrabble.input_player_args, 0)
+        self.assertEqual(self.scrabble.game_state, 'create_game')
 
     def test_play_setup_players(self):
         player_names = ["Pedro", "Ricardo"]
-        self.scrabble.create_game = False
-        self.scrabble.input_players = True
+        self.scrabble.game_state = 'input_players'
         self.scrabble.input_player_args = len(player_names)
-
         self.scrabble.play(player_names)
-
-        self.assertFalse(self.scrabble.input_players)
         self.assertIsNotNone(self.scrabble.game)
+        self.assertEqual(self.scrabble.game_state, 'select_action')
 
     @patch.object(Game, 'change_player_tiles')
     def test_play_change_tiles(self, change_tiles_patched):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
-        self.scrabble.create_game = False
-        self.scrabble.change_letters = True
-        tile_number = 4
-
-        self.scrabble.play(tile_number)
-
-        self.assertFalse(self.scrabble.change_letters)
-        self.assertTrue(self.scrabble.change_turn)
-        change_tiles_patched.assert_called_with(4)
+        self.scrabble.game_state = 'change_letters'
+        tiles = ('a', 'b', 'c')
+        self.scrabble.change_letters = len(tiles)
+        self.scrabble.play(*tiles)
+        self.assertEqual(self.scrabble.game_state, 'change_turn')
+        change_tiles_patched.assert_called_with(tiles)
 
     @patch.object(Game, 'place_word')
     def test_play_add_word(self, play_word_patched):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
-        self.scrabble.create_game = False
-        self.scrabble.play_word = True
-
+        self.scrabble.game_state = 'play_word'
         self.scrabble.play('5', '7', 'h', 'word')
-
-        self.assertFalse(self.scrabble.play_word)
-        self.assertTrue(self.scrabble.challenge)
+        self.assertEqual(self.scrabble.game_state, 'ask_challenge')
         play_word_patched.assert_called_with(5, 7, True, 'word')
 
     def test_play_action_pass(self):
-        self.scrabble.create_game = False
-
+        self.scrabble.game_state = 'select_action'
         self.scrabble.play('pass')
-
-        self.assertTrue(self.scrabble.change_turn)
+        self.assertEqual(self.scrabble.game_state, 'change_turn')
 
     def test_play_action_play_word(self):
-        self.scrabble.create_game = False
-        
+        self.scrabble.game_state = 'select_action'
         self.scrabble.play('play')
-
-        self.assertTrue(self.scrabble.play_word)
+        self.assertEqual(self.scrabble.game_state, 'play_word')
 
     def test_play_action_change_letters(self):
-        self.scrabble.create_game = False
-
-        self.scrabble.play('change')
-
-        self.assertTrue(self.scrabble.change_letters)
+        self.scrabble.game_state = 'select_action'
+        self.scrabble.play('4')
+        self.assertEqual(self.scrabble.change_letters, 4)
+        self.assertEqual(self.scrabble.game_state, 'change_letters')
 
     def test_play_challenge(self):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
-        self.scrabble.create_game = False
-        self.scrabble.challenge = True
-
-        self.scrabble.play('1')
-
-        self.assertFalse(self.scrabble.challenge)
-        self.assertTrue(self.scrabble.in_challenge)
+        self.scrabble.game_state = 'ask_challenge'
+        self.scrabble.play(1)
         self.assertEqual(self.scrabble.challenger_player, 1)
+        self.assertEqual(self.scrabble.game_state, 'in_challenge')
 
-    def test_play_challenge_invalid(self):
+    def test_play_challenge_skip(self):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
-        self.scrabble.create_game = False
-        self.scrabble.challenge = True
+        self.scrabble.game_state = 'ask_challenge'
+        self.scrabble.play(99)
+        self.assertEqual(self.scrabble.game_state, 'change_turn')
 
-        self.scrabble.play('no')
-
-        self.assertFalse(self.scrabble.challenge)
-        self.assertFalse(self.scrabble.in_challenge)
-        self.assertTrue(self.scrabble.change_turn)
-
+    @parameterized.expand([
+        ('yes', True),
+        ('no', False),
+    ])
     @patch.object(Game, 'resolve_challenge')
-    def test_play_challenge_result(self, resolve_challenge_patched):
+    def test_play_challenge_result(self, user_input, expected_param, resolve_challenge_patched):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
-        self.scrabble.create_game = False
-        self.scrabble.in_challenge = True
+        self.scrabble.game_state = 'in_challenge'
         self.scrabble.challenger_player = 1
-
-        self.scrabble.play('yes')
-
-        self.assertFalse(self.scrabble.in_challenge)
-        resolve_challenge_patched.assert_called_with(True)
-
-    @patch.object(Game, 'resolve_challenge')
-    def test_play_challenge_result(self, resolve_challenge_patched):
-        player_names = ["Pedro", "Ricardo"]
-        self.scrabble.game = Game(player_names)
-        self.scrabble.create_game = False
-        self.scrabble.in_challenge = True
-        self.scrabble.challenger_player = 1
-
-        self.scrabble.play('no')
-
-        self.assertFalse(self.scrabble.in_challenge)
-        resolve_challenge_patched.assert_called_with(False)
+        self.scrabble.play(user_input)
+        self.assertEqual(self.scrabble.game_state, 'change_turn')
+        resolve_challenge_patched.assert_called_with(expected_param)
