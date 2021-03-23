@@ -149,3 +149,12 @@ class TestBoard(unittest.TestCase):
         spots_with_tile = b.tiles_in_board(spots)
         for swt, exp in zip(spots_with_tile, expected):
             self.assertEqual(swt, exp)
+
+    @parameterized.expand([
+        ('casa', ['a', 's'], ['c', 'a']),
+        ('casa', [], ['c', 'a', 's', 'a']),
+        ('casa', ['c', 'a', 's', 'a'], []),
+    ])
+    def test_tiles_diff(self, word, letters_in_board, expected):
+        b = Board()
+        self.assertEqual(b.tiles_diff(word, letters_in_board), expected)

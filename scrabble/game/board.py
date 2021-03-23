@@ -116,3 +116,10 @@ class Board:
 
     def tiles_in_board(self, spots):
         return ([s.tile.letter for s in spots if s.tile])
+
+    def tiles_diff(self, word, letters_in_board):
+        letters = list(word)
+        for letter_in_board in letters_in_board:
+            letters.remove(letter_in_board)
+
+        return letters
