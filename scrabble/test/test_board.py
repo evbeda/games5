@@ -109,6 +109,24 @@ class TestBoard(unittest.TestCase):
         b = Board()
         word = 'hola'
         word_tile = b.word_to_tile(word)
-        self.assertEqual(len(word_tile), len(word))
         for i, wt in enumerate(word_tile):
             self.assertEqual(wt.letter, word[i])
+
+    @parameterized.expand([
+        (4, 7, 4, True, ['b', 'a', 'r', 'c']),
+        (4, 7, 3, True, [None, 'b', 'a', 'r']),
+        (4, 7, 8, True, ['o', None, None, None]),
+        (4, 0, 0, False, [None, None, None, None]),
+    ])
+    def test_get_spots_to_place_word(self, len_word, row, col, dire, expected):
+        b = Board()
+        word_tile = b.word_to_tile('barco')
+        b.place_letters(word_tile, 7, 4, True, range(len(word_tile)))
+            
+        spots_for_word = b.get_spots_to_place_word(len_word, row, col, dire)
+
+        for sfw, exp in zip(spots_for_word, expected):
+            if sfw.tile:
+                self.assertEqual(sfw.tile.letter, exp)
+            else:
+                self.assertEqual(sfw.tile, exp)

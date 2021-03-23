@@ -106,3 +106,10 @@ class Board:
 
     def word_to_tile(self, word):
         return [Tile(letter) for letter in word]
+
+    def get_spots_to_place_word(self, len_word, row, col, direction):
+        return (
+            self.spots[row][col:col+len_word]
+            if direction
+            else [self.spots[row+i][col] for i in range(len_word)]
+        )
