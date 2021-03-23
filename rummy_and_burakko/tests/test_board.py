@@ -119,3 +119,34 @@ class TestBoard(unittest.TestCase):
         with patch.object(SetTiles, 'remove_tile') as remove_tile_patched:
             board.add_new_play([set_2])
             remove_tile_patched.assert_called()
+
+        @parameterized.expand([
+            (
+                SetTiles(
+                    [Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)]
+                ),
+                3,
+                Tile('r', 6)
+            ),
+            (
+                SetTiles(
+                    [Tile('r', 3), Tile('r', 4), Tile('r', 5)]
+                ),
+                3,
+                None
+            ),
+            (
+                SetTiles([]),
+                3,
+                None
+            ),
+        ])
+        def test_take_one_tile_from_board(self, set_tile, index, chosen_tile):
+            original_len = len(set_tile)
+            self.board.sets = {
+                1: set_tile,
+            }
+            self.board.give_one_tile(self.players[2], 1, index)
+
+            self.assertEqual(self.players[2].hand, [chosen_tile])
+            self.assertEqual(len(self.t_bag.remaining_tiles), original_len - 1)
