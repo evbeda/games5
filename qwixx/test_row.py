@@ -7,8 +7,10 @@ from unittest.mock import patch
 class TestRow(unittest.TestCase):
     def test_lock_row(self):
         color_row = "red"
+        expected = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
         self.row = Row(color_row)
-        self.assertEqual(self.row.lock_Row(), True)
+        self.assertEqual(self.row.marks, [])
+        self.assertEqual(self.row.numbers, expected)
 
     @parameterized.expand([
         ('red', tuple(range(2, 13))),
@@ -33,14 +35,14 @@ class TestRow(unittest.TestCase):
         self.assertFalse(result)
 
     @parameterized.expand([
-        ('red', False, 1, True),
-        ('red', True, 0, False),
+        ('red', 0, True),
+        ('red', 0, False),
     ])
     @patch.object(Row, 'can_mark')
-    def test_check_row_lock(self, color, is_locked, call_count_mock, expected,
+    def test_check_row_lock(self, color, call_count_mock, expected,
                             mock_can_mark):
         r = Row(color)
-        r.is_locked = is_locked
+        r.blocked_rows.append('red')
         r.check_row_lock(5)
         # Como testear el return de la funcion check_row_lock
         self.assertEqual(mock_can_mark.call_count, call_count_mock, expected)
@@ -68,9 +70,8 @@ class TestRow(unittest.TestCase):
         self.assertEqual(r.calculate_marks(), expected)
 
     @parameterized.expand([
-        ('red', [2, 3, 6], 7, [2, 3, 6, 7]),
-        ('red', [4], 7, [4, 7]),
-        ('yellow', [0], 7, [0, 7]),
+        ('green', [4], 7, [4]),
+        ('yellow', [2], 7, [2, 7]),
     ])
     def test_set_mark(self, color, marks, number, expected):
         r = Row(color)
