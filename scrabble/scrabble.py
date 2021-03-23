@@ -72,6 +72,7 @@ class Scrabble:
             query += '- - - - - - - - - - - - - -\n\n'
         elif self.game_state == GAME_STATE_SKIP_TURN:
             self.game.skip_turn()
+            self.game_state = GAME_STATE_SELECT_ACTION
 
         if self.game_state in [
             GAME_STATE_CHANGE_TURN,
