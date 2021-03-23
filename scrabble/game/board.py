@@ -114,5 +114,5 @@ class Board:
             else [self.spots[row+i][col] for i in range(len_word)]
         )
 
-    def tiles_not_in_board(self, spots):
+    def tiles_in_board(self, spots):
         return ([s.tile.letter for s in spots if s.tile])
