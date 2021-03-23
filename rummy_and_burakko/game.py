@@ -44,8 +44,13 @@ class Game:
         pass
 
     def end_turn(self):
-        if self.board.validate_sets() and self.players[self.current_turn].validate_hand():
+        if self.valid_turn:
             self.board.valid_turn()
             self.players[self.current_turn].valid_turn()
         else:
             self.tile_bag.give_one_tile(self.players[self.current_turn])
+
+    def valid_turn(self):
+        cond_1 = self.players[self.current_turn].validate_hand()
+        cond_2 = self.board.validate_sets()
+        return cond_1 and cond_2
