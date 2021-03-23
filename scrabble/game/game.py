@@ -53,11 +53,11 @@ class Game:
         self.current_player = (self.current_player + 1) % self.player_count
 
     def skip_turn(self):
+        self.skipped_turns += 1
         if self.skipped_turns < self.player_count * 2:
-            self.skipped_turns += 1
+            self.change_turn()
         else:
             self.game_over()
-        self.change_turn()
 
     def game_over(self):
         pass
