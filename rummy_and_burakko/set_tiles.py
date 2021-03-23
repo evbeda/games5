@@ -56,3 +56,9 @@ class SetTiles():
             ])
             + ' ]'
         )
+
+    def extract_one_tile(self, index):
+        try:
+            return self.tiles.pop(index)
+        except IndexError:
+            raise Exception

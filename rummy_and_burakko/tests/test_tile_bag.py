@@ -61,7 +61,3 @@ class TestTileBag(unittest.TestCase):
         # assert
         self.assertEqual(len(self.players[2].hand), e_hand)
         self.assertEqual(len(self.t_bag.remaining_tiles), e_remaining)
-
-            
-    
-        
