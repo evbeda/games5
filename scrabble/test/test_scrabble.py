@@ -190,6 +190,18 @@ class TestScrabble(unittest.TestCase):
         state_query_patched.assert_called()
         change_turn_patched.assert_not_called()
 
+    @patch.object(Scrabble, 'next_turn_state_query')
+    @patch.object(Scrabble, 'next_turn_show_hand')
+    @patch.object(Game, 'skip_turn')
+    def test_next_turn_skip_turn(self, skip_turn_patched, show_hand_patched, state_query_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game_state = 'skip_turn'
+        self.scrabble.next_turn()
+        self.assertEqual(show_hand_patched.call_count, 1)
+        state_query_patched.assert_called()
+        skip_turn_patched.assert_called()
+
     def test_is_playing(self):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
