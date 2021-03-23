@@ -33,7 +33,7 @@ class Player:
         for t_tile in self.temp_hand:
             try:
                 h_tiles_comp.remove(t_tile)
-            except: 
+            except Exception:
                 return False
 
         return True
