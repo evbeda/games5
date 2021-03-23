@@ -84,3 +84,5 @@ class TestGame(unittest.TestCase):
         result = self.game.show_game()
         # assert
         self.assertEqual(result, expected)
+        mock_board.assert_called_once()
+        mock_player.assert_called_once()
