@@ -7,6 +7,7 @@ GAME_STATE_CHANGE_LETTERS = 'change_letters'
 GAME_STATE_ASK_CHALLENGE = 'ask_challenge'
 GAME_STATE_IN_CHALLENGE = 'in_challenge'
 GAME_STATE_CHANGE_TURN = 'change_turn'
+GAME_STATE_CHANGED_LETTERS = 'changed_letters'
 GAME_STATE_SELECT_ACTION = 'select_action'
 
 
@@ -58,9 +59,25 @@ class Scrabble:
 
     def next_turn_show_hand(self):
         return self.game.get_current_player_hand()
-        
+    
     def next_turn(self):
-        query = self.next_turn_state_query()
+        query = '\n'
+        
+        if self.game_state == GAME_STATE_CHANGED_LETTERS:
+            query += 'Changed letters:\n'
+            query += self.next_turn_show_hand() + '\n'
+            query += '- - - - - - - - - - - - - -\n\n'
+        
+        if self.game_state in [
+            GAME_STATE_CHANGE_TURN,
+            GAME_STATE_CHANGED_LETTERS
+        ]:
+            self.game.change_turn()
+            self.game_state = GAME_STATE_SELECT_ACTION
+
+        query += self.next_turn_show_hand() + '\n\n'
+        query += self.next_turn_state_query()
+
         return query
 
     def play_create_game(self, player_count):
@@ -81,7 +98,7 @@ class Scrabble:
 
     def play_change_letters(self, *letters):
         self.game.change_player_tiles(letters)
-        self.game_state = GAME_STATE_CHANGE_TURN
+        self.game_state = GAME_STATE_CHANGED_LETTERS
 
     def play_ask_challenge(self, challenger):
         if 0 <= challenger <= self.game.player_count:

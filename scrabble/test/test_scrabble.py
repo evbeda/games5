@@ -63,7 +63,7 @@ class TestScrabble(unittest.TestCase):
         tiles = ('a', 'b', 'c')
         self.scrabble.change_letters = len(tiles)
         self.scrabble.play(*tiles)
-        self.assertEqual(self.scrabble.game_state, 'change_turn')
+        self.assertEqual(self.scrabble.game_state, 'changed_letters')
         change_tiles_patched.assert_called_with(tiles)
 
     @patch.object(Game, 'place_word')
@@ -153,3 +153,39 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.game = Game(player_names)
         self.scrabble.next_turn_show_hand()
         get_current_player_hand_patched.assert_called()
+
+    @patch.object(Scrabble, 'next_turn_state_query')
+    @patch.object(Scrabble, 'next_turn_show_hand')
+    @patch.object(Game, 'change_turn')
+    def test_next_turn_changed_letters(self, change_turn_patched, show_hand_patched, state_query_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game_state = 'changed_letters'
+        self.scrabble.next_turn()
+        self.assertEqual(show_hand_patched.call_count, 2)
+        state_query_patched.assert_called()
+        change_turn_patched.assert_called()
+        
+    @patch.object(Scrabble, 'next_turn_state_query')
+    @patch.object(Scrabble, 'next_turn_show_hand')
+    @patch.object(Game, 'change_turn')
+    def test_next_turn_change_turn(self, change_turn_patched, show_hand_patched, state_query_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game_state = 'change_turn'
+        self.scrabble.next_turn()
+        self.assertEqual(show_hand_patched.call_count, 1)
+        state_query_patched.assert_called()
+        change_turn_patched.assert_called()
+
+    @patch.object(Scrabble, 'next_turn_state_query')
+    @patch.object(Scrabble, 'next_turn_show_hand')
+    @patch.object(Game, 'change_turn')
+    def test_next_turn_change_turn(self, change_turn_patched, show_hand_patched, state_query_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game_state = 'play_word'
+        self.scrabble.next_turn()
+        self.assertEqual(show_hand_patched.call_count, 1)
+        state_query_patched.assert_called()
+        change_turn_patched.assert_not_called()
