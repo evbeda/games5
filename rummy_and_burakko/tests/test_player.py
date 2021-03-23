@@ -18,18 +18,18 @@ class TestPlayer(unittest.TestCase):
         [self.assertIn(tile, self.player.hand) for tile in [1, 2, 5]]
 
     def test_take_tiles_from_hand(self):
-        self.player.hand = [2, 6, 7, 8]
+        self.player.temp_hand = [2, 6, 7, 8]
         self.player.remove_tiles([6, 8])
-        [self.assertNotIn(tile, self.player.hand) for tile in [6, 8]]
+        [self.assertNotIn(tile, self.player.temp_hand) for tile in [6, 8]]
 
     def test_take_tile_not_in_hand(self):
-        self.player.hand = [1, 2, 3]
+        self.player.temp_hand = [1, 2, 3]
 
         with self.assertRaises(Exception):
             self.player.remove_tiles([4])
 
     def test_hand_format(self):
-        self.player.hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
+        self.player.temp_hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
 
         self.assertEqual(self.player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
 

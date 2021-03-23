@@ -4,21 +4,25 @@ class Player:
         self.first_move = True
         self.hand = []
         self.temp_hand = []
+        self.is_playing = False
 
     def add_tiles(self, tiles):
-        self.hand += tiles
+        if self.is_playing:
+            self.temp_hand += tiles
+        else:
+            self.hand += tiles
 
     def remove_tiles(self, tiles):
         for tile in tiles:
-            if tile in self.hand:
-                self.hand.remove(tile)
+            if tile in self.temp_hand:
+                self.temp_hand.remove(tile)
             else:
                 raise Exception
 
     def get_hand(self):
         return f'{self.name}> ' + ' '.join([
             f'{index}:{tile.color}{tile.number}'
-            for index, tile in enumerate(self.hand)
+            for index, tile in enumerate(self.temp_hand)
         ])
 
     def temporary_hand(self):
