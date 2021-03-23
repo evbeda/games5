@@ -1,4 +1,4 @@
-
+from .player import Player
 WHITE = 'white'
 COLOR = 'color'
 
@@ -40,11 +40,14 @@ class Qwixx:
             if self.state == WHITE:
                 self.input_args = 1
                 self.input_are_ints = True
-                # return messages('Choose in which row you want to mark the common dice (0/3) or not (99)?')
+                # return messages('Choose in which row you want to mark the
+                # common dice (0/3) or not (99)?')
             if self.state == COLOR:
                 self.input_args = 3
                 self.input_are_ints = True
-                # return messages("Choose in which row you want to mark a common die with a colored die (0/3),common die (0/1) and color die(0/3) or Penalty (99/99)?")
+                # return messages("Choose in which row you want to mark a
+                # common die with a colored die (0/3),common die (0/1) and
+                # color die(0/3) or Penalty (99/99)?")
 
     def play(self, row, die_color, die_white):
         if self.state == WHITE:
