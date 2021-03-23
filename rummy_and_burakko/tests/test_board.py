@@ -3,12 +3,14 @@ from unittest.mock import patch
 from ..board import Board
 from ..set_tiles import SetTiles
 from ..tile import Tile
+from ..player import Player
 from parameterized import parameterized
 
 
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board = Board()
+        self.players = [Player('test_1'), Player('test_2'), Player('test_3')]
 
     @parameterized.expand([
         (
@@ -96,72 +98,54 @@ class TestBoard(unittest.TestCase):
     def test_add_new_play(
         self, mock_validate_sets, set_tile_patched, tile_patched
     ):
-        board = Board()
         set_one = [Tile('r', 5), Tile('r', 6), Tile('r', 7)]
-        board.add_new_play([set_one])
+        self.board.add_new_play([set_one])
         set_tile_patched.assert_called_with(set_one)
-        self.assertEqual(len(board.sets), 1)
+        self.assertEqual(len(self.board.sets), 1)
 
     @patch('rummy_and_burakko.tile.Tile', create=True)
     @patch.object(Board, 'valid_sets', return_value=True)
     def test_remove_reused_tiles(self, board_patched, tiles_patched):
-        board = Board()
-
         (t1, t2, t3, t4, t5, t6) = [Tile('*', 0) for _ in range(6)]
         [t.assign_set_id(1) for t in (t1, t2, t3, t4)]
 
         with patch('rummy_and_burakko.tests.test_board.SetTiles', create=True):
             set_1 = SetTiles([t1, t2, t3, t4])
 
-        board.sets = {1: set_1}
+        self.board.sets = {1: set_1}
         set_2 = [t2, t5, t6]
 
         with patch.object(SetTiles, 'remove_tile') as remove_tile_patched:
-            board.add_new_play([set_2])
+            self.board.add_new_play([set_2])
             remove_tile_patched.assert_called()
 
-        @parameterized.expand([
-            (
-                SetTiles(
-                    [Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)]
-                ),
-                3,
-                Tile('r', 6)
+    @parameterized.expand([
+        (
+            SetTiles(
+                [Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)]
             ),
-            (
-                SetTiles(
-                    [Tile('r', 3), Tile('r', 4), Tile('r', 5)]
-                ),
-                3,
-                None
-            ),
-            (
-                SetTiles([]),
-                3,
-                None
-            ),
-        ])
-        def test_give_one_tile_from_board(self, set_tile, index, chosen_tile):
-            original_len = len(set_tile)
-            self.board.sets = {
-                1: set_tile,
-            }
+            3,
+            Tile('r', 6)
+        ),
+    ])
+    @patch.object(SetTiles, 'extract_one_tile', return_value=Tile('r', 6))
+    def test_give_one_tile_from_board(
+        self, set_tile, index, chosen_tile, mock
+    ):
+        self.board.sets = {
+            1: set_tile,
+        }
+        self.board.give_one_tile_from_board(self.players[2], 1, index)
+
+        self.assertEqual(self.players[2].hand, [chosen_tile])
+
+    @parameterized.expand([
+        (SetTiles([Tile('r', 3), Tile('r', 4)]), 3),
+        (SetTiles([]), 3),
+    ])
+    def test_give_one_tile_from_board_fail(self, set_tile, index):
+        self.board.sets = {
+            1: set_tile,
+        }
+        with self.assertRaises(Exception):
             self.board.give_one_tile_from_board(self.players[2], 1, index)
-
-            self.assertEqual(self.players[2].hand, [chosen_tile])
-            self.assertEqual(len(self.t_bag.remaining_tiles), original_len - 1)
-
-        @parameterized.expand([
-            (SetTiles([Tile('r', 3), Tile('r', 4)]), 3),
-        ])
-        def test_give_one_tile_from_board_fail(self, set_tile, index):
-            self.board.sets = {
-                1: set_tile,
-            }
-            with self.assertRaises(Exception):
-                self.board.give_one_tile_from_board(self.players[2], 1, index)
-
-        def test_give_one_tile_from_board_fail_empty_array(self):
-            self.board.sets = {}
-            with self.assertRaises(Exception):
-                self.board.give_one_tile_from_board(self.players[2], 1, 1)
