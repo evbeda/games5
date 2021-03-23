@@ -50,3 +50,6 @@ class Game:
 
     def change_turn(self):
         pass
+
+    def skip_turn(self):
+        pass

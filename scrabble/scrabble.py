@@ -9,7 +9,7 @@ GAME_STATE_IN_CHALLENGE = 'in_challenge'
 GAME_STATE_CHANGE_TURN = 'change_turn'
 GAME_STATE_CHANGED_LETTERS = 'changed_letters'
 GAME_STATE_SELECT_ACTION = 'select_action'
-
+GAME_STATE_SKIP_TURN = 'skip_turn'
 
 class Scrabble:
 
@@ -67,10 +67,13 @@ class Scrabble:
             query += 'Changed letters:\n'
             query += self.next_turn_show_hand() + '\n'
             query += '- - - - - - - - - - - - - -\n\n'
-        
+        elif self.game_state == GAME_STATE_SKIP_TURN:
+            self.game.skip_turn()
+
         if self.game_state in [
             GAME_STATE_CHANGE_TURN,
-            GAME_STATE_CHANGED_LETTERS
+            GAME_STATE_CHANGED_LETTERS,
+            GAME_STATE_SKIP_TURN,
         ]:
             self.game.change_turn()
             self.game_state = GAME_STATE_SELECT_ACTION
@@ -118,7 +121,7 @@ class Scrabble:
         elif action == 'play':
             self.game_state = GAME_STATE_PLAY_WORD
         elif action == 'pass':
-            self.game_state = GAME_STATE_CHANGE_TURN
+            self.game_state = GAME_STATE_SKIP_TURN
 
     def play(self, *args):
         method_name = 'play_' + self.game_state
