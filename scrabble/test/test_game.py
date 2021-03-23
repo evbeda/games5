@@ -46,3 +46,8 @@ class TestGame(unittest.TestCase):
     def test_print_board(self, get_board_patched):
         self.t_game.print_board()
         get_board_patched.assert_called()
+
+    @patch.object(Player, 'get_hand')
+    def test_get_current_player_hand(self, get_hand_patched):
+        self.t_game.get_current_player_hand()
+        get_hand_patched.assert_called()
