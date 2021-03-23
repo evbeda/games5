@@ -1,4 +1,5 @@
 from .spot import Spot
+from .tile import Tile
 
 
 class Board:
@@ -102,3 +103,6 @@ class Board:
                 self.spots[row][col+i].set_tile(word[i])
             else:
                 self.spots[row+i][col].set_tile(word[i])
+
+    def word_to_tile(self, word):
+        return [Tile(letter) for letter in word]
