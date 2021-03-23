@@ -11,7 +11,7 @@ class Qwixx:
         self.state = WHITE
         self.input_args = 2
         self.input_are_ints = False
-        self.score_pad = None
+        self.score_pad = []
         self.current_player = 0
         self.dice_set = {}
 
@@ -19,8 +19,8 @@ class Qwixx:
         if player_amount not in range(1, 5):
             raise Exception
         for indice_Player in range(player_amount):
-            self.score_pad = ScorePad()
-            self.score_pad.id_player = indice_Player
+            self.score_pad.append(ScorePad())
+            self.score_pad[indice_Player].id_player = indice_Player
 
     def remove_dice(self, color):
         for index, dice in enumerate(self.dice_set):
