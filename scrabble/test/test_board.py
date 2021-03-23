@@ -133,11 +133,11 @@ class TestBoard(unittest.TestCase):
                 self.assertEqual(sfw.tile, exp)
 
     @parameterized.expand([
-        ([None, Tile('p'), None], [(1, 'p')],),
-        ([None, Tile('a'), Tile('c')], [(1, 'a'), (2, 'c')],),
+        ([None, Tile('p'), None], ['p'],),
+        ([None, Tile('a'), Tile('c')], ['a', 'c'],),
         ([None, None, None, None], [],),
     ])
-    def test_tiles_in_board(self, tiles, expected):
+    def test_tiles_not_in_board(self, tiles, expected):
         b = Board()
         spots = []
         for t in tiles:
