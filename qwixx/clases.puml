@@ -1,7 +1,4 @@
 @startuml
-class Player {
-    name: String
-}
 class ScorePad {
     penalty: Integer
 }
@@ -14,13 +11,16 @@ class Row {
 class Dice{
     color: String
 }
-class Game{
+class Qwixx{
     current_player: Integer
+    state : String 
+    score_pad : List
+    current_player : int
+    dice_set : dic
 }
 
 ScorePad  --> "4" Row: rows
-Player --> ScorePad: score_pad
-Game --> "1..4" Player: players
-Game --> SetDices
+Qwixx--> "1..4"ScorePad: score_pad
+Qwixx--> SetDices
 SetDices --> "6" Dice: dices
 @enduml
