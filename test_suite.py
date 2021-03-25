@@ -14,6 +14,7 @@ from rummy_and_burakko.tests.test_player import TestPlayer as RTestPlayer
 from rummy_and_burakko.tests.test_tile_bag import TestTileBag as RTestTileBag
 from rummy_and_burakko.tests.test_set_tiles import TestSetTiles
 from rummy_and_burakko.tests.test_tile import TestTiles
+from rummy_and_burakko.tests.test_rummy_and_burakko import TestRummyAndBurakko
 
 from scrabble.test.test_board import TestBoard as STestBoard
 from scrabble.test.test_game import TestGame as STestGame
@@ -44,6 +45,7 @@ def suite():
     test_suite.addTest(unittest.makeSuite(TestSetTiles))
     test_suite.addTest(unittest.makeSuite(RTestTileBag))
     test_suite.addTest(unittest.makeSuite(TestTiles))
+    test_suite.addTest(unittest.makeSuite(TestRummyAndBurakko))
     # scrabble
     test_suite.addTest(unittest.makeSuite(STestBoard))
     test_suite.addTest(unittest.makeSuite(STestGame))

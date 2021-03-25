@@ -119,44 +119,34 @@ class TestGame(unittest.TestCase):
         self.assertEqual(mock_valid_sets.call_count, 1)
         self.assertEqual(result, expected)
 
+    @parameterized.expand([
+        # (return_value, validate.call_count, give_one_tile.call_count)
+        (True, 1, 0),
+        (False, 0, 1),
+    ])
     @patch.object(TileBag, "give_one_tile")
     @patch.object(Player, "validate_turn")
     @patch.object(Board, "validate_turn")
-    @patch.object(Game, "valid_turn", return_value=True)
-    def test_end_turn_valid(
+    @patch.object(Player, "change_state")
+    def test_end_turn(
         self,
-        mock_v_t,
+        rv,
+        call_count_1,
+        call_count_2,
+        mock_player_change_state,
         mock_board,
-        mock_player,
-        mock_bag
+        mock_player_validate,
+        mock_bag,
     ):
-        # process
+        # data
         self.game.create_players(["player_1", "player_2"])
         self.game.distribute_tiles()
-        self.game.end_turn()
-        # assert
-        mock_v_t.assert_called_once()
-        mock_board.assert_called_once()
-        mock_player.assert_called_once()
-        mock_bag.assert_not_called()
-
-    @patch.object(TileBag, "give_one_tile")
-    @patch.object(Player, "validate_turn")
-    @patch.object(Board, "validate_turn")
-    @patch.object(Game, "valid_turn", return_value=False)
-    def test_end_turn_not_valid(
-        self,
-        mock_v_t,
-        mock_board,
-        mock_player,
-        mock_bag
-    ):
         # process
-        self.game.create_players(["player_1", "player_2"])
-        self.game.distribute_tiles()
-        self.game.end_turn()
-        # assert
-        mock_v_t.assert_called_once()
-        mock_board.assert_not_called()
-        mock_player.assert_not_called()
-        mock_bag.assert_called_once()
+        with patch.object(Game, "valid_turn", return_value=rv) as mock_v_t:
+            self.game.end_turn()
+            # assert
+            self.assertEqual(mock_v_t.call_count, 1)
+            self.assertEqual(mock_player_change_state.call_count, 1)
+            self.assertEqual(mock_board.call_count, call_count_1)
+            self.assertEqual(mock_player_validate.call_count, call_count_1)
+            self.assertEqual(mock_bag.call_count, call_count_2)
