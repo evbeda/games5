@@ -69,22 +69,6 @@ class RummyAndBurakko():
     def next_turn(self):
         query = '\n'
 
-        if self.game_state == GAME_STATE_CHANGED_LETTERS:
-            query += 'Changed letters:\n'
-            query += self.next_turn_show_hand() + '\n'
-            query += '- - - - - - - - - - - - - -\n\n'
-
-        elif self.game_state == GAME_STATE_SKIP_TURN:
-            self.game.skip_turn()
-            self.game_state = GAME_STATE_SELECT_ACTION
-
-        if self.game_state in [
-            GAME_STATE_CHANGE_TURN,
-            GAME_STATE_CHANGED_LETTERS,
-            GAME_STATE_SKIP_TURN,
-        ]:
-            self.game.change_turn()
-            self.game_state = GAME_STATE_SELECT_ACTION
 
         query += self.board + '\n\n'
         query += self.next_turn_state_query()
@@ -101,6 +85,7 @@ class RummyAndBurakko():
         }
         self.option = option
         self.game_state = options[option]
+
 
     def play(self, *args):
         method_name = 'play_' + self.game_state
