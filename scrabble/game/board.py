@@ -82,8 +82,10 @@ class Board:
             existing_tiles = self.tiles_in_board(spot_list)
             if self.can_place_word(word, existing_tiles):
                 remain_tiles = self.tiles_diff(word, existing_tiles)
-                
+
                 # verificacion de hand
+                # un zip para revisar q esten las letras
+                # un zip para revisar que esten los indices
 
             self.place_letters(word, row, col, direction, indexes)
             pass
