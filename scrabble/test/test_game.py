@@ -80,19 +80,30 @@ class TestGame(unittest.TestCase):
 
     @parameterized.expand([
         (
-            [30, 40, 50],
+            [30, 40, 35],
+            [
+                ['a', 'b', 'c'],
+                ['x', 'y', 'h'],
+                ['f', 'e', 'q'],
+            ],
+            True,
+            [23, 24, 25],
+        ),
+        (
+            [30, 40, 35],
             [
                 ['a', 'b', 'c'],
                 ['x', 'y'],
                 ['f', 'e', 'q'],
             ],
-            [23, 28, 40],
+            False,
+            [30, 40, 35],
         ),
     ])
-    def test_count_points(self, scores, player_hands, expected):
+    def test_count_points(self, scores, player_hands, minus_remaining_tiles, expected):
         for player, score, tiles in zip(self.t_game.players, scores, player_hands):
             player.score = score
             player.tiles_in_hand = [Tile(t) for t in tiles]
-        score = self.t_game.count_points()
+        score = self.t_game.count_points(minus_remaining_tiles)
         for player_score, expected_score in zip(score, expected):
             self.assertEqual(player_score, expected_score)

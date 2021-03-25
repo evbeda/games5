@@ -62,10 +62,14 @@ class Game:
     def game_over(self):
         pass
 
-    def count_points(self):
-        return [
-            player.score - sum([
-                tile.score for tile in player.tiles_in_hand
-            ]) for player in self.players
-        ]
+    def count_points(self, with_remaining_tiles=True):
+        if with_remaining_tiles:
+            scores = [
+                player.score - sum([
+                    tile.score for tile in player.tiles_in_hand
+                ]) for player in self.players
+            ]
+        else:
+            scores = [player.score for player in self.players]
 
+        return scores
