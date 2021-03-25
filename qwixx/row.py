@@ -15,7 +15,7 @@ class Row:
             )
 
     def lock_Row(self):
-        return self.blocked_rows.append(self.color)
+        self.blocked_rows.append(self.color)
 
     @property
     def is_locked(self):
