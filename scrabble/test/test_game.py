@@ -120,3 +120,21 @@ class TestGame(unittest.TestCase):
 
     def test_game_over(self):
         pass
+
+    @parameterized.expand([
+        (
+            [
+                (1, 50),
+                (2, 30),
+                (0, 10),
+            ],
+            [60, 65, 20],
+            'Final scores:\n1: player_2 - 50\n2: player_3 - 30\n3: player_1 - 10',
+        ),
+    ])
+    def test_get_game_results(self, game_results, player_scores, expected):
+        self.t_game.game_results = game_results
+        for player, score in zip(self.t_game.players, player_scores):
+            player.score = score
+        
+        self.t_game.get_game_results()
