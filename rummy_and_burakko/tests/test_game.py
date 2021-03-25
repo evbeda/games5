@@ -57,14 +57,6 @@ class TestGame(unittest.TestCase):
         m_temporary_sets.assert_called_once_with()
         m_temporary_hand.assert_called_once_with()
 
-    @parameterized.expand([
-        (["1"],),
-        (["1", "2", "3", "4", "5"],),
-    ])
-    def test_player_limit(self, players):
-        with self.assertRaises(Exception):
-            self.game.create_players(players)
-
     @patch.object(TileBag, "assign_tiles")
     def test_call_assign_tiles(self, mock):
         self.game.distribute_tiles()
