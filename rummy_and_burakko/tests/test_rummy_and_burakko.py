@@ -35,16 +35,16 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.assertEqual(self.rummy.input_player_args, res_1)
         self.assertEqual(self.rummy.game_state, res_2)
 
-    # @patch.object(Game, "distribute_tiles")
-    # @patch.object(Game, "random_order")
-    # # @patch.object(Game, "__init__")
-    # def test_play_players_input(self, m_order, m_distribute):
-    #     # data
-    #     players = ["test_1", "test_2", "test_3"]
-    #     # process
-    #     self.rummy.play_players_input(players)
-
-
-    #     m_order.assert_called_once_with()
-    #     m_distribute.assert_called_once_with()
+    @patch.object(Game, "distribute_tiles")
+    @patch.object(Game, "random_order")
+    @patch.object(Game, "create_players")
+    def test_play_players_input(self, m_init, m_order, m_distribute):
+        # data
+        players = ["test_1", "test_2", "test_3"]
+        # process
+        self.rummy.play_players_input(players)
+        # assert
+        m_init.assert_called_once_with(players)
+        m_order.assert_called_once_with()
+        m_distribute.assert_called_once_with()
 
