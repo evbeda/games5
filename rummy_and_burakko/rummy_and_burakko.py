@@ -53,10 +53,17 @@ class RummyAndBurakko():
 
     # turn event
     def next_turn(self):
-        if self.is_playing:
-            return 'Give me a number from 0 to 100'
-        else:
-            return 'Game Over'
+        game_state_next_turn = {
+            GAME_STATE_CREATE_GAME: 'Enter number of players',
+            GAME_STATE_INPUT_PLAYERS: 'Enter player names',
+            GAME_STATE_SELECT_OPTION: 'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n3)Take a tile from a set\n4)End turn',
+            GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
+            GAME_STATE_NEW_SET_TILES: 'Put the index of tiles to play in the correct order',
+            GAME_STATE_PUT_A_TILE: 'Puting a tile: Select a tile, select the set, select the index in the chosen set',
+            GAME_STATE_GET_A_TILE: 'Taking a tile: Select the set, select the index in the chosen set',
+            GAME_STATE_PASS: 'Passing',
+        }
+        return game_state_next_turn[self.game_state]
 
     # plays
     def play(self, number):
