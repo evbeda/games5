@@ -15,6 +15,7 @@ class Game:
         self.skipped_turns = 0
         self.lost_turns = []
         self.current_player = 0
+        self.winner = None
         self.is_playing = True
 
     def create_player(self, name_players):
@@ -68,7 +69,24 @@ class Game:
             self.game_over()
 
     def game_over(self):
-        pass
+        self.is_playing = False
+        tie = False
+        winner = None
+        highest = float('-inf')
+        player_scores = self.count_points(True)
+        for player, score in enumerate(player_scores):
+            if score > highest:
+                highest = score
+                winner = player
+            tie = score == highest if not tie
+        if tie:
+            highest = float('-inf')
+            player_scores = self.count_points(False)
+            for player, score in enumerate(player_scores):
+                if score > highest:
+                    highest = score
+                    winner = player
+        self.winner = winner
 
     def count_points(self, with_remaining_tiles=True):
         if with_remaining_tiles:

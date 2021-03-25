@@ -11,6 +11,7 @@ GAME_STATE_CHANGED_LETTERS = 'changed_letters'
 GAME_STATE_SELECT_ACTION = 'select_action'
 GAME_STATE_SKIP_TURN = 'skip_turn'
 
+
 class Scrabble:
 
     @property
@@ -82,8 +83,11 @@ class Scrabble:
             self.game.change_turn()
             self.game_state = GAME_STATE_SELECT_ACTION
 
-        query += self.next_turn_show_hand() + '\n\n'
-        query += self.next_turn_state_query()
+        if self.is_playing:
+            query += self.next_turn_show_hand() + '\n\n'
+            query += self.next_turn_state_query()
+        else:
+            query += self.game.get_game_results()
 
         return query
 
