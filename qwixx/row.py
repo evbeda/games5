@@ -59,6 +59,8 @@ class Row:
 
     def can_mark(self, number):
         return(
+            self.marks == []
+        ) or (
             (number > self.marks[-1])
             and (self.color in ['red', 'yellow'])
         ) or (
