@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from .set_dices import SetDices
+from .dice import Dice
 
 
 class TestSetDices(unittest.TestCase):
@@ -27,3 +28,13 @@ class TestSetDices(unittest.TestCase):
         self.assertEqual(random_mock.call_count, 6)
         self.assertEqual(len(values), 6)
         self.assertEqual(values, values_test)
+
+    def test_get_value_of_die(self):
+        self.t_set_dices.dices = [
+            Dice('white_1'),
+            Dice('white_2'),
+            Dice('red'),
+        ]
+        self.t_set_dices.dices[0].value = 5
+        result = self.t_set_dices.get_value_of_die('white_1')
+        self.assertEqual(result, 5)
