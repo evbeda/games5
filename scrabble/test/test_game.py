@@ -107,3 +107,7 @@ class TestGame(unittest.TestCase):
         score = self.t_game.count_points(minus_remaining_tiles)
         for player_score, expected_score in zip(score, expected):
             self.assertEqual(player_score, expected_score)
+
+    def test_resolve_challenge_word_correct(self):
+        self.t_game.resolve_challenge(True, 1)
+        self.assertIn(1, self.t_game.lost_turns)
