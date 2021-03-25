@@ -118,7 +118,7 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.challenger_player = 1
         self.scrabble.play(user_input)
         self.assertEqual(self.scrabble.game_state, 'change_turn')
-        resolve_challenge_patched.assert_called_with(expected_param)
+        resolve_challenge_patched.assert_called_with(expected_param, 1)
 
     @parameterized.expand([
         ('create_game', True),

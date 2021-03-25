@@ -78,6 +78,12 @@ class TestGame(unittest.TestCase):
         t_game.change_turn()
         self.assertEqual(t_game.current_player, next_player)
 
+    def test_change_turn_skip_lost(self):
+        self.t_game.current_player = 0
+        self.t_game.lost_turns = [1]
+        self.t_game.change_turn()
+        self.assertEqual(self.t_game.current_player, 2)
+
     @parameterized.expand([
         (
             [30, 40, 35],
