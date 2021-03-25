@@ -46,8 +46,8 @@ class RummyAndBurakko():
     # game creation
     def play_start(self, players_q):
         if 1 <= players_q <= 4:
-            self.input_player_args = players_q
-            self.game_state = GAME_STATE_PLAYERS
+            self.input_player_args, self.game_state = players_q, GAME_STATE_PLAYERS
+            # self.game_state = GAME_STATE_PLAYERS
 
     def play_players(self, *player_names):
         self.game = Game(player_names)
@@ -86,14 +86,15 @@ class RummyAndBurakko():
 
     # plays
     def plays_select_option(self, option):
-        options = {
-            1: GAME_STATE_NEW_SET_Q,
-            2: GAME_STATE_PUT_A_TILE,
-            3: GAME_STATE_GET_A_TILE,
-            4: GAME_STATE_END_TURN,
-        }
-        self.option = option
-        self.game_state = options[option]
+        if 1 <= option <= 4:
+            options = {
+                1: GAME_STATE_NEW_SET_Q,
+                2: GAME_STATE_PUT_A_TILE,
+                3: GAME_STATE_GET_A_TILE,
+                4: GAME_STATE_END_TURN,
+            }
+            self.option = option
+            self.game_state = options[option]
 
     def plays_new_set_q(self, quantity):
         self.input_q_tiles = quantity
@@ -104,6 +105,5 @@ class RummyAndBurakko():
         self.game_state = GAME_STATE_SELECT_OPTION
 
     def play(self, *args):
-        # method_name = 'plays_' + self.game_state
         method = getattr(self, 'plays_' + self.game_state)
         method(*args)
