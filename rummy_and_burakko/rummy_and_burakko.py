@@ -1,7 +1,7 @@
 from .game import Game
 
-GAME_STATE_CREATE_GAME = 'create_game'
-GAME_STATE_INPUT_PLAYERS = 'input_players'
+GAME_STATE_START = 'start'
+GAME_STATE_PLAYERS = 'players'
 GAME_STATE_SELECT_OPTION = 'select_option'
 GAME_STATE_NEW_SET_Q = 'new_set_q'
 GAME_STATE_NEW_SET_TILES = 'new_set_tiles'
@@ -19,8 +19,8 @@ class RummyAndBurakko():
     @property
     def input_args(self):
         game_state_args = {
-            GAME_STATE_CREATE_GAME: 1,
-            GAME_STATE_INPUT_PLAYERS: self.input_player_args,
+            GAME_STATE_START: 1,
+            GAME_STATE_PLAYERS: self.input_player_args,
             GAME_STATE_SELECT_OPTION: 1,
             GAME_STATE_NEW_SET_Q: 1,
             GAME_STATE_NEW_SET_TILES: self.input_q_tiles,
@@ -37,19 +37,19 @@ class RummyAndBurakko():
 
     def __init__(self):
         self.game = None
-        self.game_state = GAME_STATE_CREATE_GAME
+        self.game_state = GAME_STATE_START
         self.is_playing = True
         self.input_player_args = 0
         self.input_q_tiles = 0
         self.option = 0
 
     # game creation
-    def play_create_game(self, players_q):
+    def play_start(self, players_q):
         if 1 <= players_q <= 4:
             self.input_player_args = players_q
-            self.game_state = GAME_STATE_INPUT_PLAYERS
+            self.game_state = GAME_STATE_PLAYERS
 
-    def play_input_players(self, *player_names):
+    def play_players(self, *player_names):
         self.game = Game(player_names)
         self.game.distribute_tiles()
         self.game.random_order()
@@ -58,8 +58,8 @@ class RummyAndBurakko():
     # turn event
     def next_turn_query(self):
         game_state_next_turn = {
-            GAME_STATE_CREATE_GAME: 'Enter number of players',
-            GAME_STATE_INPUT_PLAYERS: 'Enter player names',
+            GAME_STATE_START: 'Enter number of players',
+            GAME_STATE_PLAYERS: 'Enter player names',
             GAME_STATE_SELECT_OPTION: 'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n3)Take a tile from a set\n4)End turn',
             GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
             GAME_STATE_NEW_SET_TILES: 'Put the index of tiles to play in the correct order',
