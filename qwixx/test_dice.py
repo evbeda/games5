@@ -9,8 +9,8 @@ class TestDice(unittest.TestCase):
 
     def test_random_dice(self):
         with patch('random.randint', return_value=3) as randint_patched:
-            result = self.t_dice.roll_dice()
-            self.assertEqual(result, 3)
+            self.t_dice.roll_dice()
+            self.assertEqual(self.t_dice.value, 3)
             randint_patched.assert_called_once_with(1, 6)
 
     def test_has_color(self):

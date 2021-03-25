@@ -61,3 +61,11 @@ class Game:
 
     def game_over(self):
         pass
+
+    def count_points(self):
+        return [
+            player.score - sum([
+                tile.score for tile in player.tiles_in_hand
+            ]) for player in self.players
+        ]
+

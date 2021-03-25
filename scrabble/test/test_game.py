@@ -77,3 +77,22 @@ class TestGame(unittest.TestCase):
         t_game.current_player = current_player
         t_game.change_turn()
         self.assertEqual(t_game.current_player, next_player)
+
+    @parameterized.expand([
+        (
+            [30, 40, 50],
+            [
+                ['a', 'b', 'c'],
+                ['x', 'y'],
+                ['f', 'e', 'q'],
+            ],
+            [23, 28, 40],
+        ),
+    ])
+    def test_count_points(self, scores, player_hands, expected):
+        for player, score, tiles in zip(self.t_game.players, scores, player_hands):
+            player.score = score
+            player.tiles_in_hand = [Tile(t) for t in tiles]
+        score = self.t_game.count_points()
+        for player_score, expected_score in zip(score, expected):
+            self.assertEqual(player_score, expected_score)
