@@ -40,15 +40,15 @@ class Game:
             self.players[self.current_turn].get_hand(),
         ])
 
-    def make_play(self, option, *args):
+    def make_play(self, option, args):
         if option == 3:
             self.end_turn()
         else:
             player = self.players[self.current_turn]
             options = {
-                0: self.board.put_new_set
-                1: self.board.put_a_tile
-                2: self.board.give_one_tile_from_board
+                # 0: self.board.put_new_set,
+                # 1: self.board.put_a_tile,
+                2: self.board.give_one_tile_from_board,
             }
             options[option](player, *args)
 

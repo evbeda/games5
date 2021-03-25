@@ -120,6 +120,51 @@ class TestGame(unittest.TestCase):
         self.assertEqual(result, expected)
 
     @parameterized.expand([
+        # (option, call_count)
+        # (0, (1, 0, 0, 0)),
+        # (1, (0, 1, 0, 0)),
+        (2, (0, 0, 1, 0)),
+        (3, (0, 0, 0, 1)),
+    ])
+    @patch.object(Game, "end_turn")
+    @patch.object(Board, "give_one_tile_from_board")
+    # @patch.object(Board, "put_a_tile")
+    # @patch.object(Board, "put_new_set")
+    def test_make_play_calls(
+        self,
+        option,
+        call_count,
+        # mock_new_set,
+        # mock_put_a_tile,
+        mock_take_tile,
+        mock_end,
+    ):
+        # data
+        self.game.players = [Player("test_1")]
+        arg_1 = 10
+        arg_2 = 55
+        # process
+        self.game.make_play(option, [arg_1, arg_2])
+        # assert
+        # self.assertEqual(mock_new_set.call_count, call_count[0])
+        # self.assertEqual(mock_put_a_tile.call_count, call_count[1])
+        self.assertEqual(mock_take_tile.call_count, call_count[2])
+        self.assertEqual(mock_end.call_count, call_count[3])
+
+    @patch.object(Board, "give_one_tile_from_board")
+    def test_make_play_arguments(self, mock):
+        # data
+        self.game.players = [Player("test_1")]
+        player = self.game.players[self.game.current_turn]
+        option = 2
+        set_id = 1
+        index = 3
+        # process
+        self.game.make_play(option, [set_id, index])
+        # assert
+        mock.assert_called_once_with(player, set_id, index)
+
+    @parameterized.expand([
         # (return_value, validate.call_count, give_one_tile.call_count)
         (True, 1, 0),
         (False, 0, 1),
