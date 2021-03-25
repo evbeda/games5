@@ -40,11 +40,17 @@ class Game:
             self.players[self.current_turn].get_hand(),
         ])
 
-    # def hand_to_board(self, indexes):
-    #     pass
-
-    # def board_to_hand(self):
-    #     pass
+    def make_play(self, option, *args):
+        if option == 3:
+            self.end_turn()
+        else:
+            player = self.players[self.current_turn]
+            options = {
+                0: self.board.put_new_set
+                1: self.board.put_a_tile
+                2: self.board.give_one_tile_from_board
+            }
+            options[option](player, *args)
 
     def end_turn(self):
         self.players[self.current_turn].change_state()
