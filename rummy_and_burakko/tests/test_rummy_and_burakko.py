@@ -7,6 +7,6 @@ class TestRummyAndBurakko(unittest.TestCase):
     def setUp(self):
         self.rummy = RummyAndBurakko()
 
-    def test_init(self):
-        x = self.rummy.probando()
-        self.assertEqual(x, "anda")
+    # def test_init(self):
+    #     x = self.rummy.probando()
+    #     self.assertEqual(x, "anda")
