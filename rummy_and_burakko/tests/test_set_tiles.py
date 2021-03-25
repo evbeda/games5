@@ -66,7 +66,6 @@ class TestSetTiles(unittest.TestCase):
         self.assertEqual(result, expected)
         self.assertEqual(result_2, expected)
 
-
     # Pocedure test to approve a leg
     @parameterized.expand([
         (True, (('red', 5), ('blue', 5), ('green', 5))),
@@ -107,3 +106,25 @@ class TestSetTiles(unittest.TestCase):
     ])
     def test_hand_format(self, tile_set, expected):
         self.assertEqual(tile_set.get_tiles(), expected)
+
+    @parameterized.expand([
+        ((('blue', 1), ('blue', 2), ('blue', 3)), 2, ('blue', 3)),
+        ((('blue', 1), ('blue', 2), ('blue', 3)), 0, ('blue', 1)),
+        ((('blue', 1), ('blue', 2), ('blue', 3)), 1, ('blue', 2)),
+    ])
+    def test_extract_one_tile(self, tiles, index, tile_expected):
+        set_tile = SetTiles([Tile(t[0], t[1]) for t in tiles])
+        temp_len = len(set_tile.tiles)
+        result = set_tile.extract_one_tile(index)
+        self.assertEqual(result.color, tile_expected[0])
+        self.assertEqual(result.number, tile_expected[1])
+        self.assertEqual(len(set_tile.tiles), temp_len - 1)
+
+    @parameterized.expand([
+        ((('blue', 1), ('blue', 2), ('blue', 3)), 4),
+        # ((), 4),
+    ])
+    def test_extract_one_tile_fail(self, tiles, index):
+        set_tile = SetTiles([Tile(t[0], t[1]) for t in tiles])
+        with self.assertRaises(IndexError):
+            set_tile.extract_one_tile(index)

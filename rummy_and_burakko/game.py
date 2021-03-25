@@ -19,8 +19,8 @@ class Game:
             raise Exception
 
     def next_turn(self):
-        self.players[self.current_turn].change_state()
         self.current_turn = (self.current_turn + 1) % len(self.players)
+        self.players[self.current_turn].change_state()
         self.board.temporary_sets()
         self.players[self.current_turn].temporary_hand()
 
@@ -45,6 +45,7 @@ class Game:
     #     pass
 
     def end_turn(self):
+        self.players[self.current_turn].change_state()
         if self.valid_turn():
             self.players[self.current_turn].validate_turn()
             self.board.validate_turn()
@@ -52,6 +53,7 @@ class Game:
             self.tile_bag.give_one_tile(self.players[self.current_turn])
 
     def valid_turn(self):
-        cond_1 = self.players[self.current_turn].valid_hand()
-        cond_2 = self.board.valid_sets()
-        return cond_1 and cond_2
+        return (
+            self.players[self.current_turn].valid_hand() and
+            self.board.valid_sets()
+        )
