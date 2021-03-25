@@ -127,13 +127,15 @@ class TestGame(unittest.TestCase):
     @patch.object(TileBag, "give_one_tile")
     @patch.object(Player, "validate_turn")
     @patch.object(Board, "validate_turn")
-    def test_end_turn_valid(
+    @patch.object(Player, "change_state")
+    def test_end_turn(
         self,
         rv,
         call_count_1,
         call_count_2,
+        mock_player_change_state,
         mock_board,
-        mock_player,
+        mock_player_validate,
         mock_bag,
     ):
         # data
@@ -144,6 +146,7 @@ class TestGame(unittest.TestCase):
             self.game.end_turn()
             # assert
             self.assertEqual(mock_v_t.call_count, 1)
+            self.assertEqual(mock_player_change_state.call_count, 1)
             self.assertEqual(mock_board.call_count, call_count_1)
-            self.assertEqual(mock_player.call_count, call_count_1)
+            self.assertEqual(mock_player_validate.call_count, call_count_1)
             self.assertEqual(mock_bag.call_count, call_count_2)
