@@ -20,17 +20,17 @@ class Game:
         else:
             raise Exception
 
-    def next_turn(self):
-        self.current_turn = (self.current_turn + 1) % len(self.players)
-        self.players[self.current_turn].change_state()
-        self.board.temporary_sets()
-        self.players[self.current_turn].temporary_hand()
-
     def distribute_tiles(self):
         self.tile_bag.assign_tiles(self.players)
 
     def random_order(self):
         random.shuffle(self.players)
+
+    def next_turn(self):
+        self.current_turn = (self.current_turn + 1) % len(self.players)
+        self.players[self.current_turn].change_state()
+        self.board.temporary_sets()
+        self.players[self.current_turn].temporary_hand()
 
     def show_game(self):
         return "\n".join([
