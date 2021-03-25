@@ -1,4 +1,5 @@
 from .score_pad import ScorePad
+from .set_dices import SetDices
 WHITE = 'white'
 COLOR = 'color'
 
@@ -13,7 +14,7 @@ class Qwixx:
         self.input_are_ints = False
         self.score_pad = []
         self.current_player = 0
-        self.dice_set = {}
+        self.dice_set = SetDices()
 
     def create_scored_pad(self, player_amount):
         if player_amount not in range(1, 5):
@@ -27,9 +28,6 @@ class Qwixx:
             if dice.color == color:
                 self.dice_set.pop(index)
                 break
-
-    def create_dice_set(self):
-        raise NotImplementedError
 
     def mark_with_white(self, row):
         pass
