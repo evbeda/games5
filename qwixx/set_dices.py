@@ -16,4 +16,4 @@ class SetDices:
         values = {}
         for dice in self.dices:
             values[dice.color] = dice.roll_dice()
-        return values
+        # return values

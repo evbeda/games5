@@ -19,8 +19,10 @@ class TestSetDices(unittest.TestCase):
             'green': 3
         }
         # process
-        values = self.t_set_dices.roll_dices()
-
+        values = {}
+        self.t_set_dices.roll_dices()
+        for die in self.t_set_dices.dices:
+            values[die.color] = die.value
         # assert
         self.assertEqual(random_mock.call_count, 6)
         self.assertEqual(len(values), 6)
