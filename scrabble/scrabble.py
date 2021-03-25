@@ -115,7 +115,7 @@ class Scrabble:
             self.game_state = GAME_STATE_CHANGE_TURN
 
     def play_in_challenge(self, result):
-        self.game.resolve_challenge(result == 'yes')
+        self.game.resolve_challenge(result == 'yes', self.challenger_player)
         self.game_state = GAME_STATE_CHANGE_TURN
 
     def play_select_action(self, action):
