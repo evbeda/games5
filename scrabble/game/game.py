@@ -73,15 +73,15 @@ class Game:
         tie = False
         winner = None
         highest = float('-inf')
-        player_scores = self.count_points(True)
+        player_scores = sorted(self.count_points(True), key=lambda x: x[1])
         for player, score in enumerate(player_scores):
             if score > highest:
                 highest = score
                 winner = player
-            tie = score == highest if not tie
+            tie = score == highest if not tie else True
         if tie:
             highest = float('-inf')
-            player_scores = self.count_points(False)
+            player_scores = sorted(self.count_points(False), key=lambda x: x[1])
             for player, score in enumerate(player_scores):
                 if score > highest:
                     highest = score
@@ -91,11 +91,20 @@ class Game:
     def count_points(self, with_remaining_tiles=True):
         if with_remaining_tiles:
             scores = [
-                player.score - sum([
+                (index, player.score - sum([
                     tile.score for tile in player.tiles_in_hand
-                ]) for player in self.players
+                ])) for index, player in enumerate(self.players)
             ]
         else:
-            scores = [player.score for player in self.players]
+            scores = [
+                (index, player.score)
+                for index, player in enumerate(self.players)
+            ]
 
         return scores
+
+    def get_game_results(self):
+        return 'Final scores:\n' + '\n'.join([
+            f'{pos}: {player.name} - {player.score}'
+            for pos, player in enumerate(self.players)
+        ])

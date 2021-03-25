@@ -112,7 +112,7 @@ class TestGame(unittest.TestCase):
             player.tiles_in_hand = [Tile(t) for t in tiles]
         score = self.t_game.count_points(minus_remaining_tiles)
         for player_score, expected_score in zip(score, expected):
-            self.assertEqual(player_score, expected_score)
+            self.assertEqual(player_score[1], expected_score)
 
     def test_resolve_challenge_word_correct(self):
         self.t_game.resolve_challenge(True, 1)
