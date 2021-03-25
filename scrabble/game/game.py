@@ -13,6 +13,7 @@ class Game:
         self.tile_bag = TileBag()
         self.first = 0
         self.skipped_turns = 0
+        self.lost_turns = []
         self.current_player = 0
         self.is_playing = True
 
@@ -51,6 +52,9 @@ class Game:
 
     def change_turn(self):
         self.current_player = (self.current_player + 1) % self.player_count
+        if self.current_player in self.lost_turns:
+            self.lost_turns.remove(self.current_player)
+            self.change_turn()
 
     def skip_turn(self):
         self.skipped_turns += 1
