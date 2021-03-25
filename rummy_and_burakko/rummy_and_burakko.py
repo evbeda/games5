@@ -42,17 +42,17 @@ class RummyAndBurakko():
         self.input_q_tiles = 0
 
     # game creation
-    def create_game(self, player_count):
+    def play_create_game(self, player_count):
         if 2 <= player_count <= 4:
             self.input_player_args = player_count
             self.game_state = GAME_STATE_INPUT_PLAYERS
 
-    def input_players(self, *player_names):
+    def play_input_players(self, *player_names):
         self.game = Game(player_names)
         self.game_state = GAME_STATE_SELECT_OPTION
 
     # turn event
-    def next_turn(self):
+    def next_turn_query(self):
         game_state_next_turn = {
             GAME_STATE_CREATE_GAME: 'Enter number of players',
             GAME_STATE_INPUT_PLAYERS: 'Enter player names',
@@ -65,12 +65,42 @@ class RummyAndBurakko():
         }
         return game_state_next_turn[self.game_state]
 
+    def next_turn(self):
+        query = '\n'
+
+        if self.game_state == GAME_STATE_CHANGED_LETTERS:
+            query += 'Changed letters:\n'
+            query += self.next_turn_show_hand() + '\n'
+            query += '- - - - - - - - - - - - - -\n\n'
+
+        elif self.game_state == GAME_STATE_SKIP_TURN:
+            self.game.skip_turn()
+            self.game_state = GAME_STATE_SELECT_ACTION
+
+        if self.game_state in [
+            GAME_STATE_CHANGE_TURN,
+            GAME_STATE_CHANGED_LETTERS,
+            GAME_STATE_SKIP_TURN,
+        ]:
+            self.game.change_turn()
+            self.game_state = GAME_STATE_SELECT_ACTION
+
+        query += self.board + '\n\n'
+        query += self.next_turn_state_query()
+
+        return query
+
     # plays
-    def play(self, number):
-        self.played_numbers.append(number)
-        if number < self._guess_number:
-            return 'too low'
-        elif number > self._guess_number:
-            return 'too high'
-        self.is_playing = False
-        return 'you win'
+    def play_select_option(self, option):
+        options = {
+            1: self.game_state
+            2: 
+            3: 
+            4: 
+        }
+        self.game_state = 
+
+    def play(self, *args):
+        method_name = 'play_' + self.game_state
+        method = getattr(self, method_name)
+        method(*args)

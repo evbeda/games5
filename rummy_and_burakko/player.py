@@ -32,6 +32,11 @@ class Player:
     def valid_hand(self):
         return self.q_tiles() and self.correct_tiles()
 
+    def q_tiles(self):
+        if len(self.hand) <= len(self.temp_hand):
+            return False
+        return True
+
     def correct_tiles(self):
         h_tiles_comp = self.hand.copy()
         for t_tile in self.temp_hand:
@@ -39,11 +44,6 @@ class Player:
                 h_tiles_comp.remove(t_tile)
             except Exception:
                 return False
-        return True
-
-    def q_tiles(self):
-        if len(self.hand) <= len(self.temp_hand):
-            return False
         return True
 
     def validate_turn(self):
