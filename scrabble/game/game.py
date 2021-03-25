@@ -61,3 +61,6 @@ class Game:
 
     def game_over(self):
         pass
+
+    def count_points(self):
+        pass
