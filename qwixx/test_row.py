@@ -54,6 +54,8 @@ class TestRow(unittest.TestCase):
         ('blue', [6, 5, 4], 3, True),
         ('blue', [6, 5, 4], 7, False),
         ('green', [7, 5, 4], 6, False),
+        ('green', [], 6, True),
+        ('red', [], 7, True),
     ])
     def test_can_mark(self, color, marks, number, expected):
         r = Row(color)
