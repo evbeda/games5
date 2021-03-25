@@ -25,17 +25,21 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.t_bag.tiles), 99)
         self.assertEqual(len(self.player_test.tiles_in_hand), 1)
 
-    def test_full_draw(self):
+    @parameterized.expand([
+        (['a', 'b'], ['c']*100, 7, 95),
+        (['a', 'b'], ['c']*3, 5, 0),
+        (['a', 'b'], [], 2, 0),
+    ])
+    def test_full_draw(
+        self, tiles_hand, tiles_in_bag, len_hand, len_bag,
+    ):
         # data
-        self.player_test.tiles_in_hand = [9, 99]
-        # process
-        self.assertEqual(len(self.player_test.tiles_in_hand), 2)
-        self.assertEqual(len(self.t_bag.tiles), 100)
-
+        self.player_test.tiles_in_hand = tiles_hand
+        self.t_bag.tiles = tiles_in_bag
         self.player_test.full_draw(self.t_bag)
         # assert
-        self.assertEqual(len(self.player_test.tiles_in_hand), 7)
-        self.assertEqual(len(self.t_bag.tiles), 95)
+        self.assertEqual(len(self.player_test.tiles_in_hand), len_hand)
+        self.assertEqual(len(self.t_bag.tiles), len_bag)
 
     @patch('random.randint')
     def test_put_t_draw_t(self, mock_random):
