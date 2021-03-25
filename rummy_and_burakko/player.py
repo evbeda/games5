@@ -39,13 +39,10 @@ class Player:
                 h_tiles_comp.remove(t_tile)
             except Exception:
                 return False
-
         return True
 
     def q_tiles(self):
-        l_hand = len(self.hand)
-        l_temp = len(self.temp_hand)
-        if l_hand <= l_temp:
+        if len(self.hand) <= len(self.temp_hand):
             return False
         return True
 
