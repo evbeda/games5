@@ -7,10 +7,12 @@ from unittest.mock import patch
 
 
 class TestBoard(unittest.TestCase):
+    def setUp(self):
+        self.b = Board()
+    
     def test_board(self):
-        b = Board()
-        self.assertEqual(len(b.spots), 15)
-        self.assertEqual(len(b.spots[0]), 15)
+        self.assertEqual(len(self.b.spots), 15)
+        self.assertEqual(len(self.b.spots[0]), 15)
 
     @patch.object(Board, 'multiplier', return_value=(0, 'c'))
     def test_set_spots(self, multiplier_mock):
@@ -25,8 +27,7 @@ class TestBoard(unittest.TestCase):
         (14, 0, (3, 'w')),    # spot with mult x3 word
     ])
     def test_multiplier(self, row, col, expected):
-        s = Board()
-        self.assertEqual(s.multiplier(row, col), expected)
+        self.assertEqual(self.b.multiplier(row, col), expected)
 
     def test_board_format(self):
         expected_board = '''- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -61,8 +62,7 @@ class TestBoard(unittest.TestCase):
 |3xW|   |   |2xL|   |   |   |3xW|   |   |   |2xL|   |   |3xW|
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -'''
 
-        board = Board()
-        self.assertEqual(board.get_board(), expected_board)
+        self.assertEqual(self.b.get_board(), expected_board)
 
     @parameterized.expand([
         ('hola', 7, 5, True, True),
@@ -73,8 +73,7 @@ class TestBoard(unittest.TestCase):
     def test_can_place_first_word(
         self, word, row, col, direction, expected
     ):
-        b = Board()
-        result = b.can_place_first_word(word, row, col, direction)
+        result = self.b.can_place_first_word(word, row, col, direction)
 
         self.assertEqual(result, expected)
 
@@ -86,30 +85,27 @@ class TestBoard(unittest.TestCase):
         ('martillo', 7, 2, True, False),
     ])
     def test_can_place_word(self, word, row, col, direction, expected):
-        b = Board()
-        word_tile = b.word_to_tile('hola')
-        b.place_letters(word_tile, 7, 4, True, [0, 1, 2, 3])
+        word_tile = self.b.word_to_tile('hola')
+        self.b.place_letters(word_tile, 7, 4, True, [0, 1, 2, 3])
 
-        self.assertEqual(b.can_place_word(word, row, col, direction), expected)
+        self.assertEqual(self.b.can_place_word(word, row, col, direction), expected)
 
     def test_place_letters(self):  # , word, row, col, direction):
-        b = Board()
-        word = b.word_to_tile('hola')
+        word = self.b.word_to_tile('hola')
         row = 4
         col = 8
         direction = True
-        b.place_letters(word, row, col, direction, range(len(word)))
+        self.b.place_letters(word, row, col, direction, range(len(word)))
 
         for i in range(len(word)):
             if direction:
-                self.assertEqual(b.spots[row][col+i].tile, word[i])
+                self.assertEqual(self.b.spots[row][col+i].tile, word[i])
             else:
-                self.assertEqual(b.spots[row+i][col].tile, word[i])
+                self.assertEqual(self.b.spots[row+i][col].tile, word[i])
 
     def test_word_to_tile(self):
-        b = Board()
         word = 'hola'
-        word_tile = b.word_to_tile(word)
+        word_tile = self.b.word_to_tile(word)
         for i, wt in enumerate(word_tile):
             self.assertEqual(wt.letter, word[i])
 
@@ -120,13 +116,12 @@ class TestBoard(unittest.TestCase):
         (4, 0, 0, False, [None, None, None, None]),
     ])
     def test_get_spots_to_place_word(self, len_word, row, col, dire, expected):
-        b = Board()
-        word_tile = b.word_to_tile('barco')
-        b.place_letters(word_tile, 7, 4, True, range(len(word_tile)))
+        word_tile = self.b.word_to_tile('barco')
+        self.b.place_letters(word_tile, 7, 4, True, range(len(word_tile)))
             
-        spots_for_word = b.get_spots_to_place_word(len_word, row, col, dire)
+        spots_word = self.b.get_spots_to_place_word(len_word, row, col, dire)
 
-        for sfw, exp in zip(spots_for_word, expected):
+        for sfw, exp in zip(spots_word, expected):
             if sfw.tile:
                 self.assertEqual(sfw.tile.letter, exp)
             else:
@@ -138,7 +133,6 @@ class TestBoard(unittest.TestCase):
         ([None, None, None, None], [],),
     ])
     def test_tiles_in_board(self, tiles, expected):
-        b = Board()
         spots = []
         for t in tiles:
             spot = Spot(0, 'c')
@@ -146,7 +140,7 @@ class TestBoard(unittest.TestCase):
                 spot.set_tile(t)
             spots.append(spot)
 
-        spots_with_tile = b.tiles_in_board(spots)
+        spots_with_tile = self.b.tiles_in_board(spots)
         for swt, exp in zip(spots_with_tile, expected):
             self.assertEqual(swt, exp)
 
@@ -156,5 +150,4 @@ class TestBoard(unittest.TestCase):
         ('casa', ['c', 'a', 's', 'a'], []),
     ])
     def test_tiles_diff(self, word, letters_in_board, expected):
-        b = Board()
-        self.assertEqual(b.tiles_diff(word, letters_in_board), expected)
+        self.assertEqual(self.b.tiles_diff(word, letters_in_board), expected)
