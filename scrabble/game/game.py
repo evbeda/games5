@@ -91,6 +91,6 @@ class Game:
 
     def get_game_results(self):
         return 'Final scores:\n' + '\n'.join([
-            f'{pos+1}: {self.players[result[0]]} - {result[1]}'
+            f'{pos+1}: {self.players[result[0]].name} - {result[1]}'
             for pos, result in enumerate(self.game_results)
         ])

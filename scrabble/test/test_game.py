@@ -137,4 +137,4 @@ class TestGame(unittest.TestCase):
         for player, score in zip(self.t_game.players, player_scores):
             player.score = score
         
-        self.t_game.get_game_results()
+        self.assertEqual(self.t_game.get_game_results(), expected)
