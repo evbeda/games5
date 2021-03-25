@@ -15,7 +15,7 @@ class Game:
         self.skipped_turns = 0
         self.lost_turns = []
         self.current_player = 0
-        self.winner = None
+        self.game_results = []
         self.is_playing = True
 
     def create_player(self, name_players):
@@ -70,23 +70,9 @@ class Game:
 
     def game_over(self):
         self.is_playing = False
-        tie = False
-        winner = None
-        highest = float('-inf')
-        player_scores = sorted(self.count_points(True), key=lambda x: x[1])
-        for player, score in enumerate(player_scores):
-            if score > highest:
-                highest = score
-                winner = player
-            tie = score == highest if not tie else True
-        if tie:
-            highest = float('-inf')
-            player_scores = sorted(self.count_points(False), key=lambda x: x[1])
-            for player, score in enumerate(player_scores):
-                if score > highest:
-                    highest = score
-                    winner = player
-        self.winner = winner
+        self.game_results = sorted(self.count_points(True), key=lambda x: x[1], reverse=True)
+        if self.game_results[0] == self.game_results[1]:
+            self.game_results = sorted(self.count_points(False), key=lambda x: x[1], reverse=True)
 
     def count_points(self, with_remaining_tiles=True):
         if with_remaining_tiles:
@@ -105,6 +91,6 @@ class Game:
 
     def get_game_results(self):
         return 'Final scores:\n' + '\n'.join([
-            f'{pos}: {player.name} - {player.score}'
-            for pos, player in enumerate(self.players)
+            f'{pos+1}: {self.players[result[0]]} - {result[1]}'
+            for pos, result in enumerate(self.game_results)
         ])
