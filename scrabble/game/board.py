@@ -8,7 +8,8 @@ class Board:
         self.first = False
 
     def set_spots(self):
-        return [[Spot(*self.multiplier(x, y)) for y in range(15)] for x in range(15)]
+        return [[Spot(*self.multiplier(x, y))
+                for y in range(15)] for x in range(15)]
 
     def multiplier(self, x, y):
         mult = (0, 'c')
@@ -82,13 +83,15 @@ class Board:
             existing_tiles = self.tiles_in_board(spot_list)
             if self.can_place_word(word, existing_tiles):
                 remain_tiles = self.tiles_diff(word, existing_tiles)
-
-                # verificacion de hand
-                # un zip para revisar q esten las letras
-                # un zip para revisar que esten los indices
-
-            self.place_letters(word, row, col, direction, indexes)
-            pass
+                unzipped_remain_tiles = zip(*remain_tiles)
+                unzipped_list = list(unzipped_remain_tiles)
+                if all(
+                    [item in [tile.letter for tile in hand]
+                        for item in unzipped_list[1]]
+                ):
+                    self.place_letters(
+                        word, row, col, direction, unzipped_list[0]
+                    )
 
     def can_place_first_word(self, word, row, col, direction):
         return (
@@ -112,15 +115,12 @@ class Board:
     def word_to_tile(self, word):
         return [Tile(letter) for letter in word]
 
-# pasas la palabra la longitud la ubicacion
-# devuelvo el slice del tablero
     def get_spots_to_place_word(self, len_word, row, col, direction):
         return (
             self.spots[row][col:col+len_word]
             if direction
             else [self.spots[row+i][col] for i in range(len_word)]
         )
-
 
     def tiles_diff(self, word, letters_in_board):
         letters = list(enumerate(word))
