@@ -70,40 +70,40 @@ class RummyAndBurakko():
         }
         return game_state_next_turn[self.game_state]
 
-    def next_turn(self):
-        query = '\n'
-        if self.game_state in [
-            GAME_STATE_NEW_SET_TILES,
-            GAME_STATE_PUT_A_TILE,
-            GAME_STATE_GET_A_TILE
-        ]:
-            self.game_state = GAME_STATE_MAKE_MOVE
+    # def next_turn(self):
+    #     query = '\n'
+    #     if self.game_state in [
+    #         GAME_STATE_NEW_SET_TILES,
+    #         GAME_STATE_PUT_A_TILE,
+    #         GAME_STATE_GET_A_TILE
+    #     ]:
+    #         self.game_state = GAME_STATE_MAKE_MOVE
 
-        query += self.board + '\n\n'
-        query += self.next_turn_state_query()
+    #     query += self.board + '\n\n'
+    #     query += self.next_turn_state_query()
 
-        return query
+    #     return query
 
     # plays
-    def plays_select_option(self, option):
-        if 1 <= option <= 4:
-            options = {
-                1: GAME_STATE_NEW_SET_Q,
-                2: GAME_STATE_PUT_A_TILE,
-                3: GAME_STATE_GET_A_TILE,
-                4: GAME_STATE_END_TURN,
-            }
-            self.option = option
-            self.game_state = options[option]
+    # def plays_select_option(self, option):
+    #     if 1 <= option <= 4:
+    #         options = {
+    #             1: GAME_STATE_NEW_SET_Q,
+    #             2: GAME_STATE_PUT_A_TILE,
+    #             3: GAME_STATE_GET_A_TILE,
+    #             4: GAME_STATE_END_TURN,
+    #         }
+    #         self.option = option
+    #         self.game_state = options[option]
 
-    def plays_new_set_q(self, quantity):
-        self.input_q_tiles = quantity
-        self.game_state = GAME_STATE_NEW_SET_TILES
+    # def plays_new_set_q(self, quantity):
+    #     self.input_q_tiles = quantity
+    #     self.game_state = GAME_STATE_NEW_SET_TILES
 
-    def plays_make_move(self, moves):
-        self.game.make_play(self.option, moves)
-        self.game_state = GAME_STATE_SELECT_OPTION
+    # def plays_make_move(self, moves):
+    #     self.game.make_play(self.option, moves)
+    #     self.game_state = GAME_STATE_SELECT_OPTION
 
-    def play(self, *args):
-        method = getattr(self, 'plays_' + self.game_state)
-        method(*args)
+    # def play(self, *args):
+    #     method = getattr(self, 'plays_' + self.game_state)
+    #     method(*args)
