@@ -40,6 +40,7 @@ class RummyAndBurakko():
         self.is_playing = True
         self.input_player_args = 0
         self.input_q_tiles = 0
+        self.option = 0
 
     # game creation
     def play_create_game(self, player_count):
@@ -93,12 +94,13 @@ class RummyAndBurakko():
     # plays
     def play_select_option(self, option):
         options = {
-            1: self.game_state
-            2: 
-            3: 
-            4: 
+            1: GAME_STATE_NEW_SET_Q,
+            2: GAME_STATE_PUT_A_TILE,
+            3: GAME_STATE_GET_A_TILE,
+            4: GAME_STATE_PASS,
         }
-        self.game_state = 
+        self.option = option
+        self.game_state = options[option]
 
     def play(self, *args):
         method_name = 'play_' + self.game_state
