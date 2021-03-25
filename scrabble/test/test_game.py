@@ -93,6 +93,6 @@ class TestGame(unittest.TestCase):
         for player, score, tiles in zip(self.t_game.players, scores, player_hands):
             player.score = score
             player.tiles_in_hand = [Tile(t) for t in tiles]
-        points = self.t_game.count_points()
-        for player_points, expected_points in zip(points, expected):
-            self.assertEqual(player_points, expected_points)
+        score = self.t_game.count_points()
+        for player_score, expected_score in zip(score, expected):
+            self.assertEqual(player_score, expected_score)

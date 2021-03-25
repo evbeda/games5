@@ -63,4 +63,9 @@ class Game:
         pass
 
     def count_points(self):
-        pass
+        return [
+            player.score - sum([
+                tile.score for tile in player.tiles_in_hand
+            ]) for player in self.players
+        ]
+

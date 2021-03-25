@@ -6,6 +6,7 @@ class Player:
         self.id = id
         self.name = name
         self.tiles_in_hand = []
+        self.score = 0
 
     def one_draw(self, tiles_sack):
         index = random.randint(0, len(tiles_sack.tiles)-1)
