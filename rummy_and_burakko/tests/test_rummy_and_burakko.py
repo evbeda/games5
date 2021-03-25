@@ -14,10 +14,13 @@ class TestRummyAndBurakko(unittest.TestCase):
 
     @patch.object(Game, "show_game", return_value="test")
     def test_board(self, mock):
+        # data
+        players = ["test_1", "test_2", "test_3"]
+        # process
         result = self.rummy.board
         self.assertEqual(result, "Starting...")
 
-        self.rummy.game = Game()
+        self.rummy.game = Game(players)
         result = self.rummy.board
         mock.assert_called_once_with()
         self.assertEqual(mock.return_value, "test")
@@ -45,4 +48,3 @@ class TestRummyAndBurakko(unittest.TestCase):
     #     m_order.assert_called_once_with()
     #     m_distribute.assert_called_once_with()
 
-    
