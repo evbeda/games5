@@ -118,8 +118,41 @@ class TestGame(unittest.TestCase):
         self.t_game.resolve_challenge(True, 1)
         self.assertIn(1, self.t_game.lost_turns)
 
-    def test_game_over(self):
-        pass
+    @parameterized.expand([
+        (
+            [
+                (0, 10),
+                (1, 50),
+                (2, 30),
+            ],
+            [
+                (1, 50),
+                (2, 30),
+                (0, 10),
+            ],
+            True,
+        ),
+        (
+            [
+                (0, 10),
+                (1, 30),
+                (2, 30),
+            ],
+            [
+                (1, 30),
+                (2, 30),
+                (0, 10),
+            ],
+            False,
+        ),
+    ])
+    @patch.object(Game, 'count_points')
+    def test_game_over(self, result, sorted_result, expected_param, count_points_patched):
+        count_points_patched.return_value = result
+        self.t_game.game_over()
+        self.assertFalse(self.t_game.is_playing)
+        self.assertEqual(self.t_game.game_results, sorted_result)
+        count_points_patched.assert_called_with(expected_param)
 
     @parameterized.expand([
         (

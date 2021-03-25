@@ -71,7 +71,7 @@ class Game:
     def game_over(self):
         self.is_playing = False
         self.game_results = sorted(self.count_points(True), key=lambda x: x[1], reverse=True)
-        if self.game_results[0] == self.game_results[1]:
+        if self.game_results[0][1] == self.game_results[1][1]:
             self.game_results = sorted(self.count_points(False), key=lambda x: x[1], reverse=True)
 
     def count_points(self, with_remaining_tiles=True):
