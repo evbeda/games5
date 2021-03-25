@@ -6,11 +6,12 @@ from unittest.mock import patch
 
 class TestRow(unittest.TestCase):
     def test_lock_row(self):
-        color_row = "red"
-        expected = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-        self.row = Row(color_row)
-        self.assertEqual(self.row.marks, [])
-        self.assertEqual(self.row.numbers, expected)
+        # color_row = "red"
+        r = Row('yellow')
+        r.blocked_rows = []
+        self.assertEqual(r.blocked_rows, [])
+        r.lock_Row()
+        self.assertEqual(r.blocked_rows, [r.color])
 
     @parameterized.expand([
         ('red', tuple(range(2, 13))),
