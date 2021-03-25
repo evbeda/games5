@@ -104,6 +104,6 @@ class RummyAndBurakko():
         self.game_state = GAME_STATE_SELECT_OPTION
 
     def play(self, *args):
-        method_name = 'plays_' + self.game_state
-        method = getattr(self, method_name)
+        # method_name = 'plays_' + self.game_state
+        method = getattr(self, 'plays_' + self.game_state)
         method(*args)
