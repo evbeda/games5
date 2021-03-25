@@ -73,12 +73,20 @@ class Board:
 
         return board_str
 
-    def place_word(self, word, row, col, direction):
+    def place_word(self, word, row, col, direction, hand):
         if self.first and self.can_place_first_word(word, row, col, direction):
             self.place_letters(word, row, col, direction, range(len(word)))
+            self.first = False
         else:
-            indexes = self.can_place_word(word, row, col, direction)
+            spot_list = self.get_spots_to_place_word(word, row, col, direction)
+            existing_tiles = self.tiles_in_board(spot_list)
+            if self.can_place_word(word, existing_tiles):
+                remain_tiles = self.tiles_diff(word, existing_tiles)
+                
+                # verificacion de hand
+
             self.place_letters(word, row, col, direction, indexes)
+            pass
 
     def can_place_first_word(self, word, row, col, direction):
         return (
@@ -86,16 +94,11 @@ class Board:
             (not direction and col == 7 and row <= 7 <= row+len(word))
         )
 
-    def can_place_word(self, word, row, col, direction):
-        lw = len(word)
-        spots = (
-            self.spots[row][col:col+lw]
-            if direction
-            else [self.spots[row+i][col] for i in range(lw)]
-        )
-        # result::list((index, letter))
-        result = ([(i, s.tile.letter) for i, s in enumerate(spots) if s.tile])
-        return all([(word[i[0]] == i[1]) for i in result])
+    def tiles_in_board(self, spots):
+        return [(i, s.tile.letter) for i, s in enumerate(spots) if s.tile]
+
+    def can_place_word(self, word, tiles_in_board):
+        return all([(word[i[0]] == i[1]) for i in tiles_in_board])
 
     def place_letters(self, word, row, col, direction, indexes):
         for i in indexes:
@@ -107,6 +110,8 @@ class Board:
     def word_to_tile(self, word):
         return [Tile(letter) for letter in word]
 
+# pasas la palabra la longitud la ubicacion
+# devuelvo el slice del tablero
     def get_spots_to_place_word(self, len_word, row, col, direction):
         return (
             self.spots[row][col:col+len_word]
@@ -114,12 +119,7 @@ class Board:
             else [self.spots[row+i][col] for i in range(len_word)]
         )
 
-    def tiles_in_board(self, spots):
-        return ([s.tile.letter for s in spots if s.tile])
 
     def tiles_diff(self, word, letters_in_board):
-        letters = list(word)
-        for letter_in_board in letters_in_board:
-            letters.remove(letter_in_board)
-
-        return letters
+        letters = list(enumerate(word))
+        return [i for i in letters if i not in letters_in_board]
