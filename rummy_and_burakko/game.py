@@ -13,10 +13,7 @@ class Game:
         self.board = Board()
 
     def create_players(self, names):
-        if 2 <= len(names) <= 4:
-            return [Player(name) for name in names]
-        else:
-            raise Exception
+        return [Player(name) for name in names]
 
     def distribute_tiles(self):
         self.tile_bag.assign_tiles(self.players)
