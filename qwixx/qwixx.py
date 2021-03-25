@@ -29,8 +29,12 @@ class Qwixx:
                 self.dice_set.pop(index)
                 break
 
-    def mark_with_white(self, row):
-        pass
+    def mark_with_white(self, color):
+        s_pad = self.score_pad[self.current_player]
+        first_die = self.dice_set.get_value_of_die('white_1')
+        second_die = self.dice_set.get_value_of_die('white_2')
+        total = first_die + second_die
+        s_pad.mark_number_in_row(total, color)
 
     def mark_with_color(row, die_color, die_white):
         pass
