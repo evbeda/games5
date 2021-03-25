@@ -117,3 +117,6 @@ class TestGame(unittest.TestCase):
     def test_resolve_challenge_word_correct(self):
         self.t_game.resolve_challenge(True, 1)
         self.assertIn(1, self.t_game.lost_turns)
+
+    def test_game_over(self):
+        pass
