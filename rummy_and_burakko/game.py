@@ -6,8 +6,10 @@ import random
 
 class Game:
 
+    # def __init__(self, players):
     def __init__(self):
         self.players = []
+        # self.players = self.create_players(players)
         self.current_turn = 0
         self.tile_bag = TileBag()
         self.board = Board()
