@@ -10,18 +10,17 @@ from ..board import Board
 class TestGame(unittest.TestCase):
 
     def setUp(self):
-        self.game = Game()
+        self.player_names = ["Pedro", "Juana", "Mia"]
+        self.game = Game(self.player_names)
 
     def test_game_attributes(self):
         self.assertEqual(type(self.game.tile_bag), type(TileBag()))
-        self.assertEqual(self.game.players, [])
+        self.assertEqual(len(self.game.players), 3)
         self.assertEqual(self.game.current_turn, 0)
 
     def test_create_players(self):
-        player_names = ["Pedro", "Juana", "Mia"]
-
         with patch('rummy_and_burakko.game.Player') as player_patched:
-            self.game.create_players(player_names)
+            self.game.create_players(self.player_names)
 
         self.assertEqual(len(self.game.players), 3)
         player_patched.assert_called()
