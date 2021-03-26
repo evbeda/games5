@@ -91,25 +91,13 @@ class Qwixx:
         output += "\n"
         for row in self.score_pad[self.current_player].rows.values():
             if row.color == 'red':
-                output += 'red'
-                output += ' ' + str(tuple(range(2, 13)))
-                # buscar la forma de representar las marcas en el output
-                output += ' ' + self.is_locked(row)
-                output += "\n"
+                output += self.output_row(row)
             if row.color == 'yellow':
-                output += 'yellow'
-                output += ' ' + str(tuple(range(2, 13)))
-                output += ' ' + self.is_locked(row)
-                output += "\n"
+                output += self.output_row(row)
             if row.color == 'green':
-                output += 'green'
-                output += ' ' + str(tuple(reversed(range(2, 13))))
-                output += ' ' + self.is_locked(row)
-                output += "\n"
+                output += self.output_row(row)
             if row.color == 'blue':
-                output += 'blue'
-                output += ' ' + str(tuple(reversed(range(2, 13))))
-                output += ' ' + self.is_locked(row)
+                output += self.output_row(row)
         output += "\n"
         output += "penalty"
         output += " " + str(self.score_pad[self.current_player].penalty)
@@ -127,6 +115,14 @@ class Qwixx:
         else:
             return "not loked"
 
+    def output_row(self, row):
+        output = ' '
+        output += '' + row.color
+        output += ' ' + str(tuple(range(2, 13)))
+        # buscar la forma de representar las marcas en el output
+        output += ' ' + self.is_locked(row)
+        output += "\n"
+        return output
     # @property
     # def you_can_play(self):
     #     if len(self.row.blocked_rows) < 2:
