@@ -13,13 +13,13 @@ class Qwixx:
     name = 'Qwixx'
     input_are_ints = True
 
-    @property
-    def input_args(self):
-        game_state_args = {
-            QWIXX_STATE_START: 1,
-            QWIXX_STATE_PLAYERS: self.input_player_args,
-        }
-        return game_state_args[self.game_state]()
+    # @property
+    # def input_args(self):
+    #     game_state_args = {
+    #         QWIXX_STATE_START: 1,
+    #         QWIXX_STATE_PLAYERS: self.input_player_args,
+    #     }
+    #     return game_state_args[self.game_state]()
 
     def __init__(self):
         self.game_state = QWIXX_STATE_START
