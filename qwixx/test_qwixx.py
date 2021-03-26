@@ -6,8 +6,11 @@ from .qwixx import (
     Qwixx,
     QWIXX_STATE_START,
     QWIXX_STATE_OPTION,
-    QWIXX_STATE_WHITE,
-    QWIXX_STATE_COLOR,
+    QWIXX_STATE_PLAY,
+    QWIXX_TURN_WHITE,
+    QWIXX_TURN_COLOR,
+    OPTION_PLAY,
+    OPTION_PASS,
 )
 from .set_dices import SetDices
 from .score_pad import ScorePad
@@ -64,11 +67,18 @@ class TestQwixx(unittest.TestCase):
     @parameterized.expand([
         (QWIXX_STATE_START, 'Enter number of players',),
         (QWIXX_STATE_OPTION, 'Game option :\n1)play \n2)pass',),
-        (QWIXX_STATE_WHITE, 'Choose in which row you want to mark the common dice (0/3) or not (99)?',),
-        (QWIXX_STATE_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
     ])
     def test_next_turn(self, state, expected):
         self.qwixx.game_state = state
+        self.assertEqual(self.qwixx.next_turn(), expected)
+
+    @parameterized.expand([
+        (QWIXX_TURN_WHITE, 'Choose in which row you want to mark the common dice (0/3) or not (99)?',),
+        (QWIXX_TURN_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
+    ])
+    def test_next_turn_play(self, turn_color, expected):
+        self.qwixx.game_state = QWIXX_STATE_PLAY
+        self.qwixx.turn_color = turn_color
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
@@ -98,7 +108,54 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(len(self.qwixx.output_row(row)), expected)
 
     @patch.object(Qwixx, 'play_start')
-    def test_play_start(self, patched_play):
+    def test_play_start(self, patched_play_start):
         self.qwixx.game_state = QWIXX_STATE_START
         self.qwixx.play(4)
-        patched_play.assert_called_once_with(4)
+        patched_play_start.assert_called_once_with(4)
+
+    @patch.object(Qwixx, 'play_option')
+    def test_play_option_(self, patched_play_option):
+        self.qwixx.game_state = QWIXX_STATE_OPTION
+        self.qwixx.play(OPTION_PLAY)
+        patched_play_option.assert_called_once_with(OPTION_PLAY)
+
+    def test_play_option_play(self):
+        self.qwixx.play_start(4)
+        self.qwixx.play_option(OPTION_PLAY)
+        self.assertEqual(
+            self.qwixx.game_state,
+            QWIXX_STATE_PLAY,
+        )
+        self.assertEqual(
+            self.qwixx.current_player,
+            0,
+        )
+
+    def test_play_option_pass(self):
+        self.qwixx.play_start(4)
+        self.qwixx.play_option(OPTION_PASS)
+        self.assertEqual(
+            self.qwixx.game_state,
+            QWIXX_STATE_OPTION,
+        )
+        self.assertEqual(
+            self.qwixx.current_player,
+            1,
+        )
+
+    def test_play_option_pass_last_player(self):
+        self.qwixx.play_start(4)
+        self.qwixx.current_player = 3
+        self.qwixx.play_option(OPTION_PASS)
+        self.assertEqual(
+            self.qwixx.game_state,
+            QWIXX_STATE_OPTION,
+        )
+        self.assertEqual(
+            self.qwixx.current_player,
+            0,
+        )
+
+    def test_play_option_exception(self):
+        with self.assertRaises(Exception):
+            self.qwixx.play_option(3)
