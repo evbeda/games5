@@ -5,7 +5,6 @@ from parameterized import parameterized
 from .qwixx import (
     Qwixx,
     QWIXX_STATE_START,
-    QWIXX_STATE_PLAYERS,
     QWIXX_STATE_OPTION,
     QWIXX_STATE_WHITE,
     QWIXX_STATE_COLOR,
@@ -64,7 +63,6 @@ class TestQwixx(unittest.TestCase):
 
     @parameterized.expand([
         (QWIXX_STATE_START, 'Enter number of players',),
-        (QWIXX_STATE_PLAYERS, 'Enter player names',),
         (QWIXX_STATE_OPTION, 'Game option :\n1)play \n2)pass',),
         (QWIXX_STATE_WHITE, 'Choose in which row you want to mark the common dice (0/3) or not (99)?',),
         (QWIXX_STATE_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
