@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
+from parameterized import parameterized
 from .qwixx import Qwixx
 from .set_dices import SetDices
 from .score_pad import ScorePad
@@ -45,3 +46,11 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.score_pad = [ScorePad()]
         self.qwixx.mark_with_white('red')
         mock_mark_number.assert_called_once_with(4, 'red')
+
+    @patch.object(Qwixx, "create_scored_pad")
+    @patch.object(SetDices, "roll_dices")
+    def test_play_players(self, mock_roll, mock_create):
+        self.qwixx.play_players(5)
+        mock_create.assert_called_once_with(5)
+        mock_roll.assert_called_once_with()
+

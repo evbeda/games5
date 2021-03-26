@@ -1,20 +1,37 @@
 from .score_pad import ScorePad
 from .set_dices import SetDices
-WHITE = 'white'
-COLOR = 'color'
+
+QWIXX_STATE_START = 'start_game'
+QWIXX_STATE_PLAYERS = 'players_input'
+QWIXX_STATE_OPTION = 'select_option'
+QWIXX_STATE_WHITE = 'white'
+QWIXX_STATE_COLOR = 'color'
 
 
 class Qwixx:
 
     name = 'Qwixx'
+    input_are_ints = True
+
+    @property
+    def input_args(self):
+        game_state_args = {
+            QWIXX_STATE_START: 1,
+            QWIXX_STATE_PLAYERS: self.input_player_args,
+        }
+        return game_state_args[self.game_state]()
 
     def __init__(self):
-        self.state = WHITE
-        self.input_args = 2
+        self.game_state = QWIXX_STATE_START
         self.input_are_ints = False
         self.score_pad = []
         self.current_player = 0
         self.dice_set = SetDices()
+
+    def play_players(self, n_players):
+        self.score_pad = self.create_scored_pad(n_players)
+        self.dice_set.roll_dices()
+        self.game_state = QWIXX_STATE_OPTION
 
     def create_scored_pad(self, player_amount):
         if player_amount not in range(1, 5):
@@ -22,6 +39,16 @@ class Qwixx:
         for indice_Player in range(player_amount):
             self.score_pad.append(ScorePad())
             self.score_pad[indice_Player].id_player = indice_Player
+
+    def next_turn_query(self):
+        game_state_next_turn = {
+            QWIXX_STATE_START: 'Enter number of players',
+            QWIXX_STATE_PLAYERS: 'Enter player names',
+            QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
+            QWIXX_STATE_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
+            QWIXX_STATE_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+        }
+        return game_state_next_turn[self.game_state]
 
     def remove_dice(self, color):
         for index, dice in enumerate(self.dice_set):
@@ -44,14 +71,9 @@ class Qwixx:
     #         if self.state == WHITE:
     #             self.input_args = 1
     #             self.input_are_ints = True
-    #             # return messages('Choose in which row you want to mark the
-    #             # common dice (0/3) or not (99)?')
     #         if self.state == COLOR:
     #             self.input_args = 3
     #             self.input_are_ints = True
-    #             # return messages("Choose in which row you want to mark a
-    #             # common die with a colored die (0/3),common die (0/1) and
-    #             # color die(0/3) or Penalty (99/99)?")
 
     # def play(self, row, die_color, die_white):
     #     if self.state == WHITE:
@@ -63,38 +85,40 @@ class Qwixx:
     # def board(self):
     #     output = " "
     #     output += "\n"
-    #     output += "the player who plays(player)"
+    #     output += "the player who plays :" + str(self.score_pad[self.current_player].id_player)
     #     output += "\n"
     #     output += "score pad "
-    #     for row in self.rows.values():
+    #     for row in self.score_pad[self.current_player].rows.values():
     #         if row.color == 'red':
     #             output += 'red'
-    #             output += ' ' + tuple(range(2, 13))
+    #             output += ' ' + str(tuple(range(2, 13)))
     #             # buscar la forma de representar las marcas en el output
     #             output += ' ' + self.is_locked(row)
     #         if row.color == 'yellow':
     #             output += 'yellow'
-    #             output += ' ' + tuple(range(2, 13))
+    #             output += ' ' + str(tuple(range(2, 13)))
     #             output += ' ' + self.is_locked(row)
     #         if row.color == 'green':
     #             output += 'green'
-    #             output += ' ' + tuple(reversed(range(2, 13)))
+    #             output += ' ' + str(tuple(reversed(range(2, 13))))
     #             output += ' ' + self.is_locked(row)
     #         if row.color == 'blue':
     #             output += 'blue'
-    #             output += ' ' + tuple(reversed(range(2, 13)))
+    #             output += ' ' + str(tuple(reversed(range(2, 13))))
     #             output += ' ' + self.is_locked(row)
     #     output += "\n"
     #     output += "penalty"
-    #     output += " " + self.scoredpad.penalty
+    #     output += " " + str(self.score_pad[self.current_player].penalty)
     #     output += "\n"
     #     output += "score"
-    #     output += "" + tuple(range(1, 12))
+    #     output += "" + str(tuple(range(1, 12)))
     #     output += "(1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
 
     # def is_locked(self, row):
-    #     if self.row.color in self.row.blocked_rows:
+    #     if row.color in row.blocked_rows:
     #         return "is loked"
+    #     else:
+    #         return "not loked"
 
     # @property
     # def you_can_play(self):
