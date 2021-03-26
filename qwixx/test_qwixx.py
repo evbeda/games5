@@ -57,7 +57,7 @@ class TestQwixx(unittest.TestCase):
     @patch.object(Qwixx, "create_scored_pad")
     @patch.object(SetDices, "roll_dices")
     def test_play_players(self, mock_roll, mock_create):
-        self.qwixx.play_players(5)
+        self.qwixx.play_start(5)
         mock_create.assert_called_once_with(5)
         mock_roll.assert_called_once_with()
 
@@ -96,3 +96,9 @@ class TestQwixx(unittest.TestCase):
     ])
     def test_output_row(self, row, expected):
         self.assertEqual(len(self.qwixx.output_row(row)), expected)
+
+    @patch.object(Qwixx, 'play_start')
+    def test_play_start(self, patched_play):
+        self.qwixx.game_state = QWIXX_STATE_START
+        self.qwixx.play(4)
+        patched_play.assert_called_once_with(4)
