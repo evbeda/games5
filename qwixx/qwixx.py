@@ -3,13 +3,11 @@ from .set_dices import SetDices
 
 
 QWIXX_STATE_START = 'start_game'
-QWIXX_STATE_PLAYERS = 'players_input'
 QWIXX_STATE_OPTION = 'select_option'
 QWIXX_STATE_WHITE = 'white'
 QWIXX_STATE_COLOR = 'color'
 game_state_next_turn = {
     QWIXX_STATE_START: 'Enter number of players',
-    QWIXX_STATE_PLAYERS: 'Enter player names',
     QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
     QWIXX_STATE_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
     QWIXX_STATE_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
