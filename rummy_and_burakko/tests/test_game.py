@@ -186,3 +186,13 @@ class TestGame(unittest.TestCase):
             self.assertEqual(mock_board.call_count, call_count_1)
             self.assertEqual(mock_player_validate.call_count, call_count_1)
             self.assertEqual(mock_bag.call_count, call_count_2)
+
+    @patch.object(Player, 'get_lenght', return_value=5)
+    def test_quantity_of_tiles(self, mock_player):
+        # data
+        self.game.distribute_tiles()
+        # process
+        result = self.game.quantity_of_tiles()
+        # assert
+        mock_player.assert_called_once_with()
+        self.assertEqual(result, mock_player.return_value)

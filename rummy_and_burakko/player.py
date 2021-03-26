@@ -51,3 +51,6 @@ class Player:
 
     def change_state(self):
         self.is_playing = not self.is_playing
+
+    def get_lenght(self):
+        return len(self.temp_hand)

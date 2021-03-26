@@ -47,6 +47,9 @@ class Game:
             }
             options[option](player, *args)
 
+    def quantity_of_tiles(self):
+        return self.players[self.current_turn].get_lenght()
+
     def end_turn(self):
         self.players[self.current_turn].change_state()
         if self.valid_turn():
