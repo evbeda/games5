@@ -5,6 +5,7 @@ from parameterized import parameterized
 from .qwixx import Qwixx
 from .set_dices import SetDices
 from .score_pad import ScorePad
+from .row import Row
 
 
 class TestQwixx(unittest.TestCase):
@@ -61,3 +62,22 @@ class TestQwixx(unittest.TestCase):
     def test_next_turn_query(self, state, expected):
         self.qwixx.game_state = state
         self.assertEqual(self.qwixx.next_turn_query(), expected)
+
+    @parameterized.expand([
+       (2, 0, 356),
+       (4, 3, 356),
+        ])
+    def test_board(self, cant_score_pad, id_player, cant_letter):
+        qwixx = Qwixx()
+        qwixx.create_scored_pad(cant_score_pad)
+        qwixx.current_player = id_player
+        self.assertEqual(len(qwixx.board), cant_letter)
+ 
+    @parameterized.expand([
+       (Row('rojo'), 'green', 'not loked'),
+       (Row('rojo'), 'rojo', 'is loked'),
+    ])
+    def test_is_locked(self, row, color_row, expected):
+        row.blocked_rows.append(color_row)
+        self.qwixx.is_locked(row)
+        self.assertEqual(self.qwixx.is_locked(row), expected)
