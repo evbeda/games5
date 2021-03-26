@@ -14,7 +14,7 @@ game_state_next_turn = {
     QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
 }
 game_state_color_next_turn = {
-    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
+    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (red, yellow, blue, green) or pass ?',
     QWIXX_TURN_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
 }
 OPTION_PLAY = 1
@@ -68,18 +68,25 @@ class Qwixx:
                 break
 
     def mark_with_white(self, color):
+        # if color == 'pass':
+            # self.set_next_player()
+        # if color not in ['red', 'yellow', 'blue', 'green']:
+            # raise Exception('Invalid color')
         s_pad = self.score_pad[self.current_player]
         first_die = self.dice_set.get_value_of_die('white_1')
         second_die = self.dice_set.get_value_of_die('white_2')
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
 
+    def set_next_player(self):
+        self.game_state = QWIXX_STATE_OPTION
+        self.current_player = (self.current_player + 1) % len(self.score_pad)
+
     def play_option(self, option):
         if option == OPTION_PLAY:
             self.game_state = QWIXX_STATE_PLAY
         elif option == OPTION_PASS:
-            self.game_state = QWIXX_STATE_OPTION
-            self.current_player = (self.current_player + 1) % len(self.score_pad)
+            self.set_next_player()
         else:
             raise Exception('Invalid Option')
 
@@ -88,11 +95,12 @@ class Qwixx:
             self.play_start(args[0])
         elif self.game_state == QWIXX_STATE_OPTION:
             self.play_option(args[0])
+        elif self.game_state == QWIXX_STATE_PLAY:
+            if self.turn_color == QWIXX_TURN_WHITE:
+                self.mark_with_white(args[0])
+            else:
+                self.mark_with_color(args[0], args[1], args[2])
         return ''
-    #     if self.state == WHITE:
-    #         return self.mark_with_white([row])
-    #     if self.state == COLOR:
-    #         return self.mark_with_color([row, die_color, die_white])
 
     @property
     def board(self):
