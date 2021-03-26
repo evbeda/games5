@@ -96,13 +96,13 @@ class RummyAndBurakko():
             self.option = option
             self.game_state = options[option]
 
-    def play_new_set_q(self, quantity):
-        self.input_q_tiles = quantity
-        self.game_state = GAME_STATE_NEW_SET_TILES
+    # def play_new_set_q(self, quantity):
+    #     self.input_q_tiles = quantity
+    #     self.game_state = GAME_STATE_NEW_SET_TILES
 
-    def play_make_move(self, moves):
-        self.game.make_play(self.option, moves)
-        self.game_state = GAME_STATE_SELECT_OPTION
+    # def play_make_move(self, moves):
+    #     self.game.make_play(self.option, moves)
+    #     self.game_state = GAME_STATE_SELECT_OPTION
 
     def play(self, *args):
         method = getattr(self, 'play_' + self.game_state)
