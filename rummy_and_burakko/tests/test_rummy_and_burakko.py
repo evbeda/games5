@@ -47,6 +47,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         m_init.assert_called_once_with(players)
         m_order.assert_called_once_with()
         m_distribute.assert_called_once_with()
+        self.assertTrue(self.rummy.input_are_ints)
 
     @parameterized.expand([
         # (game_state, expected)
