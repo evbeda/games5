@@ -1,11 +1,19 @@
 from .score_pad import ScorePad
 from .set_dices import SetDices
+from .row import Row
 
 QWIXX_STATE_START = 'start_game'
 QWIXX_STATE_PLAYERS = 'players_input'
 QWIXX_STATE_OPTION = 'select_option'
 QWIXX_STATE_WHITE = 'white'
 QWIXX_STATE_COLOR = 'color'
+game_state_next_turn = {
+            QWIXX_STATE_START: 'Enter number of players',
+            QWIXX_STATE_PLAYERS: 'Enter player names',
+            QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
+            QWIXX_STATE_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
+            QWIXX_STATE_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+        }
 
 
 class Qwixx:
@@ -27,6 +35,7 @@ class Qwixx:
         self.score_pad = []
         self.current_player = 0
         self.dice_set = SetDices()
+        self.is_playing = True
 
     def play_players(self, n_players):
         self.score_pad = self.create_scored_pad(n_players)
@@ -41,13 +50,6 @@ class Qwixx:
             self.score_pad[indice_Player].id_player = indice_Player
 
     def next_turn_query(self):
-        game_state_next_turn = {
-            QWIXX_STATE_START: 'Enter number of players',
-            QWIXX_STATE_PLAYERS: 'Enter player names',
-            QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
-            QWIXX_STATE_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
-            QWIXX_STATE_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
-        }
         return game_state_next_turn[self.game_state]
 
     def remove_dice(self, color):
@@ -62,18 +64,18 @@ class Qwixx:
         second_die = self.dice_set.get_value_of_die('white_2')
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
-
     # def mark_with_color(row, die_color, die_white):
     #     pass
 
     # def next_turn(self):
-    #     if self.you_can_play:
+    #     if self.is_playing:
     #         if self.state == WHITE:
     #             self.input_args = 1
     #             self.input_are_ints = True
     #         if self.state == COLOR:
     #             self.input_args = 3
     #             self.input_are_ints = True
+    #      self.you
 
     # def play(self, row, die_color, die_white):
     #     if self.state == WHITE:
@@ -116,9 +118,9 @@ class Qwixx:
         output += ' ' + self.is_locked(row)
         output += "\n"
         return output
-    # @property
+
     # def you_can_play(self):
-    #     if len(self.row.blocked_rows) < 2:
-    #         return True
+    #     if len(Row.blocked_rows) < 2:
+    #         self.is_playing = True
     #     else:
-    #         return False  # lo que retorna en realidad end_game()
+    #         self.is_playing = False

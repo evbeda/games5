@@ -71,7 +71,6 @@ class TestQwixx(unittest.TestCase):
         qwixx = Qwixx()
         qwixx.create_scored_pad(cant_score_pad)
         qwixx.current_player = id_player
-        print(qwixx.board)
         self.assertEqual(len(qwixx.board), cant_letter)
  
     @parameterized.expand([
