@@ -62,6 +62,15 @@ class TestPlayer(unittest.TestCase):
         # assert
         self.assertEqual(result, expected)
 
+    def test_validate_turn(self):
+        p = Player('jugador 1')
+        p.temp_hand = [1, 2, 3]
+
+        p.validate_turn()
+
+        self.assertTrue(p.hand == p.temp_hand)
+        self.assertFalse(p. hand is p.temp_hand)
+
     def test_change_state(self):
         self.assertFalse(self.player.is_playing)
         self.player.change_state()
