@@ -14,7 +14,6 @@ GAME_STATE_MAKE_MOVE = 'make_move'
 
 class RummyAndBurakko():
     name = 'Rummy and Burakko'
-    input_are_ints = True
 
     @property
     def input_args(self):
@@ -42,18 +41,20 @@ class RummyAndBurakko():
         self.input_player_args = 0
         self.input_q_tiles = 0
         self.option = 0
+        self.input_are_ints = True
 
     # game creation
     def play_start_game(self, players_q):
         if 1 <= players_q <= 4:
             self.input_player_args, self.game_state = players_q, GAME_STATE_PLAYERS_INPUT
-            # self.game_state = GAME_STATE_PLAYERS
+            self.input_are_ints = False
 
     def play_players_input(self, player_names):
         self.game = Game(player_names)
         self.game.distribute_tiles()
         self.game.random_order()
         self.game_state = GAME_STATE_SELECT_OPTION
+        self.input_are_ints = True
 
     # turn event
     def next_turn_state_message(self):
