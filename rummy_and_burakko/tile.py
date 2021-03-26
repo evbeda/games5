@@ -11,7 +11,5 @@ class Tile():
         self.set_id = set_id
 
     def __eq__(self, other):
-        if not isinstance(other, Tile):
-            return NotImplemented
-
-        return self.color == other.color and self.number == other.number
+        if isinstance(other, Tile):
+            return self.color == other.color and self.number == other.number
