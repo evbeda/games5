@@ -26,14 +26,17 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.assertEqual(mock.return_value, "test")
 
     @parameterized.expand([
-        # (input_players)
-        (0, 0, 'start_game'),
-        (1, 1, 'players_input'),
+        # (input_players, assign_input, game_state, input_are_ints)
+        (0, 0, 'start_game', True),
+        (1, 1, 'players_input', False),
+        (4, 4, 'players_input', False),
+        (5, 0, 'start_game', True),
     ])
-    def test_play_start_game(self, input_players, res_1, res_2):
+    def test_play_start_game(self, input_players, res_1, res_2, are_ints):
         self.rummy.play_start_game(input_players)
         self.assertEqual(self.rummy.input_player_args, res_1)
         self.assertEqual(self.rummy.game_state, res_2)
+        self.assertEqual(self.rummy.input_are_ints, are_ints)
 
     @patch.object(Game, "distribute_tiles")
     @patch.object(Game, "random_order")
