@@ -56,7 +56,7 @@ class RummyAndBurakko():
         self.game_state = GAME_STATE_SELECT_OPTION
 
     # turn event
-    def next_turn_query(self):
+    def next_turn_state_message(self):
         game_state_next_turn = {
             GAME_STATE_START_GAME: 'Enter number of players',
             GAME_STATE_PLAYERS_INPUT: 'Enter player names',
@@ -71,7 +71,7 @@ class RummyAndBurakko():
         return game_state_next_turn[self.game_state]
 
     # def next_turn(self):
-    #     query = '\n'
+    #     message = '\n'
     #     if self.game_state in [
     #         GAME_STATE_NEW_SET_TILES,
     #         GAME_STATE_PUT_A_TILE,
@@ -79,10 +79,10 @@ class RummyAndBurakko():
     #     ]:
     #         self.game_state = GAME_STATE_MAKE_MOVE
 
-    #     query += self.board + '\n\n'
-    #     query += self.next_turn_state_query()
+    #     message += self.board + '\n\n'
+    #     message += self.next_turn_state_message()
 
-    #     return query
+    #     return message
 
     # play
     def play_select_option(self, option):
@@ -102,9 +102,9 @@ class RummyAndBurakko():
             self.input_q_tiles = quantity
             self.game_state = GAME_STATE_NEW_SET_TILES
 
-    # def play_make_move(self, moves):
-    #     self.game.make_play(self.option, moves)
-    #     self.game_state = GAME_STATE_SELECT_OPTION
+    def play_make_move(self, moves):
+        self.game.make_play(self.option, moves)
+        self.game_state = GAME_STATE_SELECT_OPTION
 
     def play(self, *args):
         method = getattr(self, 'play_' + self.game_state)
