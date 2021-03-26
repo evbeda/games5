@@ -66,3 +66,17 @@ class TestPlayer(unittest.TestCase):
         self.assertFalse(self.player.is_playing)
         self.player.change_state()
         self.assertTrue(self.player.is_playing)
+
+    def test_get_lenght(self):
+        # data
+        self.player.temp_hand = [
+            Tile('r', 7),
+            Tile('b', 4),
+            Tile('y', 5),
+            Tile('*', 0),
+        ]
+        expected = 4
+        # process
+        result = self.player.get_lenght()
+        # assert
+        self.assertEqual(result, expected)
