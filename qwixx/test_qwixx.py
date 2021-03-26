@@ -147,18 +147,37 @@ class TestQwixx(unittest.TestCase):
         with self.assertRaises(Exception):
             self.qwixx.play_option(3)
 
-    @patch.object(Qwixx, 'mark_with_white')
-    def test_play_play_white(self, patched_mark_with_white):
+    @patch.object(Qwixx, 'play_turn')
+    def test_play_play_turn(self, patched_mark_with_white):
         self.qwixx.play_start(4)
         self.qwixx.turn_color = QWIXX_TURN_WHITE
         self.qwixx.game_state = QWIXX_STATE_PLAY
         self.qwixx.play(1)
         patched_mark_with_white.assert_called_once_with(1)
 
-    @patch.object(Qwixx, 'mark_with_color')
-    def test_play_play_color(self, patched_mark_with_color):
+    @patch.object(Qwixx, 'mark_with_white')
+    def test_play_play_color(self, patched_mark_with_white):
+        self.qwixx.play_start(4)
+        self.qwixx.turn_color = QWIXX_TURN_WHITE
+        self.qwixx.play_turn('red')
+        patched_mark_with_white.assert_called_once_with('red')
+
+    @parameterized.expand([
+        (0,),
+        (1,),
+        (2,),
+        (3,),
+    ])
+    def set_next_player(self, current_player):
         self.qwixx.play_start(4)
         self.qwixx.game_state = QWIXX_STATE_PLAY
-        self.qwixx.turn_color = QWIXX_TURN_COLOR
-        self.qwixx.play(1, 2, 3)
-        patched_mark_with_color.assert_called_once_with(1, 2, 3)
+        self.qwixx.current_player = current_player
+        self.qwixx.set_next_player()
+        self.assertEqual(
+            self.qwixx.game_state,
+            QWIXX_STATE_OPTION,
+        )
+        self.assertEqual(
+            self.qwixx.current_player,
+            (current_player + 1) % 4,
+        )
