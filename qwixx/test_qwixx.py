@@ -2,7 +2,14 @@ import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
 from parameterized import parameterized
-from .qwixx import Qwixx
+from .qwixx import (
+    Qwixx,
+    QWIXX_STATE_START,
+    QWIXX_STATE_PLAYERS,
+    QWIXX_STATE_OPTION,
+    QWIXX_STATE_WHITE,
+    QWIXX_STATE_COLOR,
+)
 from .set_dices import SetDices
 from .score_pad import ScorePad
 from .row import Row
@@ -56,12 +63,15 @@ class TestQwixx(unittest.TestCase):
         mock_roll.assert_called_once_with()
 
     @parameterized.expand([
-        ('white', 'Choose in which row you want to mark the common dice (0/3) or not (99)?'),
-        ('color', 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
+        (QWIXX_STATE_START, 'Enter number of players',),
+        (QWIXX_STATE_PLAYERS, 'Enter player names',),
+        (QWIXX_STATE_OPTION, 'Game option :\n1)play \n2)pass',),
+        (QWIXX_STATE_WHITE, 'Choose in which row you want to mark the common dice (0/3) or not (99)?',),
+        (QWIXX_STATE_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
     ])
-    def test_next_turn_query(self, state, expected):
+    def test_next_turn(self, state, expected):
         self.qwixx.game_state = state
-        self.assertEqual(self.qwixx.next_turn_query(), expected)
+        self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
         (2, 0, 361),

@@ -49,7 +49,7 @@ class Qwixx:
             self.score_pad.append(ScorePad())
             self.score_pad[indice_Player].id_player = indice_Player
 
-    def next_turn_query(self):
+    def next_turn(self):
         return game_state_next_turn[self.game_state]
 
     def remove_dice(self, color):
@@ -66,17 +66,6 @@ class Qwixx:
         s_pad.mark_number_in_row(total, color)
     # def mark_with_color(row, die_color, die_white):
     #     pass
-
-    # def next_turn(self):
-    #     if self.is_playing:
-    #         if self.state == WHITE:
-    #             self.input_args = 1
-    #             self.input_are_ints = True
-    #         if self.state == COLOR:
-    #             self.input_args = 3
-    #             self.input_are_ints = True
-    #      self.you
-
     # def play(self, row, die_color, die_white):
     #     if self.state == WHITE:
     #         return self.mark_with_white([row])
