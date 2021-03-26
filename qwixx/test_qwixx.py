@@ -119,41 +119,28 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.play(OPTION_PLAY)
         patched_play_option.assert_called_once_with(OPTION_PLAY)
 
-    def test_play_option_play(self):
+    @parameterized.expand([
+        (OPTION_PLAY, 0, 0, QWIXX_STATE_PLAY,),
+        (OPTION_PASS, 0, 1, QWIXX_STATE_OPTION,),
+        (OPTION_PASS, 3, 0, QWIXX_STATE_OPTION,),
+    ])
+    def test_play_option_play(
+        self,
+        selected_option,
+        current_player,
+        expected_current_player,
+        expected_game_state,
+    ):
         self.qwixx.play_start(4)
-        self.qwixx.play_option(OPTION_PLAY)
+        self.qwixx.current_player = current_player
+        self.qwixx.play_option(selected_option)
         self.assertEqual(
             self.qwixx.game_state,
-            QWIXX_STATE_PLAY,
+            expected_game_state,
         )
         self.assertEqual(
             self.qwixx.current_player,
-            0,
-        )
-
-    def test_play_option_pass(self):
-        self.qwixx.play_start(4)
-        self.qwixx.play_option(OPTION_PASS)
-        self.assertEqual(
-            self.qwixx.game_state,
-            QWIXX_STATE_OPTION,
-        )
-        self.assertEqual(
-            self.qwixx.current_player,
-            1,
-        )
-
-    def test_play_option_pass_last_player(self):
-        self.qwixx.play_start(4)
-        self.qwixx.current_player = 3
-        self.qwixx.play_option(OPTION_PASS)
-        self.assertEqual(
-            self.qwixx.game_state,
-            QWIXX_STATE_OPTION,
-        )
-        self.assertEqual(
-            self.qwixx.current_player,
-            0,
+            expected_current_player,
         )
 
     def test_play_option_exception(self):
