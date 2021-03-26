@@ -35,7 +35,7 @@ class Qwixx:
         self.dice_set = SetDices()
         self.is_playing = True
 
-    def play_players(self, n_players):
+    def play_start(self, n_players):
         self.score_pad = self.create_scored_pad(n_players)
         self.dice_set.roll_dices()
         self.game_state = QWIXX_STATE_OPTION
@@ -62,9 +62,10 @@ class Qwixx:
         second_die = self.dice_set.get_value_of_die('white_2')
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
-    # def mark_with_color(row, die_color, die_white):
-    #     pass
-    # def play(self, row, die_color, die_white):
+
+    def play(self, *args):
+        if self.game_state == QWIXX_STATE_START:
+            self.play_start(args[0])
     #     if self.state == WHITE:
     #         return self.mark_with_white([row])
     #     if self.state == COLOR:
