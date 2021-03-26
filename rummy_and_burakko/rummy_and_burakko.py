@@ -96,9 +96,11 @@ class RummyAndBurakko():
             self.option = option
             self.game_state = options[option]
 
-    # def play_new_set_q(self, quantity):
-    #     self.input_q_tiles = quantity
-    #     self.game_state = GAME_STATE_NEW_SET_TILES
+    def play_new_set_q(self, quantity):
+        limit = self.game.quantity_of_tiles()
+        if 3 <= quantity <= limit:
+            self.input_q_tiles = quantity
+            self.game_state = GAME_STATE_NEW_SET_TILES
 
     # def play_make_move(self, moves):
     #     self.game.make_play(self.option, moves)
