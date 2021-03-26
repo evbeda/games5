@@ -3,14 +3,12 @@ from unittest.mock import patch
 from ..board import Board
 from ..set_tiles import SetTiles
 from ..tile import Tile
-from ..player import Player
 from parameterized import parameterized
 
 
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board = Board()
-        self.players = [Player('test_1'), Player('test_2'), Player('test_3')]
 
     @parameterized.expand([
         (
@@ -135,9 +133,9 @@ class TestBoard(unittest.TestCase):
         self.board.sets = {
             1: set_tile,
         }
-        self.board.give_one_tile_from_board(self.players[2], 1, index)
+        self.board.give_one_tile_from_board(1, index)
 
-        self.assertEqual(self.players[2].hand, [chosen_tile])
+        self.assertEqual(self.board.reused_tiles, [chosen_tile])
 
     @parameterized.expand([
         (SetTiles([Tile('r', 3), Tile('r', 4)]), 3),
@@ -148,4 +146,4 @@ class TestBoard(unittest.TestCase):
             1: set_tile,
         }
         with self.assertRaises(Exception):
-            self.board.give_one_tile_from_board(self.players[2], 1, index)
+            self.board.give_one_tile_from_board(1, index)
