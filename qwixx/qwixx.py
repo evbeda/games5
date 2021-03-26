@@ -4,14 +4,21 @@ from .set_dices import SetDices
 
 QWIXX_STATE_START = 'start_game'
 QWIXX_STATE_OPTION = 'select_option'
-QWIXX_STATE_WHITE = 'white'
-QWIXX_STATE_COLOR = 'color'
+QWIXX_STATE_PLAY = 'play'
+
+QWIXX_TURN_WHITE = 'white'
+QWIXX_TURN_COLOR = 'color'
+
 game_state_next_turn = {
     QWIXX_STATE_START: 'Enter number of players',
     QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
-    QWIXX_STATE_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
-    QWIXX_STATE_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
 }
+game_state_color_next_turn = {
+    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (0/3) or not (99)?',
+    QWIXX_TURN_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+}
+OPTION_PLAY = 1
+OPTION_PASS = 2
 
 
 class Qwixx:
@@ -34,9 +41,10 @@ class Qwixx:
         self.current_player = 0
         self.dice_set = SetDices()
         self.is_playing = True
+        self.turn_color = QWIXX_TURN_WHITE
 
     def play_start(self, n_players):
-        self.score_pad = self.create_scored_pad(n_players)
+        self.create_scored_pad(n_players)
         self.dice_set.roll_dices()
         self.game_state = QWIXX_STATE_OPTION
 
@@ -48,7 +56,10 @@ class Qwixx:
             self.score_pad[indice_Player].id_player = indice_Player
 
     def next_turn(self):
-        return game_state_next_turn[self.game_state]
+        if self.game_state == QWIXX_STATE_PLAY:
+            return game_state_color_next_turn[self.turn_color]
+        else:
+            return game_state_next_turn[self.game_state]
 
     def remove_dice(self, color):
         for index, dice in enumerate(self.dice_set):
@@ -63,9 +74,21 @@ class Qwixx:
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
 
+    def play_option(self, option):
+        if option == OPTION_PLAY:
+            self.game_state = QWIXX_STATE_PLAY
+        elif option == OPTION_PASS:
+            self.game_state = QWIXX_STATE_OPTION
+            self.current_player = (self.current_player + 1) % len(self.score_pad)
+        else:
+            raise Exception('Invalid Option')
+
     def play(self, *args):
         if self.game_state == QWIXX_STATE_START:
             self.play_start(args[0])
+        elif self.game_state == QWIXX_STATE_OPTION:
+            self.play_option(args[0])
+        return ''
     #     if self.state == WHITE:
     #         return self.mark_with_white([row])
     #     if self.state == COLOR:
