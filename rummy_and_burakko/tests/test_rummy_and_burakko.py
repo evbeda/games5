@@ -54,10 +54,10 @@ class TestRummyAndBurakko(unittest.TestCase):
         ('new_set_q', 'Enter quantity of tiles to play'),
         ('end_turn', 'Turn Ended'),
     ])
-    def test_next_turn_query(self, game_state, expected):
+    def test_next_turn_message(self, game_state, expected):
         # process
         self.rummy.game_state = game_state
-        result = self.rummy.next_turn_query()
+        result = self.rummy.next_turn_state_message()
         # assert
         self.assertEqual(result, expected)
 
@@ -127,3 +127,17 @@ class TestRummyAndBurakko(unittest.TestCase):
         # assert
         self.assertEqual(mock_start.call_count, call_count[0])
         self.assertEqual(mock_players.call_count, call_count[1])
+
+    @patch.object(Game, 'make_play')
+    def test_next_turn(self, mock):
+        # data
+        players = ["player_1", "player_2", 'player_3']
+        self.rummy.game = Game(players)
+
+        self.rummy.option = 1
+        data = [0, 1, 3, 5]
+        # process
+        self.rummy.play_make_move(data)
+        # assert
+        mock.assert_called_once_with(self.rummy.option, data)
+        self.assertEqual(self.rummy.game_state, 'select_option')
