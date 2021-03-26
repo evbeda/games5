@@ -63,8 +63,8 @@ class Qwixx:
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
 
-    def mark_with_color(row, die_color, die_white):
-        pass
+    # def mark_with_color(row, die_color, die_white):
+    #     pass
 
     # def next_turn(self):
     #     if self.you_can_play:
