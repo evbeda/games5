@@ -11,6 +11,18 @@ GAME_STATE_END_TURN = 'end_turn'
 
 GAME_STATE_MAKE_MOVE = 'make_move'
 
+game_state_next_turn = {
+    GAME_STATE_START_GAME: 'Enter number of players',
+    GAME_STATE_PLAYERS_INPUT: 'Enter player names',
+    GAME_STATE_SELECT_OPTION: 'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n3)Take a tile from a set\n4)End turn',
+    GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
+    GAME_STATE_NEW_SET_TILES: 'Put the index of tiles to play in the correct order',
+    GAME_STATE_PUT_A_TILE: 'Puting a tile: Select a tile, select the set, select the index in the chosen set',
+    GAME_STATE_GET_A_TILE: 'Taking a tile: Select the set, select the index in the chosen set',
+    GAME_STATE_END_TURN: 'Turn Ended',
+    GAME_STATE_MAKE_MOVE: 'Making move',
+}
+
 
 class RummyAndBurakko():
     name = 'Rummy and Burakko'
@@ -56,24 +68,9 @@ class RummyAndBurakko():
         self.game_state = GAME_STATE_SELECT_OPTION
         self.input_are_ints = True
 
-    # turn event
-    def next_turn_state_message(self):
-        game_state_next_turn = {
-            GAME_STATE_START_GAME: 'Enter number of players',
-            GAME_STATE_PLAYERS_INPUT: 'Enter player names',
-            GAME_STATE_SELECT_OPTION: 'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n3)Take a tile from a set\n4)End turn',
-            GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
-            GAME_STATE_NEW_SET_TILES: 'Put the index of tiles to play in the correct order',
-            GAME_STATE_PUT_A_TILE: 'Puting a tile: Select a tile, select the set, select the index in the chosen set',
-            GAME_STATE_GET_A_TILE: 'Taking a tile: Select the set, select the index in the chosen set',
-            GAME_STATE_END_TURN: 'Turn Ended',
-            GAME_STATE_MAKE_MOVE: 'Making move',
-        }
-        return game_state_next_turn[self.game_state]
-
     def next_turn(self):
         message = '\n'
-        message += self.next_turn_state_message()
+        message += game_state_next_turn[self.game_state]
 
         if self.game_state in [
             GAME_STATE_NEW_SET_TILES,
