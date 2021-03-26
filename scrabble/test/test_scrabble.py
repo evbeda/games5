@@ -202,6 +202,14 @@ class TestScrabble(unittest.TestCase):
         state_query_patched.assert_called()
         skip_turn_patched.assert_called()
 
+    @patch.object(Game, 'get_game_results')
+    def test_next_turn_game_over(self, get_game_results_patched):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game.is_playing = False
+        self.scrabble.next_turn()
+        get_game_results_patched.assert_called()
+        
     def test_is_playing(self):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
