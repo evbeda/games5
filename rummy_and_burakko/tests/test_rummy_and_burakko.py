@@ -75,3 +75,28 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.rummy.play_select_option(option)
         # assert
         self.assertEqual(self.rummy.game_state, game_state)
+
+    # def test_play_new_set_q(self):
+    #     self.input_q_tiles = quantity
+    #     self.game_state = GAME_STATE_NEW_SET_TILES
+
+    # def test_play_make_move(self:
+    #     self.game.make_play(self.option, moves)
+    #     self.game_state = GAME_STATE_SELECT_OPTION
+
+    @parameterized.expand([
+        # (game_state)
+        ('start_game', (1, 0)),
+        ('players_input', (0, 1)),
+    ])
+    @patch.object(RummyAndBurakko, 'play_players_input')
+    @patch.object(RummyAndBurakko, 'play_start_game')
+    def test_play(self, game_state, call_count, mock_start, mock_players):
+        # data
+        args = [1, 2, 3, 4]
+        self.rummy.game_state = game_state
+        # process
+        self.rummy.play(args)
+        # assert
+        self.assertEqual(mock_start.call_count, call_count[0])
+        self.assertEqual(mock_players.call_count, call_count[1])
