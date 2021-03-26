@@ -67,11 +67,14 @@ class Qwixx:
                 self.dice_set.pop(index)
                 break
 
+    # def mark_with_color(self, color):
+    #     pass
+
     def mark_with_white(self, color):
         # if color == 'pass':
-            # self.set_next_player()
+        #   self.set_next_player()
         # if color not in ['red', 'yellow', 'blue', 'green']:
-            # raise Exception('Invalid color')
+        #   raise Exception('Invalid color')
         s_pad = self.score_pad[self.current_player]
         first_die = self.dice_set.get_value_of_die('white_1')
         second_die = self.dice_set.get_value_of_die('white_2')
@@ -90,16 +93,19 @@ class Qwixx:
         else:
             raise Exception('Invalid Option')
 
+    def play_turn(self, *args):
+        if self.turn_color == QWIXX_TURN_WHITE:
+            self.mark_with_white(args[0])
+        else:
+            pass  # self.mark_with_color(args[0], args[1], args[2])
+
     def play(self, *args):
         if self.game_state == QWIXX_STATE_START:
             self.play_start(args[0])
         elif self.game_state == QWIXX_STATE_OPTION:
             self.play_option(args[0])
         elif self.game_state == QWIXX_STATE_PLAY:
-            if self.turn_color == QWIXX_TURN_WHITE:
-                self.mark_with_white(args[0])
-            else:
-                self.mark_with_color(args[0], args[1], args[2])
+            self.play_turn(*args)
         return ''
 
     @property
