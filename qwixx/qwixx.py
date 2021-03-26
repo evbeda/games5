@@ -81,44 +81,51 @@ class Qwixx:
     #     if self.state == COLOR:
     #         return self.mark_with_color([row, die_color, die_white])
 
-    # @property
-    # def board(self):
-    #     output = " "
-    #     output += "\n"
-    #     output += "the player who plays :" + str(self.score_pad[self.current_player].id_player)
-    #     output += "\n"
-    #     output += "score pad "
-    #     for row in self.score_pad[self.current_player].rows.values():
-    #         if row.color == 'red':
-    #             output += 'red'
-    #             output += ' ' + str(tuple(range(2, 13)))
-    #             # buscar la forma de representar las marcas en el output
-    #             output += ' ' + self.is_locked(row)
-    #         if row.color == 'yellow':
-    #             output += 'yellow'
-    #             output += ' ' + str(tuple(range(2, 13)))
-    #             output += ' ' + self.is_locked(row)
-    #         if row.color == 'green':
-    #             output += 'green'
-    #             output += ' ' + str(tuple(reversed(range(2, 13))))
-    #             output += ' ' + self.is_locked(row)
-    #         if row.color == 'blue':
-    #             output += 'blue'
-    #             output += ' ' + str(tuple(reversed(range(2, 13))))
-    #             output += ' ' + self.is_locked(row)
-    #     output += "\n"
-    #     output += "penalty"
-    #     output += " " + str(self.score_pad[self.current_player].penalty)
-    #     output += "\n"
-    #     output += "score"
-    #     output += "" + str(tuple(range(1, 12)))
-    #     output += "(1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
+    @property
+    def board(self):
+        output = " "
+        output += "\n"
+        output += "the player who plays :" + str(self.score_pad[self.current_player].id_player)
+        output += "\n"
+        output += "score pad "
+        output += "\n"
+        for row in self.score_pad[self.current_player].rows.values():
+            if row.color == 'red':
+                output += 'red'
+                output += ' ' + str(tuple(range(2, 13)))
+                # buscar la forma de representar las marcas en el output
+                output += ' ' + self.is_locked(row)
+                output += "\n"
+            if row.color == 'yellow':
+                output += 'yellow'
+                output += ' ' + str(tuple(range(2, 13)))
+                output += ' ' + self.is_locked(row)
+                output += "\n"
+            if row.color == 'green':
+                output += 'green'
+                output += ' ' + str(tuple(reversed(range(2, 13))))
+                output += ' ' + self.is_locked(row)
+                output += "\n"
+            if row.color == 'blue':
+                output += 'blue'
+                output += ' ' + str(tuple(reversed(range(2, 13))))
+                output += ' ' + self.is_locked(row)
+        output += "\n"
+        output += "penalty"
+        output += " " + str(self.score_pad[self.current_player].penalty)
+        output += "\n"
+        output += "score :"
+        output += "" + str(tuple(range(1, 13)))
+        output += "\n"
+        output += "       (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
 
-    # def is_locked(self, row):
-    #     if row.color in row.blocked_rows:
-    #         return "is loked"
-    #     else:
-    #         return "not loked"
+        return output
+
+    def is_locked(self, row):
+        if row.color in row.blocked_rows:
+            return "is loked"
+        else:
+            return "not loked"
 
     # @property
     # def you_can_play(self):
