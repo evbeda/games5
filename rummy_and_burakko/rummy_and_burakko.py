@@ -84,26 +84,26 @@ class RummyAndBurakko():
 
     #     return query
 
-    # plays
-    # def plays_select_option(self, option):
-    #     if 1 <= option <= 4:
-    #         options = {
-    #             1: GAME_STATE_NEW_SET_Q,
-    #             2: GAME_STATE_PUT_A_TILE,
-    #             3: GAME_STATE_GET_A_TILE,
-    #             4: GAME_STATE_END_TURN,
-    #         }
-    #         self.option = option
-    #         self.game_state = options[option]
+    # play
+    def play_select_option(self, option):
+        if 1 <= option <= 4:
+            options = {
+                1: GAME_STATE_NEW_SET_Q,
+                2: GAME_STATE_PUT_A_TILE,
+                3: GAME_STATE_GET_A_TILE,
+                4: GAME_STATE_END_TURN,
+            }
+            self.option = option
+            self.game_state = options[option]
 
-    # def plays_new_set_q(self, quantity):
-    #     self.input_q_tiles = quantity
-    #     self.game_state = GAME_STATE_NEW_SET_TILES
+    def play_new_set_q(self, quantity):
+        self.input_q_tiles = quantity
+        self.game_state = GAME_STATE_NEW_SET_TILES
 
-    # def plays_make_move(self, moves):
-    #     self.game.make_play(self.option, moves)
-    #     self.game_state = GAME_STATE_SELECT_OPTION
+    def play_make_move(self, moves):
+        self.game.make_play(self.option, moves)
+        self.game_state = GAME_STATE_SELECT_OPTION
 
-    # def play(self, *args):
-    #     method = getattr(self, 'plays_' + self.game_state)
-    #     method(*args)
+    def play(self, *args):
+        method = getattr(self, 'play_' + self.game_state)
+        method(*args)

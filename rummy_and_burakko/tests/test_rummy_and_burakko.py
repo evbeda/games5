@@ -60,3 +60,18 @@ class TestRummyAndBurakko(unittest.TestCase):
         result = self.rummy.next_turn_query()
         # assert
         self.assertEqual(result, expected)
+
+    @parameterized.expand([
+        # (option, game_state)
+        (0, 'select_option'),
+        (1, 'new_set_q'),
+        (4, 'end_turn'),
+        (5, 'select_option'),
+    ])
+    def test_play_select_option(self, option, game_state):
+        # data
+        self.rummy.game_state = 'select_option'
+        # process
+        self.rummy.play_select_option(option)
+        # assert
+        self.assertEqual(self.rummy.game_state, game_state)
