@@ -25,9 +25,9 @@ class TestQwixx(unittest.TestCase):
         ]
 
         for color in colors:
-            dice = Mock()
-            dice.color = color
-            self.qwixx.dice_set.append(dice)
+            dice_mock = Mock()
+            dice_mock.color = color
+            self.qwixx.dice_set.append(dice_mock)
 
         self.qwixx.remove_dice('blue')
         self.assertNotIn('blue', [dice.color for dice in self.qwixx.dice_set])
@@ -56,26 +56,26 @@ class TestQwixx(unittest.TestCase):
         mock_roll.assert_called_once_with()
 
     @parameterized.expand([
-        ('white',  'Choose in which row you want to mark the common dice (0/3) or not (99)?'),
+        ('white', 'Choose in which row you want to mark the common dice (0/3) or not (99)?'),
         ('color', 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
-        ])
+    ])
     def test_next_turn_query(self, state, expected):
         self.qwixx.game_state = state
         self.assertEqual(self.qwixx.next_turn_query(), expected)
 
     @parameterized.expand([
-       (2, 0, 361),
-       (4, 3, 361),
-        ])
+        (2, 0, 361),
+        (4, 3, 361),
+    ])
     def test_board(self, cant_score_pad, id_player, cant_letter):
         qwixx = Qwixx()
         qwixx.create_scored_pad(cant_score_pad)
         qwixx.current_player = id_player
         self.assertEqual(len(qwixx.board), cant_letter)
- 
+
     @parameterized.expand([
-       (Row('rojo'), 'green', 'not loked'),
-       (Row('rojo'), 'rojo', 'is loked'),
+        (Row('rojo'), 'green', 'not loked'),
+        (Row('rojo'), 'rojo', 'is loked'),
     ])
     def test_is_locked(self, row, color_row, expected):
         row.blocked_rows.append(color_row)
@@ -83,8 +83,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.is_locked(row), expected)
 
     @parameterized.expand([
-       (Row('rojo'), 52),
-       (Row('blue'), 53),
+        (Row('rojo'), 52),
+        (Row('blue'), 53),
     ])
     def test_output_row(self, row, expected):
         self.assertEqual(len(self.qwixx.output_row(row)), expected)

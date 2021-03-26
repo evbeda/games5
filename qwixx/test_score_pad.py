@@ -25,7 +25,7 @@ class TestScorePad(unittest.TestCase):
             ('yellow', (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)),
             ('blue', (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2)),
             ('green', (12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2)),
-            )
+        )
         for i, row in enumerate(scrpad.create_rows()):
             self.assertEqual(row, expected[i][0])
             # self.assertEqual(row.numbers, expected[i][1])

@@ -9,10 +9,10 @@ class Row:
 
     def create_row_numbers(self):
         return (
-                tuple(range(2, 13))
-                if self.color in ['red', 'yellow']
-                else tuple(reversed(range(2, 13)))
-            )
+            tuple(range(2, 13))
+            if self.color in ['red', 'yellow']
+            else tuple(reversed(range(2, 13)))
+        )
 
     def lock_Row(self):
         self.blocked_rows.append(self.color)
@@ -61,9 +61,15 @@ class Row:
         return(
             self.marks == []
         ) or (
-            (number > self.marks[-1])
-            and (self.color in ['red', 'yellow'])
+            (
+                number > self.marks[-1]
+            ) and (
+                self.color in ['red', 'yellow']
+            )
         ) or (
-            (number < self.marks[-1])
-            and (self.color in ['blue', 'green'])
+            (
+                number < self.marks[-1]
+            ) and (
+                self.color in ['blue', 'green']
+            )
         )

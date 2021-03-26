@@ -9,11 +9,11 @@ class ScorePad:
 
     def create_rows(self):
         return (
-                {
-                    color: Row(color)
-                    for color in ['red', 'yellow', 'blue', 'green']
-                }
-            )
+            {
+                color: Row(color)
+                for color in ['red', 'yellow', 'blue', 'green']
+            }
+        )
 
     def add_penalty(self):
         self.penalty += 1
