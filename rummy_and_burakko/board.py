@@ -6,6 +6,7 @@ class Board():
         self.sets = {}
         self.temp_sets = {}
         self.last_id = 0
+        self.reused_tiles = []
 
     def add_new_play(self, sets):
         new_tile_set = {}
@@ -49,10 +50,10 @@ class Board():
     def validate_turn(self):
         self.sets = self.temp_sets.copy()
 
-    def give_one_tile_from_board(self, player, set_id, index):
+    def give_one_tile_from_board(self, set_id, index):
         if len(self.sets[set_id].tiles) > 0:
-            player.add_tiles(
-                    [self.sets[set_id].extract_one_tile(index)]
+            self.reused_tiles.append(
+                    self.sets[set_id].extract_one_tile(index)
                 )
         else:
             raise Exception
