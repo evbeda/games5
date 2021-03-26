@@ -140,3 +140,4 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.rummy.play_make_move(data)
         # assert
         mock.assert_called_once_with(self.rummy.option, data)
+        self.assertEqual(self.rummy.game_state, 'select_option')
