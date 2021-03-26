@@ -1,8 +1,12 @@
 import unittest
 from ..game.tile_bag import TileBag
+from ..game.tile import Tile
 
 
 class TesttileBag(unittest.TestCase):
+
+    def setUp(self):
+        self.bag = TileBag()
 
     def test_tile_bag_attributes(self):
         t_b = TileBag()
@@ -35,3 +39,8 @@ class TesttileBag(unittest.TestCase):
                     'x',
                     'z']
         self.assertEqual([tile.letter for tile in t_b.tiles], expected)
+
+    def test_add_tile(self):
+        new_tile = Tile('z')
+        self.bag.add_tile(new_tile)
+        self.assertIn(new_tile, self.bag.tiles)
