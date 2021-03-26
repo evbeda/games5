@@ -112,10 +112,10 @@ class TestGame(unittest.TestCase):
 
     @parameterized.expand([
         # (option, call_count)
-        # (0, (1, 0, 0, 0)),
-        # (1, (0, 1, 0, 0)),
-        (2, (0, 0, 1, 0)),
-        (3, (0, 0, 0, 1)),
+        # (1, (1, 0, 0, 0)),
+        # (2, (0, 1, 0, 0)),
+        (3, (0, 0, 1, 0)),
+        (4, (0, 0, 0, 1)),
     ])
     @patch.object(Game, "end_turn")
     @patch.object(Board, "give_one_tile_from_board")
@@ -147,7 +147,7 @@ class TestGame(unittest.TestCase):
         # data
         self.game.players = [Player("test_1")]
         player = self.game.players[self.game.current_turn]
-        option = 2
+        option = 3
         set_id = 1
         index = 3
         # process
