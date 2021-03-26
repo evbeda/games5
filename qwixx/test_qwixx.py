@@ -73,7 +73,7 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (QWIXX_TURN_WHITE, 'Choose in which row you want to mark the common dice (0/3) or not (99)?',),
+        (QWIXX_TURN_WHITE, 'Choose in which row you want to mark the common dice (red, yellow, blue, green) or pass ?',),
         (QWIXX_TURN_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
     ])
     def test_next_turn_play(self, turn_color, expected):
@@ -146,3 +146,19 @@ class TestQwixx(unittest.TestCase):
     def test_play_option_exception(self):
         with self.assertRaises(Exception):
             self.qwixx.play_option(3)
+
+    @patch.object(Qwixx, 'mark_with_white')
+    def test_play_play_white(self, patched_mark_with_white):
+        self.qwixx.play_start(4)
+        self.qwixx.turn_color = QWIXX_TURN_WHITE
+        self.qwixx.game_state = QWIXX_STATE_PLAY
+        self.qwixx.play(1)
+        patched_mark_with_white.assert_called_once_with(1)
+
+    @patch.object(Qwixx, 'mark_with_color')
+    def test_play_play_color(self, patched_mark_with_color):
+        self.qwixx.play_start(4)
+        self.qwixx.game_state = QWIXX_STATE_PLAY
+        self.qwixx.turn_color = QWIXX_TURN_COLOR
+        self.qwixx.play(1, 2, 3)
+        patched_mark_with_color.assert_called_once_with(1, 2, 3)
