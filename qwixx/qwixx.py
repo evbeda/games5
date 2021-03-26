@@ -90,14 +90,7 @@ class Qwixx:
         output += "score pad "
         output += "\n"
         for row in self.score_pad[self.current_player].rows.values():
-            if row.color == 'red':
-                output += self.output_row(row)
-            if row.color == 'yellow':
-                output += self.output_row(row)
-            if row.color == 'green':
-                output += self.output_row(row)
-            if row.color == 'blue':
-                output += self.output_row(row)
+            output += self.output_row(row)
         output += "\n"
         output += "penalty"
         output += " " + str(self.score_pad[self.current_player].penalty)
