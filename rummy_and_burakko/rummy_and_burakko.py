@@ -70,19 +70,19 @@ class RummyAndBurakko():
         }
         return game_state_next_turn[self.game_state]
 
-    # def next_turn(self):
-    #     message = '\n'
-    #     if self.game_state in [
-    #         GAME_STATE_NEW_SET_TILES,
-    #         GAME_STATE_PUT_A_TILE,
-    #         GAME_STATE_GET_A_TILE
-    #     ]:
-    #         self.game_state = GAME_STATE_MAKE_MOVE
+    def next_turn(self):
+        message = '\n'
+        message += self.next_turn_state_message()
 
-    #     message += self.board + '\n\n'
-    #     message += self.next_turn_state_message()
+        if self.game_state in [
+            GAME_STATE_NEW_SET_TILES,
+            GAME_STATE_PUT_A_TILE,
+            GAME_STATE_GET_A_TILE,
+            GAME_STATE_END_TURN,
+        ]:
+            self.game_state = GAME_STATE_MAKE_MOVE
 
-    #     return message
+        return message
 
     # play
     def play_select_option(self, option):
