@@ -26,6 +26,9 @@ jobs:
               ./cc-test-reporter before-build
               coverage run test_suite.py && coverage xml --omit=*/site-packages/*,tests/* && coverage report
               ./cc-test-reporter after-build -t coverage.py
+      - run:
+          name: Running Flake8
+          command: flake8
 
 workflows:
   main:
