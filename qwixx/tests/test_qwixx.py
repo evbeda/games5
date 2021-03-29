@@ -163,21 +163,22 @@ class TestQwixx(unittest.TestCase):
         patched_mark_with_white.assert_called_once_with('red')
 
     @parameterized.expand([
-        (0, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (1, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (2, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (3, 0, QWIXX_TURN_WHITE, QWIXX_TURN_COLOR,),
-        (0, 0, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE,),
-        (1, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (2, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (3, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (0, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
-        (1, 1, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE,),
+        (0, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (1, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (2, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (3, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_COLOR,),
+        (0, 0, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (1, 1, QWIXX_TURN_WHITE, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE,),
+        (2, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (3, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (0, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_COLOR,),
+        (1, 1, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
     ])
-    def set_next_player(self, current_player, current_color_player, turn_color, expected_next_turn_color):
+    def test_set_next_player(self, current_player, current_color_player, turn_color, previous_turn_color, expected_next_turn_color):
         self.qwixx.play_start(4)
         self.qwixx.game_state = QWIXX_STATE_PLAY
         self.qwixx.current_player = current_player
+        self.qwixx.previous_turn_color = previous_turn_color
         self.qwixx.current_color_player = current_color_player
         self.qwixx.turn_color = turn_color
         self.qwixx.set_next_player()
