@@ -88,8 +88,7 @@ class Board:
                 self.place_letters(
                     word, row, col, direction, range(len(word))
                 )
-                for tile in var2:
-                    player.tiles_in_hand.remove(Tile(tile))
+                player.use_tiles(var2)
                 # spot_list = self.get_spots_to_place_word(
                 #     len(word), row, col, direction)
                 # player.add_points(self.calculate_score(spot_list, word))
@@ -118,8 +117,7 @@ class Board:
                 self.place_letters(
                     word, row, col, direction, unzipped_list[0]
                 )
-                for tile in var2:
-                    player.tiles_in_hand.remove(Tile(tile))
+                player.use_tiles(var2)
                 # player.add_points(self.calculate_score(spot_list, word))
                 return True
         return False
