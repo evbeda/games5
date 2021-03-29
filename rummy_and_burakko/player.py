@@ -12,12 +12,8 @@ class Player:
         else:
             self.hand += tiles
 
-    # def remove_tiles(self, tiles):
-    #     for tile in tiles:
-    #         if tile in self.temp_hand:
-    #             self.temp_hand.remove(tile)
-    #         else:
-    #             raise Exception
+    def remove_tile(self, index):
+        self.temp_hand.pop(index)
 
     def get_a_tile(self, index):
         return self.temp_hand[index]
