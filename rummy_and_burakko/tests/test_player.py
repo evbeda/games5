@@ -89,3 +89,18 @@ class TestPlayer(unittest.TestCase):
         result = self.player.get_lenght()
         # assert
         self.assertEqual(result, expected)
+
+    def test_get_a_tile(self):
+        # data
+        self.player.temp_hand = [
+            Tile('r', 7),
+            Tile('b', 4),
+            Tile('y', 5),
+            Tile('*', 0),
+        ]
+        index = 3
+        expected = Tile('*', 0)
+        # process
+        result = self.player.get_a_tile(index)
+        # assert
+        self.assertEqual(result, expected)

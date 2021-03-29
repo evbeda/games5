@@ -19,6 +19,9 @@ class Player:
             else:
                 raise Exception
 
+    def get_a_tile(self, index):
+        return self.temp_hand[index]
+
     def get_hand(self):
         return f'{self.name}> ' + ' '.join([
             f'{index}:{tile.color}{tile.number}'
