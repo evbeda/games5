@@ -4,7 +4,7 @@ from ..spot import Spot
 from ..tile import Tile
 from parameterized import parameterized
 from unittest.mock import patch
-import copy
+from copy import deepcopy
 
 
 class TestBoard(unittest.TestCase):
@@ -150,7 +150,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.b.tiles_diff(word, letters_in_board), expected)
 
     def test_revert_board(self):
-        self.b.spots_orig = copy.deepcopy(self.b.spots)
+        self.b.spots_orig = deepcopy(self.b.spots)
         self.b.spots[7][6].set_tile(Tile('h'))
         self.b.spots[7][7].set_tile(Tile('o'))
         self.b.spots[7][8].set_tile(Tile('l'))
