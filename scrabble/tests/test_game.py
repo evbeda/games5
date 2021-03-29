@@ -12,9 +12,14 @@ class TestGame(unittest.TestCase):
         players = ["player_1", "player_2", "player_3"]
         self.t_game = Game(players)
 
-    # actualizar cuando se tenga el manejo de turnos
-    def test_game_initiator(self):
-        self.assertEqual(len(self.t_game.tile_bag.tiles), 100)
+    @parameterized.expand([
+        (2, 86),
+        (3, 79),
+        (4, 72),
+    ])
+    def test_game_initiator(self, players, remaining_tiles):
+        t_game = Game([f"player_{i}" for i in range(players)])
+        self.assertEqual(len(t_game.tile_bag.tiles), remaining_tiles)
 
     def test_create_players(self):
         self.assertEqual(len(self.t_game.players), 3)

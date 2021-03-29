@@ -44,13 +44,12 @@ class TestPlayer(unittest.TestCase):
     @patch('random.randint')
     def test_put_t_draw_t(self, mock_random):
         # data
-        tiles = [Tile('a') for _ in range(7)]
-        self.player_test.tiles_in_hand = tiles.copy()
-        t_index = [1, 5]
+        hand = [Tile(x) for x in ['a', 'a', 'b', 'c', 'd', 'e', 'e']]
+        self.player_test.tiles_in_hand = hand.copy()
+        tiles = ['a', 'a']
         # process
-        self.player_test.put_t_draw_t(self.t_bag, t_index)
+        self.player_test.put_t_draw_t(self.t_bag, tiles)
         # assert
-        self.assertNotEqual(self.player_test.tiles_in_hand, tiles)
         self.assertEqual(mock_random.call_count, 2)
         self.assertEqual(len(self.player_test.tiles_in_hand), 7)
 
