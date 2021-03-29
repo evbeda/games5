@@ -173,7 +173,7 @@ class TestBoard(unittest.TestCase):
     ])
     @patch.object(Board, 'place_letters')
     @patch.object(Player, 'add_points')
-    def test_place_word(
+    def test_place_other_word(
         self, word, row, col, direction, expected,
         mock_add_points, mock_place_letters
     ):
@@ -186,7 +186,7 @@ class TestBoard(unittest.TestCase):
         self.b.spots[7][8].set_tile(Tile('l'))
         self.b.spots[7][9].set_tile(Tile('a'))
 
-        self.b.place_word(word, row, col, direction, player)
+        self.b.place_other_word(word, row, col, direction, player)
         if expected:
             mock_place_letters.assert_called_once()
             # mock_add_points.assert_called_once()
@@ -216,3 +216,14 @@ class TestBoard(unittest.TestCase):
         else:
             mock_place_letters.assert_not_called()
             # mock_add_points.assert_not_called()
+
+    @patch.object(Board, 'place_first_word')
+    def test_place_word_firsts(self, place_first_word_patched):
+        self.b.place_word('word', 7, 7, True, Player(0, "player"))
+        place_first_word_patched.assert_called_once()
+
+    @patch.object(Board, 'place_other_word')
+    def test_place_word_other(self, place_other_word_patched):
+        self.b.first = False
+        self.b.place_word('word', 7, 7, True, Player(0, "player"))
+        place_other_word_patched.assert_called_once()
