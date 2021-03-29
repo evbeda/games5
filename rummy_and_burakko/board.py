@@ -47,3 +47,6 @@ class Board():
 
     def get_a_reused_tile(self, index):
         return self.reused_tiles[index]
+
+    def remove_reused_tile(self, index):
+        self.reused_tiles.pop(index)
