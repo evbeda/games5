@@ -39,7 +39,7 @@ class RummyAndBurakko():
             GAME_STATE_NEW_SET_Q: 1,
             GAME_STATE_NEW_SET_TILES: self.input_q_tiles,
             GAME_STATE_PUT_A_TILE: 3,
-            GAME_STATE_GET_A_TILE: 3,
+            GAME_STATE_GET_A_TILE: 2,
         }
         return game_state_args[self.game_state]
 
