@@ -82,8 +82,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (2, 0, 5, 374),
-        (4, 3, 5, 374),
+        (2, 0, 5, 451),
+        (4, 3, 5, 451),
     ])
     def test_board(self, cant_score_pad, id_player, marks, cant_letter):
         qwixx = Qwixx()
@@ -101,8 +101,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.is_locked(row), expected)
 
     @parameterized.expand([
-        (Row('rojo'), 52),
-        (Row('blue'), 53),
+        (Row('rojo'), 54),
+        (Row('blue'), 55),
     ])
     def test_output_row(self, row, expected):
         self.assertEqual(len(self.qwixx.output_row(row)), expected)

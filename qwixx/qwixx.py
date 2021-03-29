@@ -135,6 +135,15 @@ class Qwixx:
     @property
     def board(self):
         output = " "
+        output += "Dice: white->{}".format(self.dice_set.get_value_of_die('white_1'))
+        output += "\n"    
+        output += "      white->{}".format(self.dice_set.get_value_of_die('white_2'))
+        output += "\n"
+        output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
+        output += "\n"
+        output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
+        output += "\n"
+        output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
         if self.score_pad:
             output += "\n"
             output += "the player who plays :{} ".format(self.score_pad[self.current_player].id_player)
@@ -165,7 +174,9 @@ class Qwixx:
         output = ' '
         output += '{}'.format(row.color)
         output += '{}'.format(str(tuple(range(2, 13))))
+        output += "\n"
         output += '{}'.format(row.marks)
+        output += "\n"
         output += '{}'.format(self.is_locked(row))
         output += "\n"
         return output
