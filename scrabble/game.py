@@ -39,12 +39,13 @@ class Game:
     def print_board(self):
         return self.board.get_board()
 
-    def change_player_tiles(self, tile_amount):
-        self.players.get(self.current_player).put_t_draw_t(tile_amount)
+    def change_player_tiles(self, letters):
+        self.players[self.current_player].put_t_draw_t(
+            self.tile_bag, letters)
 
     def place_word(self, x, y, direction, word):
         self.board.place_word(
-            word, y, x, direction, self.players.get(self.current_player)
+            word, y, x, direction, self.players[self.current_player]
         )
 
     @property

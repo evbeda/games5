@@ -21,3 +21,6 @@ class Tile:
     def order(self):
 
         return ord(self.letter[0]) - ord('a')
+
+    def __eq__(self, other):
+        return self.letter == other.letter
