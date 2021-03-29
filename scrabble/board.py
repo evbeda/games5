@@ -81,10 +81,16 @@ class Board:
     def place_word(self, word, row, col, direction, player):
         self.spots_orig = deepcopy(self.spots)
         if self.first and self.can_place_first_word(word, row, col, direction):
-            self.place_letters(word, row, col, direction, range(len(word)))
-            spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
-            # player.add_points(self.calculate_score(spot_list, word))
-            self.first = False
+            var = sorted([tile.letter for tile in player.tiles_in_hand])
+            var2 = sorted(list(word))
+            if all([var2.count(i) <= var.count(i) for i in var2]):
+                print(7)
+                self.place_letters(
+                    word, row, col, direction, range(len(word))
+                )
+                spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
+                # player.add_points(self.calculate_score(spot_list, word))
+                self.first = False
         else:
             spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
             print(1)
