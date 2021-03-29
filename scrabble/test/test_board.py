@@ -9,7 +9,7 @@ from unittest.mock import patch
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.b = Board()
-    
+
     def test_board(self):
         self.assertEqual(len(self.b.spots), 15)
         self.assertEqual(len(self.b.spots[0]), 15)
@@ -29,7 +29,7 @@ class TestBoard(unittest.TestCase):
     def test_multiplier(self, row, col, expected):
         self.assertEqual(self.b.multiplier(row, col), expected)
 
-    def test_board_format(self):
+    def test_get_board(self):
         expected_board = '''- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 |3xW|   |   |2xL|   |   |   |3xW|   |   |   |2xL|   |   |3xW|
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

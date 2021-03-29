@@ -74,24 +74,24 @@ class Board:
 
         return board_str
 
-    def place_word(self, word, row, col, direction, hand):
-        if self.first and self.can_place_first_word(word, row, col, direction):
-            self.place_letters(word, row, col, direction, range(len(word)))
-            self.first = False
-        else:
-            spot_list = self.get_spots_to_place_word(word, row, col, direction)
-            existing_tiles = self.tiles_in_board(spot_list)
-            if self.can_place_word(word, existing_tiles):
-                remain_tiles = self.tiles_diff(word, existing_tiles)
-                unzipped_remain_tiles = zip(*remain_tiles)
-                unzipped_list = list(unzipped_remain_tiles)
-                if all(
-                    [item in [tile.letter for tile in hand]
-                        for item in unzipped_list[1]]
-                ):
-                    self.place_letters(
-                        word, row, col, direction, unzipped_list[0]
-                    )
+    # def place_word(self, word, row, col, direction, hand):
+    #     if self.first and self.can_place_first_word(word, row, col, direction):
+    #         self.place_letters(word, row, col, direction, range(len(word)))
+    #         self.first = False
+    #     else:
+    #         spot_list = self.get_spots_to_place_word(word, row, col, direction)
+    #         existing_tiles = self.tiles_in_board(spot_list)
+    #         if self.can_place_word(word, existing_tiles):
+    #             remain_tiles = self.tiles_diff(word, existing_tiles)
+    #             unzipped_remain_tiles = zip(*remain_tiles)
+    #             unzipped_list = list(unzipped_remain_tiles)
+    #             if all(
+    #                 [item in [tile.letter for tile in hand]
+    #                     for item in unzipped_list[1]]
+    #             ):
+    #                 self.place_letters(
+    #                     word, row, col, direction, unzipped_list[0]
+    #                 )
 
     def can_place_first_word(self, word, row, col, direction):
         return (
