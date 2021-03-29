@@ -39,6 +39,12 @@ class Board():
             for index, tile_set in self.sets.items()
         ])
 
+    def get_reused_tiles(self, start_index):
+        return '   '.join([
+            f'{index}:{tile.color}{tile.number}'
+            for index, tile in enumerate(self.reused_tiles, start_index)
+        ])
+
     def temporary_sets(self):
         self.temp_sets = self.sets.copy()
 

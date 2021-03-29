@@ -147,3 +147,13 @@ class TestBoard(unittest.TestCase):
         }
         with self.assertRaises(Exception):
             self.board.give_one_tile_from_board(1, index)
+
+    def test_get_reused_tiles(self):
+        # data
+        self.board.reused_tiles = [Tile('r', 3), Tile('r', 4), Tile('r', 5)]
+        start_index = 5
+        expected = '5:r3   6:r4   7:r5'
+        # process
+        result = self.board.get_reused_tiles(start_index)
+        # assert
+        self.assertEqual(result, expected)
