@@ -7,6 +7,7 @@ class Player:
         self.name = name
         self.tiles_in_hand = []
         self.score = 0
+        self.prev_score = 0
 
     def one_draw(self, tiles_sack):
         index = random.randint(0, len(tiles_sack.tiles)-1)
@@ -32,3 +33,9 @@ class Player:
 
     def get_hand(self):
         return ' | '.join([tile.letter for tile in self.tiles_in_hand])
+
+    def add_points(self, points):
+        pass
+
+    def revert_points(self):
+        pass
