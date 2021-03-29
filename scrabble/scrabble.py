@@ -44,7 +44,7 @@ class Scrabble:
         self.input_player_args = 0
         self.challenger_player = 0
         self.change_letters = 0
- 
+
     @property
     def board(self):
         return self.game.print_board()
@@ -54,19 +54,27 @@ class Scrabble:
             GAME_STATE_CREATE_GAME: 'Enter number of players',
             GAME_STATE_INPUT_PLAYERS: 'Enter player names',
             GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?',
-            GAME_STATE_PLAY_WORD: 'Enter start coordinates, orientation and word\nx  y  h/v  word',
+            GAME_STATE_PLAY_WORD: (
+                'Enter start coordinates, orientation and word\n'
+                'x  y  h/v  word'
+            ),
             GAME_STATE_ASK_CHALLENGE: 'Any player wants to challenge',
-            GAME_STATE_IN_CHALLENGE: 'Look up new words in a dictionary. Are they correct?',
-            GAME_STATE_SELECT_ACTION: 'Enter "play" to play a new word, "pass" to end your turn or any number to change that amount of tiles',
+            GAME_STATE_IN_CHALLENGE: (
+                'Look up new words in a dictionary. Are they correct?'
+            ),
+            GAME_STATE_SELECT_ACTION: (
+                'Enter "play" to play a new word, "pass" to end your turn '
+                'or any number to change that amount of tiles'
+            ),
         }
         return game_state_next_turn[self.game_state]
 
     def next_turn_show_hand(self):
         return self.game.get_current_player_hand()
-    
+
     def next_turn(self):
         query = '\n'
-        
+
         if self.game_state == GAME_STATE_CHANGED_LETTERS:
             query += 'Changed letters:\n'
             query += self.next_turn_show_hand() + '\n'
