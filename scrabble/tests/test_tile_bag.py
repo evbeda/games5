@@ -46,5 +46,8 @@ class TesttileBag(unittest.TestCase):
         self.assertIn(new_tile, self.bag.tiles)
 
     def test_draw_tile(self):
+        test_tile = self.bag.tiles[7]
+        tile_count = self.bag.tiles.count(test_tile)
         drawn_tile = self.bag.draw_tile(7)
-        self.assertNotIn(drawn_tile, self.bag.tiles)
+        self.assertEqual(self.bag.tiles.count(drawn_tile), tile_count - 1)
+        # self.assertNotIn(drawn_tile, self.bag.tiles)
