@@ -1,7 +1,10 @@
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch
-from ..score_pad import ScorePad
+from ..score_pad import (
+    ReachPenaltyLimit,
+    ScorePad,
+)
 from ..row import Row
 
 
@@ -10,13 +13,15 @@ class TestScorePad(unittest.TestCase):
         self.score_pad = ScorePad()
 
     def test_add_penalty(self):
-        self.assertEqual(self.score_pad.add_penalty(), 1)
+        self.score_pad.add_penalty()
+        self.assertEqual(self.score_pad.penalty, 1)
 
     def test_max_penalty(self):
         for _ in range(3):
             self.score_pad.add_penalty()
 
-        self.assertTrue(self.score_pad.add_penalty())
+        with self.assertRaises(ReachPenaltyLimit):
+            self.score_pad.add_penalty()
 
     def test_create_rows(self):
         scrpad = ScorePad()
@@ -50,19 +55,12 @@ class TestScorePad(unittest.TestCase):
         mock_set_mark.assert_called_once_with(num)
 
     def test_pass_turn(self):
-        # data
         self.score_pad.penalty = 2
-        # process
-        x = self.score_pad.pass_turn()
-        # assert
+        self.score_pad.pass_turn()
         self.assertEqual(self.score_pad.penalty, 3)
-        self.assertEqual(x, 3)
-
-        # process
-        x = self.score_pad.pass_turn()
-        # assert
-        self.assertEqual(self.score_pad.penalty, 4)
-        self.assertEqual(x, True)
+        with self.assertRaises(ReachPenaltyLimit):
+            self.score_pad.pass_turn()
+            self.assertEqual(self.score_pad.penalty, 4)
 
     @patch.object(ScorePad, 'mark_number_in_row')
     def test_mark_number_mocked(self, mock_mark_number_in_row):
