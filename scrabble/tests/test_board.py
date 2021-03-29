@@ -2,6 +2,7 @@ import unittest
 from ..board import Board
 from ..spot import Spot
 from ..tile import Tile
+from ..player import Player
 from parameterized import parameterized
 from unittest.mock import patch
 from copy import deepcopy
@@ -165,3 +166,19 @@ class TestBoard(unittest.TestCase):
                 else:
                     self.assertIsNotNone(spot_orig.tile)
                     self.assertEqual(spot.tile.letter, spot_orig.tile.letter)
+
+    @patch.object(Board, 'place_letters')
+    @patch.object(Player, 'add_points')
+    @parameterized.expand([
+        ('holanda', 7, 6, True, True),
+    ])
+    def test_place_word(
+        self, word, row, col, direction, mock_place_letters,
+        mock_add_points, expected)
+        player = Player()
+        self.b.spots[7][6].set_tile(Tile('h'))
+        self.b.spots[7][7].set_tile(Tile('o'))
+        self.b.spots[7][8].set_tile(Tile('l'))
+        self.b.spots[7][9].set_tile(Tile('a'))
+        place_word(self, word, row, col, direction, player):
+        AssertCall()
