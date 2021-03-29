@@ -43,7 +43,7 @@ class Board():
         self.last_id = self.last_id + 1
         for tile in tiles:
             tile.set_id = self.last_id
-        self.sets[self.last_id] = SetTiles(tiles)
+        self.temp_sets[self.last_id] = SetTiles(tiles)
 
     def get_a_reused_tile(self, index):
         return self.reused_tiles[index]
