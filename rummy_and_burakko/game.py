@@ -49,9 +49,9 @@ class Game:
         # intercambiar indices por tiles (copiando)
         tiles = self.make_tile_array(indexes)
         # eliminar tiles respecto a los indices
-
+        self.clean(indexes)
         # crear el set con las tiles
-        # guardar el set
+        self.board.place_new_set(tiles)
 
     def make_tile_array(self, indexes):
         tiles = []
@@ -66,13 +66,15 @@ class Game:
             tiles.append(tile)
         return tiles
 
-    # def clean(self, indexes):
-    #     player = self.players[self.current_turn]
-    #     max_index_hand = player.get_lenght()
-    #     list(indexes).sort(reverse=True)
-    #     for index in indexes:
-    #         if index < max_index_hand:
-    #             player.remo
+    def clean(self, indexes):
+        player = self.players[self.current_turn]
+        max_index_hand = player.get_lenght()
+        list(indexes).sort(reverse=True)
+        for index in indexes:
+            if index < max_index_hand:
+                player.remove_tile(index)
+            else:
+                self.board.remove_reused_tile(index)
 
     def quantity_of_tiles(self):
         return self.players[self.current_turn].get_lenght()

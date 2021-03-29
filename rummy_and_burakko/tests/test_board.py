@@ -4,7 +4,6 @@ from ..board import Board
 from ..set_tiles import SetTiles
 from ..tile import Tile
 from parameterized import parameterized
-from ..player import Player
 
 
 class TestBoard(unittest.TestCase):
@@ -152,3 +151,17 @@ class TestBoard(unittest.TestCase):
         result = self.board.get_a_reused_tile(index)
         # assert
         self.assertEqual(result, expected)
+
+    @parameterized.expand([
+        # (index, expected)
+        (0, [2, 3, 4, 5]),
+        (4, [1, 2, 3, 4]),
+        (2, [1, 2, 4, 5]),
+    ])
+    def test_remove_reused_tile(self, index, expected):
+        # data
+        self.board.reused_tiles = list(range(1, 6))
+        # process
+        self.board.remove_reused_tile(index)
+        # assert
+        self.assertEqual(self.board.reused_tiles, expected)
