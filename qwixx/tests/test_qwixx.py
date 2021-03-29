@@ -54,7 +54,7 @@ class TestQwixx(unittest.TestCase):
     @patch.object(SetDices, 'get_value_of_die', return_value=2)
     def test_mark_with_white(self, mock_value_of_die, mock_mark_number):
         self.qwixx.score_pad = [ScorePad()]
-        self.qwixx.mark_with_white('red')
+        self.qwixx.mark_with_white(1)
         mock_mark_number.assert_called_once_with(4, 'red')
 
     @patch.object(Qwixx, "create_scored_pad")
@@ -73,7 +73,7 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (QWIXX_TURN_WHITE, 'Choose in which row you want to mark the common dice (red, yellow, blue, green) or pass ?',),
+        (QWIXX_TURN_WHITE, 'Choose in which row you want to mark the common dice (1): red, 2): yellow, 3): blue, 4): green) or pass ?',),
         (QWIXX_TURN_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
     ])
     def test_next_turn_play(self, turn_color, expected):
