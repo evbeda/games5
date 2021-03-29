@@ -84,7 +84,6 @@ class Qwixx:
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
 
-
     def mark_with_white(self, color_index):
         color = COLOR_ROW[color_index]
         s_pad = self.score_pad[self.current_player]
