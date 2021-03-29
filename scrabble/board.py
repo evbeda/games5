@@ -136,9 +136,9 @@ class Board:
     def place_letters(self, word, row, col, direction, indexes):
         for i in indexes:
             if direction:
-                self.spots[row][col + i].set_tile(word[i])
+                self.spots[row][col + i].set_tile(Tile(word[i]))
             else:
-                self.spots[row + i][col].set_tile(word[i])
+                self.spots[row + i][col].set_tile(Tile(word[i]))
 
     def word_to_tile(self, word):
         return [Tile(letter) for letter in word]
