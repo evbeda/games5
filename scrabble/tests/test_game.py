@@ -106,8 +106,14 @@ class TestGame(unittest.TestCase):
             [30, 40, 35],
         ),
     ])
-    def test_count_points(self, scores, player_hands, minus_remaining_tiles, expected):
-        for player, score, tiles in zip(self.t_game.players, scores, player_hands):
+    def test_count_points(
+        self, scores, player_hands, minus_remaining_tiles, expected
+    ):
+        for player, score, tiles in zip(
+            self.t_game.players,
+            scores,
+            player_hands
+        ):
             player.score = score
             player.tiles_in_hand = [Tile(t) for t in tiles]
         score = self.t_game.count_points(minus_remaining_tiles)
@@ -117,6 +123,19 @@ class TestGame(unittest.TestCase):
     def test_resolve_challenge_word_correct(self):
         self.t_game.resolve_challenge(True, 1)
         self.assertIn(1, self.t_game.lost_turns)
+
+    def test_resolve_challenge_word_correct_no_player(self):
+        with self.assertRaises(Exception):
+            self.t_game.resolve_challenge(True)
+
+    @patch.object(Player, 'revert_points')
+    @patch.object(Board, 'revert_board')
+    def test_resolve_challenge_word_incorrect(
+        self, revert_board_patched, revert_points_patched
+    ):
+        self.t_game.resolve_challenge(False)
+        revert_board_patched.assert_called()
+        revert_points_patched.assert_called()
 
     @parameterized.expand([
         (
@@ -147,7 +166,9 @@ class TestGame(unittest.TestCase):
         ),
     ])
     @patch.object(Game, 'count_points')
-    def test_game_over(self, result, sorted_result, expected_param, count_points_patched):
+    def test_game_over(
+        self, result, sorted_result, expected_param, count_points_patched
+    ):
         count_points_patched.return_value = result
         self.t_game.game_over()
         self.assertFalse(self.t_game.is_playing)
@@ -162,12 +183,15 @@ class TestGame(unittest.TestCase):
                 (0, 10),
             ],
             [60, 65, 20],
-            'Final scores:\n1: player_2 - 50\n2: player_3 - 30\n3: player_1 - 10',
+            'Final scores:\n'
+            '1: player_2 - 50\n'
+            '2: player_3 - 30\n'
+            '3: player_1 - 10',
         ),
     ])
     def test_get_game_results(self, game_results, player_scores, expected):
         self.t_game.game_results = game_results
         for player, score in zip(self.t_game.players, player_scores):
             player.score = score
-        
+
         self.assertEqual(self.t_game.get_game_results(), expected)

@@ -48,12 +48,15 @@ class Game:
     def player_count(self):
         return len(self.players)
 
-    def resolve_challenge(self, result, player):
+    def resolve_challenge(self, result, player=None):
         if result:
-            self.lost_turns.append(player)
+            if player is not None:
+                self.lost_turns.append(player)
+            else:
+                raise Exception
         else:
-            # Revert board
-            pass
+            self.board.revert_board()
+            self.players[self.current_player].revert_points()
 
     def get_current_player_hand(self):
         curr_player = self.players[self.current_player]
