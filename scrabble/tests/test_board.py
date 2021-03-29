@@ -167,18 +167,29 @@ class TestBoard(unittest.TestCase):
                     self.assertIsNotNone(spot_orig.tile)
                     self.assertEqual(spot.tile.letter, spot_orig.tile.letter)
 
-    @patch.object(Board, 'place_letters')
-    @patch.object(Player, 'add_points')
     @parameterized.expand([
         ('holanda', 7, 6, True, True),
+        ('holandaa', 7, 6, True, False),
     ])
+    @patch.object(Board, 'place_letters')
+    @patch.object(Player, 'add_points')
     def test_place_word(
-        self, word, row, col, direction, mock_place_letters,
-        mock_add_points, expected)
-        player = Player()
+        self, word, row, col, direction, expected,
+        mock_add_points, mock_place_letters
+    ):
+        player = Player(0, 'andres')
+        player.tiles_in_hand = [Tile(x) for x in ['n', 'd', 'a']]
+        self.b.first = False
+
         self.b.spots[7][6].set_tile(Tile('h'))
         self.b.spots[7][7].set_tile(Tile('o'))
         self.b.spots[7][8].set_tile(Tile('l'))
         self.b.spots[7][9].set_tile(Tile('a'))
-        place_word(self, word, row, col, direction, player):
-        AssertCall()
+
+        self.b.place_word(word, row, col, direction, player)
+        if expected:
+            mock_place_letters.assert_called_once()
+            # mock_add_points.assert_called_once()
+        else:
+            mock_place_letters.assert_not_called()
+            # mock_add_points.assert_not_called()
