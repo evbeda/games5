@@ -117,14 +117,13 @@ class TestGame(unittest.TestCase):
 
     @parameterized.expand([
         # (option, call_count)
-        # (1, (1, 0, 0, 0)),
-        # (2, (0, 1, 0, 0)),
-        (3, (0, 0, 1, 0)),
+        # (1, (1, 0, 0)),
+        # (2, (0, 1, 0)),
+        (3, (0, 0, 1)),
     ])
-    @patch.object(Game, "end_turn")
     @patch.object(Board, "give_one_tile_from_board")
     # @patch.object(Board, "put_a_tile")
-    # @patch.object(Board, "put_new_set")
+    # @patch.object(Game, "put_new_set")
     def test_make_play_calls(
         self,
         option,
@@ -132,7 +131,6 @@ class TestGame(unittest.TestCase):
         # mock_new_set,
         # mock_put_a_tile,
         mock_take_tile,
-        mock_end,
     ):
         # data
         self.game.players = [Player("test_1")]
@@ -144,7 +142,6 @@ class TestGame(unittest.TestCase):
         # self.assertEqual(mock_new_set.call_count, call_count[0])
         # self.assertEqual(mock_put_a_tile.call_count, call_count[1])
         self.assertEqual(mock_take_tile.call_count, call_count[2])
-        self.assertEqual(mock_end.call_count, call_count[3])
 
     @patch.object(Board, "give_one_tile_from_board")
     def test_make_play_arguments(self, mock):

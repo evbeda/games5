@@ -41,9 +41,9 @@ class Game:
 
     def make_play(self, option, args):
         options = {
-            # 1: self.put_new_set(*args)
-            # 2: self.board.put_a_tile(player, *args)
-            3: self.board.give_one_tile_from_board(*args)
+            # 1: self.put_new_set(args),
+            # 2: self.board.put_a_tile(player, *args),
+            3: self.board.give_one_tile_from_board(*args),
         }
         options[option]
 
