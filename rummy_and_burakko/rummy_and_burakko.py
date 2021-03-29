@@ -61,7 +61,7 @@ class RummyAndBurakko():
             self.input_player_args, self.game_state = players_q, GAME_STATE_PLAYERS_INPUT
             self.input_are_ints = False
 
-    def play_players_input(self, player_names):
+    def play_players_input(self, *player_names):
         self.game = Game(player_names)
         self.game.distribute_tiles()
         self.game.random_order()
@@ -98,7 +98,7 @@ class RummyAndBurakko():
             self.input_q_tiles = quantity
             self.game_state = GAME_STATE_NEW_SET_TILES
 
-    def play_make_move(self, moves):
+    def play_make_move(self, *moves):
         self.game.make_play(self.option, moves)
         self.game_state = GAME_STATE_SELECT_OPTION
 
