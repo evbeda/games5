@@ -17,7 +17,7 @@ game_state_next_turn = {
     QWIXX_STATE_OPTION: 'Game option :\n1) play \n2) pass',
 }
 game_state_color_next_turn = {
-    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (1: red, 2: yellow, 3: blue, 4: green) or pass ?',
+    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (1): red, 2): yellow, 3): blue, 4): green) or pass ?',
     QWIXX_TURN_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
 }
 OPTION_PLAY = 1
