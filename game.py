@@ -1,10 +1,7 @@
 from guess_number_game.guess_number_game import GuessNumberGame
 from qwixx.qwixx import Qwixx
-<<<<<<< HEAD
 from scrabble.scrabble import Scrabble
-=======
 from rummy_and_burakko.rummy_and_burakko import RummyAndBurakko
->>>>>>> rummy added and show_game spaces fixed
 
 
 class Game(object):
@@ -14,11 +11,8 @@ class Game(object):
         self.games = [
             GuessNumberGame,
             Qwixx,
-<<<<<<< HEAD
             Scrabble,
-=======
             RummyAndBurakko,
->>>>>>> rummy added and show_game spaces fixed
         ]
 
     def output(self, text):
