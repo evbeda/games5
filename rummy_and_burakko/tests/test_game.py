@@ -230,3 +230,38 @@ class TestGame(unittest.TestCase):
         self.assertEqual(mock_player.call_count, cc_1)
         self.assertEqual(mock_board.call_count, cc_2)
         self.assertEqual(result, expected)
+
+    @parameterized.expand([
+        # (indexes, call_count_1, call_count_2, expected)
+        ([14, 5, 1, 7], 3, 1),
+        ([0, 12, 13, 14], 2, 2),
+        ([13, 14, 15, 16], 0, 4),
+        ([0, 5, 10, 12], 4, 0),
+    ])
+    @patch.object(Board, 'remove_reused_tile')
+    @patch.object(Player, 'remove_tile')
+    def test_clean_calls(self, indexes, cc_1, cc_2, mock_player, mock_board):
+        # process
+        self.game.distribute_tiles()
+        self.game.next_turn()
+        self.game.clean(indexes)
+        # assert
+        self.assertEqual(mock_player.call_count, cc_1)
+        self.assertEqual(mock_board.call_count, cc_2)
+
+    @parameterized.expand([
+        # (indexes, expected_temp_hand, expected_reused_tiles)
+        ([6, 1, 3, 2], [0, 4], [5, 7, 8, 9]),
+        ([0, 7, 8, 9], [1, 2, 3, 4], [5, 6]),
+        ([0, 4, 5, 9], [1, 2, 3], [6, 7, 8]),
+    ])
+    def test_clean_result(self, indexes, expected_1, expected_2):
+        # data
+        player = self.game.players[self.game.current_turn]
+        player.temp_hand = list(range(5))
+        self.game.board.reused_tiles = list(range(5, 10))
+        # process
+        self.game.clean(indexes)
+        # assert
+        self.assertEqual(player.temp_hand, expected_1)
+        self.assertEqual(self.game.board.reused_tiles, expected_2)
