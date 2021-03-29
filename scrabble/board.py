@@ -59,9 +59,8 @@ class Board:
         mult = (0, 'c')
 
         for set_mult in BOARD_MULT:
-            for value in set_mult[0]:
-                if (x, y) == value:
-                    return set_mult[1]
+            if (x, y) in set_mult[0]:
+                return set_mult[1]
 
         return mult
 
