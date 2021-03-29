@@ -151,6 +151,18 @@ class TestQwixx(unittest.TestCase):
             self.qwixx.score_pad[0].penalty,
             1,
         )
+        self.assertTrue(self.qwixx.is_playing)
+
+    def test_play_option_pass_with_last_penalty(self):
+        self.qwixx.play_start(4)
+        self.qwixx.turn_color = QWIXX_TURN_COLOR
+        self.qwixx.score_pad[0].penalty = 3
+        self.qwixx.play_option(OPTION_PASS)
+        self.assertEqual(
+            self.qwixx.score_pad[0].penalty,
+            4,
+        )
+        self.assertFalse(self.qwixx.is_playing)
 
     def test_play_option_pass_without_penalty(self):
         self.qwixx.play_start(4)

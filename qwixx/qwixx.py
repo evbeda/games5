@@ -1,4 +1,7 @@
-from .score_pad import ScorePad
+from .score_pad import (
+    ScorePad,
+    ReachPenaltyLimit,
+)
 from .set_dices import SetDices
 
 
@@ -90,7 +93,10 @@ class Qwixx:
             self.game_state = QWIXX_STATE_PLAY
         elif option == OPTION_PASS:
             if self.turn_color == QWIXX_TURN_COLOR:
-                self.score_pad[self.current_player].add_penalty()
+                try:
+                    self.score_pad[self.current_player].add_penalty()
+                except ReachPenaltyLimit:
+                    self.is_playing = False
             self.set_next_player()
         else:
             return 'Invalid Option'

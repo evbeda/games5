@@ -1,6 +1,10 @@
 from .row import Row
 
 
+class ReachPenaltyLimit(Exception):
+    pass
+
+
 class ScorePad:
     def __init__(self):
         self.id_player = None
@@ -17,10 +21,8 @@ class ScorePad:
 
     def add_penalty(self):
         self.penalty += 1
-        if self.penalty < 4:
-            return self.penalty
-        else:
-            return True  # terminar juego
+        if self.penalty >= 4:
+            raise ReachPenaltyLimit()
 
     def calculate_score(self):
         score = 0
