@@ -80,8 +80,8 @@ class TestBoard(unittest.TestCase):
     @parameterized.expand([
         ('sol', [(1, 'o')], True),
         ('sol', [(1, 'h')], False),
-        ('sol', [], True),
-        # ('sol', [(0, 's'), (1, 'o'), (2, 'l')], False),
+        ('sol', [], False),
+        ('sol', [(0, 's'), (1, 'o'), (2, 'l')], False),
     ])
     def test_can_place_word(self, word, tiles_in_board, expected):
         self.assertEqual(self.b.can_place_word(word, tiles_in_board), expected)
