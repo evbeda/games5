@@ -128,9 +128,10 @@ class TestBoard(unittest.TestCase):
                 self.assertEqual(sfw.tile, exp)
 
     @parameterized.expand([
-        ([None, Tile('p'), None], ['p'],),
-        ([None, Tile('a'), Tile('c')], ['a', 'c'],),
-        ([None, None, None, None], [],),
+        ([None, Tile('p'), None], [(1, 'p')],),
+        # ([None, Tile('p'), None], ['p'],),
+        # ([None, Tile('a'), Tile('c')], ['a', 'c'],),
+        # ([None, None, None, None], [],),
     ])
     def test_tiles_in_board(self, tiles, expected):
         spots = []
@@ -145,9 +146,9 @@ class TestBoard(unittest.TestCase):
             self.assertEqual(swt, exp)
 
     @parameterized.expand([
-        ('casa', ['a', 's'], ['c', 'a']),
-        ('casa', [], ['c', 'a', 's', 'a']),
-        ('casa', ['c', 'a', 's', 'a'], []),
+        ('casa', [(1, 'a'), (2, 's')], [(0, 'c'), (3, 'a')]),
+        ('casa', [], [(0, 'c'), (1, 'a'), (2, 's'), (3, 'a')]),
+        ('casa', [(0, 'c'), (1, 'a'), (2, 's'), (3, 'a')], []),
     ])
     def test_tiles_diff(self, word, letters_in_board, expected):
         self.assertEqual(self.b.tiles_diff(word, letters_in_board), expected)
