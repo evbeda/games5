@@ -70,7 +70,9 @@ class Board:
         board_str = ''
         for row in self.spots:
             board_str += '- - ' * len(row) + '-\n'
-            board_str += '|' + '|'.join([f'{spot.get_spot()}' for spot in row]) + '|\n'
+            board_str += '|' + '|'.join(
+                [f'{spot.get_spot()}' for spot in row]
+            ) + '|\n'
         board_str += '- - ' * len(self.spots[0]) + '-'
 
         return board_str
@@ -84,35 +86,28 @@ class Board:
             var = sorted([tile.letter for tile in player.tiles_in_hand])
             var2 = sorted(list(word))
             if all([var2.count(i) <= var.count(i) for i in var2]):
-                print(7)
                 self.place_letters(
                     word, row, col, direction, range(len(word))
                 )
-                spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
+                # spot_list = self.get_spots_to_place_word(
+                #     len(word), row, col, direction)
                 # player.add_points(self.calculate_score(spot_list, word))
                 self.first = False
 
     def place_word(self, word, row, col, direction, player):
-        spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
-        print(1)
+        spot_list = self.get_spots_to_place_word(
+            len(word), row, col, direction)
         existing_tiles = self.tiles_in_board(spot_list)
-        print(2)
         if self.can_place_word(word, existing_tiles):
-            print(3)
             remain_tiles = self.tiles_diff(word, existing_tiles)
-            print(4)
             unzipped_remain_tiles = zip(*remain_tiles)
-            print(5)
             unzipped_list = list(unzipped_remain_tiles)
-            print(6)
             var = sorted([tile.letter for tile in player.tiles_in_hand])
             var2 = sorted(unzipped_list[1])
             if all([var2.count(i) <= var.count(i) for i in var2]):
-                print(7)
                 self.place_letters(
                     word, row, col, direction, unzipped_list[0]
                 )
-                print(8)
                 # player.add_points(self.calculate_score(spot_list, word))
 
     def can_place_first_word(self, word, row, col, direction):
