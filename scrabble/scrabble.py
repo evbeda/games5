@@ -117,8 +117,8 @@ class Scrabble:
         h = h == 'h'
         if self.game.place_word(x, y, h, word):
             self.game_state = GAME_STATE_ASK_CHALLENGE
-        else:
-            return 'Invalid placement'
+        # else:
+        #     return 'Invalid placement'
 
     def play_change_letters(self, *letters):
         self.game.change_player_tiles(letters)
