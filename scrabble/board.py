@@ -51,7 +51,7 @@ class Board:
     def __init__(self):
         self.spots = self.set_spots()
         self.spots_orig = None
-        self.first = False
+        self.first = True
 
     def set_spots(self):
         return [[Spot(*self.multiplier(x, y))
@@ -82,7 +82,7 @@ class Board:
 
     def place_first_word(self, word, row, col, direction, player):
         self.spots_orig = deepcopy(self.spots)
-        if self.first and self.can_place_first_word(word, row, col, direction):
+        if self.can_place_first_word(word, row, col, direction):
             var = sorted([tile.letter for tile in player.tiles_in_hand])
             var2 = sorted(list(word))
             if all([var2.count(i) <= var.count(i) for i in var2]):
@@ -94,7 +94,13 @@ class Board:
                 # player.add_points(self.calculate_score(spot_list, word))
                 self.first = False
 
-    def place_word(self, word, row, col, direction, player):
+    def place_word(self, *args):
+        if self.first:
+            self.place_first_word(*args)
+        else:
+            self.place_other_word(*args)
+
+    def place_other_word(self, word, row, col, direction, player):
         spot_list = self.get_spots_to_place_word(
             len(word), row, col, direction)
         existing_tiles = self.tiles_in_board(spot_list)
