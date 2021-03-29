@@ -38,10 +38,17 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.assertEqual(self.rummy.game_state, res_2)
         self.assertEqual(self.rummy.input_are_ints, are_ints)
 
+    @patch.object(Game, "next_turn")
     @patch.object(Game, "distribute_tiles")
     @patch.object(Game, "random_order")
     @patch.object(Game, "create_players")
-    def test_play_players_input(self, m_init, m_order, m_distribute):
+    def test_play_players_input(
+        self,
+        m_init,
+        m_order,
+        m_distribute,
+        m_next_turn,
+    ):
         # data
         players = ["test_1", "test_2", "test_3"]
         # process
@@ -50,6 +57,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         m_init.assert_called_once_with(players)
         m_order.assert_called_once_with()
         m_distribute.assert_called_once_with()
+        m_next_turn.assert_called_once_with()
         self.assertTrue(self.rummy.input_are_ints)
 
     @parameterized.expand([
@@ -111,28 +119,38 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.assertEqual(self.rummy.game_state, state)
         self.assertEqual(self.rummy.input_q_tiles, q)
 
-    @parameterized.expand([
-        # (game_state, )
-        ('start_game', 'start_game'),
-        ('new_set_tiles', 'make_move'),
-        ('put_a_tile', 'make_move'),
-        ('select_option', 'select_option'),
-    ])
-    def test_play_next_turn(self, pre_state, post_state):
-        # process
-        self.rummy.game_state = pre_state
-        self.rummy.next_turn()
-        # assert
-        self.assertEqual(self.rummy.game_state, post_state)
+    # @parameterized.expand([
+    #     # (game_state, )
+    #     ('start_game', 'start_game'),
+    #     ('new_set_tiles', 'make_move'),
+    #     ('put_a_tile', 'make_move'),
+    #     ('select_option', 'select_option'),
+    # ])
+    # def test_play_next_turn(self, pre_state, post_state):
+    #     # process
+    #     self.rummy.game_state = pre_state
+    #     self.rummy.play(4)
+    #     # assert
+    #     self.assertEqual(self.rummy.game_state, post_state)
 
     @parameterized.expand([
         # (game_state, call_count)
-        ('start_game', (1, 0)),
-        ('players_input', (0, 1)),
+        ('start_game', (1, 0, 0)),
+        ('players_input', (0, 1, 0)),
+        ('put_a_tile', (0, 0, 1)),
+        ('new_set_tiles', (0, 0, 1)),
     ])
+    @patch.object(RummyAndBurakko, 'play_make_move')
     @patch.object(RummyAndBurakko, 'play_players_input')
     @patch.object(RummyAndBurakko, 'play_start_game')
-    def test_play(self, game_state, call_count, mock_start, mock_players):
+    def test_play(
+        self,
+        game_state,
+        call_count,
+        mock_start,
+        mock_players,
+        mock_make_move,
+    ):
         # data
         args = [1, 2, 3, 4]
         self.rummy.game_state = game_state
@@ -141,6 +159,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         # assert
         self.assertEqual(mock_start.call_count, call_count[0])
         self.assertEqual(mock_players.call_count, call_count[1])
+        self.assertEqual(mock_make_move.call_count, call_count[2])
 
     @patch.object(Game, 'make_play')
     def test_play_make_move(self, mock):

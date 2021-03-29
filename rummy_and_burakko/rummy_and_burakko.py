@@ -67,19 +67,11 @@ class RummyAndBurakko():
         self.game.random_order()
         self.game_state = GAME_STATE_SELECT_OPTION
         self.input_are_ints = True
+        self.game.next_turn()
 
     def next_turn(self):
         message = '\n'
         message += game_state_next_turn[self.game_state]
-
-        if self.game_state in [
-            GAME_STATE_NEW_SET_TILES,
-            GAME_STATE_PUT_A_TILE,
-            GAME_STATE_GET_A_TILE,
-            GAME_STATE_END_TURN,
-        ]:
-            self.game_state = GAME_STATE_MAKE_MOVE
-
         return message
 
     # play
@@ -105,5 +97,12 @@ class RummyAndBurakko():
         self.game_state = GAME_STATE_SELECT_OPTION
 
     def play(self, *args):
+        if self.game_state in [
+            GAME_STATE_NEW_SET_TILES,
+            GAME_STATE_PUT_A_TILE,
+            GAME_STATE_GET_A_TILE,
+        ]:
+            self.game_state = GAME_STATE_MAKE_MOVE
+
         method = getattr(self, 'play_' + self.game_state)
         method(*args)
