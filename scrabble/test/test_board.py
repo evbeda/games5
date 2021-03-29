@@ -129,9 +129,8 @@ class TestBoard(unittest.TestCase):
 
     @parameterized.expand([
         ([None, Tile('p'), None], [(1, 'p')],),
-        # ([None, Tile('p'), None], ['p'],),
-        # ([None, Tile('a'), Tile('c')], ['a', 'c'],),
-        # ([None, None, None, None], [],),
+        ([None, Tile('a'), Tile('c')], [(1, 'a'), (2, 'c')],),
+        ([None, None, None, None], [],),
     ])
     def test_tiles_in_board(self, tiles, expected):
         spots = []
