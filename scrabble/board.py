@@ -102,7 +102,12 @@ class Board:
         return [(i, s.tile.letter) for i, s in enumerate(spots) if s.tile]
 
     def can_place_word(self, word, tiles_in_board):
-        return all([(word[i[0]] == i[1]) for i in tiles_in_board])
+        l_word = len(word)
+        l_tiles_in_board = len(tiles_in_board)
+        if l_tiles_in_board == l_word or l_tiles_in_board == 0:
+            return False
+        else:
+            return all([(word[i[0]] == i[1]) for i in tiles_in_board])
 
     def place_letters(self, word, row, col, direction, indexes):
         for i in indexes:
