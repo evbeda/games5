@@ -233,3 +233,4 @@ class TestQwixx(unittest.TestCase):
         row.blocked_rows.extend(['blue', 'red'])
         self.qwixx.you_can_play
         self.assertFalse(self.qwixx.is_playing)
+        

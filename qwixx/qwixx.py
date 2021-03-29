@@ -181,10 +181,11 @@ class Qwixx:
         output += '{}'.format(self.is_locked(row))
         output += "\n"
         return output
-        
+
     @property
     def you_can_play(self):
         if len(Row.blocked_rows) < 2:
             self.is_playing = True
         else:
             self.is_playing = False
+
