@@ -227,10 +227,16 @@ class TestQwixx(unittest.TestCase):
             expected_next_turn_color,
         )
 
-    def test_you_cant_play(self):
+    @parameterized.expand([
+        (['blue', 'red'], False),
+        (['blue', 'red', 'yellow'], False),
+        (['blue'], True),
+        ([], True),
+    ])
+    def test_you_cant_play(self, blocked_row, expected):
         row = Row
         row.blocked_rows.clear()
-        row.blocked_rows.extend(['blue', 'red'])
+        row.blocked_rows.extend(blocked_row)
         self.qwixx.you_can_play
-        self.assertFalse(self.qwixx.is_playing)
-        
+        self.assertEqual(self.qwixx.is_playing, expected)
+
