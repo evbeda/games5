@@ -17,7 +17,7 @@ class TestBoard(unittest.TestCase):
 
     @patch.object(Board, 'multiplier', return_value=(0, 'c'))
     def test_set_spots(self, multiplier_mock):
-        b = Board()
+        Board()
         self.assertEqual(multiplier_mock.call_count, 225)
 
     @parameterized.expand([
