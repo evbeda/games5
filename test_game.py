@@ -35,6 +35,7 @@ class TestGame(unittest.TestCase):
             self.game.game_inputs(),
             'Select Game\n'
             '0: Guess Number Game\n'
+            '1: Qwixx\n'
             '99: to quit\n'
         )
 

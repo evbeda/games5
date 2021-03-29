@@ -66,7 +66,7 @@ class TestQwixx(unittest.TestCase):
 
     @parameterized.expand([
         (QWIXX_STATE_START, 'Enter number of players',),
-        (QWIXX_STATE_OPTION, 'Game option :\n1)play \n2)pass',),
+        (QWIXX_STATE_OPTION, 'Game option :\n1) play \n2) pass',),
     ])
     def test_next_turn(self, state, expected):
         self.qwixx.game_state = state
@@ -82,8 +82,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (2, 0, 361),
-        (4, 3, 361),
+        (2, 0, 374),
+        (4, 3, 374),
     ])
     def test_board(self, cant_score_pad, id_player, cant_letter):
         qwixx = Qwixx()
@@ -163,15 +163,23 @@ class TestQwixx(unittest.TestCase):
         patched_mark_with_white.assert_called_once_with('red')
 
     @parameterized.expand([
-        (0,),
-        (1,),
-        (2,),
-        (3,),
+        (0, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (1, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (2, 0, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (3, 0, QWIXX_TURN_WHITE, QWIXX_TURN_COLOR,),
+        (0, 0, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE,),
+        (1, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (2, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (3, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (0, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
+        (1, 1, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE,),
     ])
-    def set_next_player(self, current_player):
+    def set_next_player(self, current_player, current_color_player, turn_color, expected_next_turn_color):
         self.qwixx.play_start(4)
         self.qwixx.game_state = QWIXX_STATE_PLAY
         self.qwixx.current_player = current_player
+        self.qwixx.current_color_player = current_color_player
+        self.qwixx.turn_color = turn_color
         self.qwixx.set_next_player()
         self.assertEqual(
             self.qwixx.game_state,
@@ -180,4 +188,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(
             self.qwixx.current_player,
             (current_player + 1) % 4,
+        )
+        self.assertEqual(
+            self.qwixx.turn_color,
+            expected_next_turn_color,
         )
