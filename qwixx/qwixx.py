@@ -11,7 +11,7 @@ QWIXX_TURN_COLOR = 'color'
 
 game_state_next_turn = {
     QWIXX_STATE_START: 'Enter number of players',
-    QWIXX_STATE_OPTION: 'Game option :\n1)play \n2)pass',
+    QWIXX_STATE_OPTION: 'Game option :\n1) play \n2) pass',
 }
 game_state_color_next_turn = {
     QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (red, yellow, blue, green) or pass ?',
@@ -26,22 +26,15 @@ class Qwixx:
     name = 'Qwixx'
     input_are_ints = True
 
-    # @property
-    # def input_args(self):
-    #     game_state_args = {
-    #         QWIXX_STATE_START: 1,
-    #         QWIXX_STATE_PLAYERS: self.input_player_args,
-    #     }
-    #     return game_state_args[self.game_state]()
-
     def __init__(self):
         self.game_state = QWIXX_STATE_START
-        self.input_are_ints = False
         self.score_pad = []
         self.current_player = 0
+        self.current_color_player = 0
         self.dice_set = SetDices()
         self.is_playing = True
         self.turn_color = QWIXX_TURN_WHITE
+        self.previous_turn_color = QWIXX_TURN_WHITE
 
     def play_start(self, n_players):
         self.create_scored_pad(n_players)
@@ -68,7 +61,6 @@ class Qwixx:
                 break
 
     # def mark_with_color(self, color):
-    #     pass
 
     def mark_with_white(self, color):
         # if color == 'pass':
@@ -83,7 +75,15 @@ class Qwixx:
 
     def set_next_player(self):
         self.game_state = QWIXX_STATE_OPTION
-        self.current_player = (self.current_player + 1) % len(self.score_pad)
+        next_player = (self.current_player + 1) % len(self.score_pad)
+        if self.turn_color == QWIXX_TURN_COLOR and self.previous_turn_color == QWIXX_TURN_WHITE:
+            self.current_color_player = (self.current_color_player + 1) % len(self.score_pad)
+            self.turn_color = QWIXX_TURN_WHITE
+            self.previous_turn_color = QWIXX_TURN_COLOR
+        elif next_player == self.current_color_player:
+            self.turn_color = QWIXX_TURN_COLOR
+            self.previous_turn_color = QWIXX_TURN_WHITE
+        self.current_player = next_player
 
     def play_option(self, option):
         if option == OPTION_PLAY:
@@ -99,6 +99,14 @@ class Qwixx:
         else:
             pass  # self.mark_with_color(args[0], args[1], args[2])
 
+    @property
+    def input_args(self):
+        return (
+            3
+            if self.game_state == QWIXX_STATE_PLAY and self.turn_color == QWIXX_TURN_COLOR
+            else 1
+        )
+
     def play(self, *args):
         if self.game_state == QWIXX_STATE_START:
             self.play_start(args[0])
@@ -111,21 +119,23 @@ class Qwixx:
     @property
     def board(self):
         output = " "
-        output += "\n"
-        output += "the player who plays :" + str(self.score_pad[self.current_player].id_player)
-        output += "\n"
-        output += "score pad "
-        output += "\n"
-        for row in self.score_pad[self.current_player].rows.values():
-            output += self.output_row(row)
-        output += "\n"
-        output += "penalty"
-        output += " " + str(self.score_pad[self.current_player].penalty)
-        output += "\n"
-        output += "score :"
-        output += "" + str(tuple(range(1, 13)))
-        output += "\n"
-        output += "       (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
+        if self.score_pad:
+            output += "\n"
+            output += "the player who plays :{} ".format(self.score_pad[self.current_player].id_player)
+            output += "color :" + self.turn_color
+            output += "\n"
+            output += "score pad "
+            output += "\n"
+            for row in self.score_pad[self.current_player].rows.values():
+                output += self.output_row(row)
+            output += "\n"
+            output += "penalty"
+            output += " " + str(self.score_pad[self.current_player].penalty)
+            output += "\n"
+            output += "score :"
+            output += "" + str(tuple(range(1, 13)))
+            output += "\n"
+            output += "       (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
 
         return output
 
