@@ -114,14 +114,14 @@ class TestGame(unittest.TestCase):
         with self.assertRaises(Exception):
             self.t_game.resolve_challenge(True)
 
-    @patch.object(Player, 'revert_points')
+    @patch.object(Player, 'revert_play')
     @patch.object(Board, 'revert_board')
     def test_resolve_challenge_word_incorrect(
-        self, revert_board_patched, revert_points_patched
+        self, revert_board_patched, revert_play_patched
     ):
         self.t_game.resolve_challenge(False)
         revert_board_patched.assert_called()
-        revert_points_patched.assert_called()
+        revert_play_patched.assert_called()
 
     @parameterized.expand([
         (

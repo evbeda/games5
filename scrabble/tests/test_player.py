@@ -87,8 +87,16 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player_test.score, 55)
         self.assertEqual(self.player_test.prev_score, 50)
 
-    def test_revert_points(self):
+    def test_revert_play(self):
         self.player_test.score = 55
         self.player_test.prev_score = 50
-        self.player_test.revert_points()
+        self.player_test.tiles_in_hand = ['a', 'b', 'c']
+        self.player_test.prev_tiles_in_hand = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+        self.player_test.revert_play()
         self.assertEqual(self.player_test.score, 50)
+        self.assertEqual(self.player_test.tiles_in_hand, ['a', 'b', 'c', 'd', 'e', 'f', 'g'])
+
+    def test_use_tiles(self):
+        self.player_test.tiles_in_hand = [Tile(t) for t in ['a', 'b', 'c']]
+        self.player_test.use_tiles(['a', 'c'])
+        self.assertEqual(self.player_test.tiles_in_hand, [Tile('b')])

@@ -6,6 +6,7 @@ class Player:
     def __init__(self, id, name):
         self.id = id
         self.name = name
+        prev_tiles_in_hand = []
         self.tiles_in_hand = []
         self.score = 0
         self.prev_score = 0
@@ -38,5 +39,11 @@ class Player:
         self.prev_score = self.score
         self.score += points
 
-    def revert_points(self):
+    def revert_play(self):
         self.score = self.prev_score
+        self.tiles_in_hand = self.prev_tiles_in_hand
+
+    def use_tiles(self, tiles):
+        self.prev_tiles_in_hand = self.tiles_in_hand
+        for tile in tiles:
+            self.tiles_in_hand.remove(Tile(tile))
