@@ -89,6 +89,8 @@ class Qwixx:
         if option == OPTION_PLAY:
             self.game_state = QWIXX_STATE_PLAY
         elif option == OPTION_PASS:
+            if self.turn_color == QWIXX_TURN_COLOR:
+                self.score_pad[self.current_player].add_penalty()
             self.set_next_player()
         else:
             return 'Invalid Option'
