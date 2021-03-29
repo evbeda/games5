@@ -49,6 +49,7 @@ BOARD_MULT = (
 class Board:
     def __init__(self):
         self.spots = self.set_spots()
+        self.spots_orig = None
         self.first = False
 
     def set_spots(self):
@@ -74,6 +75,7 @@ class Board:
         return board_str
 
     # def place_word(self, word, row, col, direction, hand):
+    #     self.spots_orig = self.spots.copy()
     #     if self.first and self.can_place_first_word(word, row, col, direction):
     #         self.place_letters(word, row, col, direction, range(len(word)))
     #         self.first = False
