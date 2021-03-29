@@ -44,7 +44,7 @@ class Game:
             self.tile_bag, letters)
 
     def place_word(self, x, y, direction, word):
-        self.board.place_word(
+        return self.board.place_word(
             word, y, x, direction, self.players[self.current_player]
         )
 
