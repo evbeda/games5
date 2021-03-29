@@ -142,7 +142,7 @@ class Qwixx:
         output += "\n"
         output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
         output += "\n"
-        output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
+        output += "      red->{}".format(self.dice_set.get_value_of_die('green'))
         output += "\n"
         output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
         if self.score_pad:
