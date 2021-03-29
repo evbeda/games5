@@ -112,8 +112,8 @@ class Board:
 
     def can_place_first_word(self, word, row, col, direction):
         return (
-            (direction and row == 7 and col <= 7 <= col+len(word)) or
-            (not direction and col == 7 and row <= 7 <= row+len(word))
+            (direction and row == 7 and col <= 7 <= col + len(word)) or
+            (not direction and col == 7 and row <= 7 <= row + len(word))
         )
 
     def tiles_in_board(self, spots):
@@ -130,18 +130,18 @@ class Board:
     def place_letters(self, word, row, col, direction, indexes):
         for i in indexes:
             if direction:
-                self.spots[row][col+i].set_tile(word[i])
+                self.spots[row][col + i].set_tile(word[i])
             else:
-                self.spots[row+i][col].set_tile(word[i])
+                self.spots[row + i][col].set_tile(word[i])
 
     def word_to_tile(self, word):
         return [Tile(letter) for letter in word]
 
     def get_spots_to_place_word(self, len_word, row, col, direction):
         return (
-            self.spots[row][col:col+len_word]
+            self.spots[row][col:col + len_word]
             if direction
-            else [self.spots[row+i][col] for i in range(len_word)]
+            else [self.spots[row + i][col] for i in range(len_word)]
         )
 
     def tiles_diff(self, word, letters_in_board):

@@ -18,8 +18,12 @@ game_state_next_turn = {
     QWIXX_STATE_OPTION: 'Game option :\n1) play \n2) pass',
 }
 game_state_color_next_turn = {
-    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (1): red, 2): yellow, 3): blue, 4): green) or pass ?',
-    QWIXX_TURN_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+    QWIXX_TURN_WHITE:
+        'Choose in which row you want to mark the common dice (1): red, 2): yellow, '
+        '3): blue, 4): green) or pass ?',
+    QWIXX_TURN_COLOR:
+        'Choose in which row you want to mark acommon die with a colored die (0/3),'
+        'common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
 }
 OPTION_PLAY = 1
 OPTION_PASS = 2
@@ -144,7 +148,7 @@ class Qwixx:
     def board(self):
         output = " "
         output += "Dice: white->{}".format(self.dice_set.get_value_of_die('white_1'))
-        output += "\n"    
+        output += "\n"
         output += "      white->{}".format(self.dice_set.get_value_of_die('white_2'))
         output += "\n"
         output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
@@ -195,4 +199,3 @@ class Qwixx:
             self.is_playing = True
         else:
             self.is_playing = False
-

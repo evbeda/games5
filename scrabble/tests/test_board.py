@@ -97,9 +97,9 @@ class TestBoard(unittest.TestCase):
 
         for i in range(len(word)):
             if direction:
-                self.assertEqual(self.b.spots[row][col+i].tile, word[i])
+                self.assertEqual(self.b.spots[row][col + i].tile, word[i])
             else:
-                self.assertEqual(self.b.spots[row+i][col].tile, word[i])
+                self.assertEqual(self.b.spots[row + i][col].tile, word[i])
 
     def test_word_to_tile(self):
         word = 'hola'
@@ -206,7 +206,7 @@ class TestBoard(unittest.TestCase):
         player = Player(0, 'andres')
         player.tiles_in_hand = [
             Tile(x) for x in ['h', 'o', 'l', 'a', 'n', 'd', 'a']
-            ]
+        ]
         self.b.first = True
 
         self.b.place_first_word(word, row, col, direction, player)

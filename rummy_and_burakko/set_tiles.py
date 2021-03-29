@@ -29,15 +29,15 @@ class SetTiles():
         size = len(number)
         if size < 3 or size > 13:
             return False
-        for i in range(size-1):
-            if number[i] != number[i+1]-1:
+        for i in range(size - 1):
+            if number[i] != number[i + 1] - 1:
                 if number[i] != 0:
                     return False
         colors = list([c.color for c in self.tiles])
         if colors.count('*') == 1:
-            if colors[0] == '*' and colors.count(colors[1]) == len(colors)-1:
+            if colors[0] == '*' and colors.count(colors[1]) == len(colors) - 1:
                 return True
-            elif colors.count(colors[0]) == len(colors)-1:
+            elif colors.count(colors[0]) == len(colors) - 1:
                 return True
         elif colors.count('*') == 0 and colors.count(colors[0]) == len(colors):
             return True

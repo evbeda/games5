@@ -37,7 +37,7 @@ class Game:
         ])
 
     def make_play(self, option, args):
-        player = self.players[self.current_turn]
+        # player = self.players[self.current_turn] NOT IN USE
         options = {
             # 1: self.put_new_set(*args)
             # 2: self.board.put_a_tile(player, *args)

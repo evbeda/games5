@@ -9,7 +9,7 @@ class TileBag():
 
     def create_tiles(self):
         temp_tiles = list(itertools.chain(
-            *[[Tile(color, number) for color in ['b', 'r', 'y', 'w']*2] for
+            *[[Tile(color, number) for color in ['b', 'r', 'y', 'w'] * 2] for
                 number in range(1, 14)]
         ))
         temp_tiles += [Tile('*', 0), Tile('*', 0)]

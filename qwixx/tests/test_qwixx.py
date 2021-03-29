@@ -73,8 +73,16 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (QWIXX_TURN_WHITE, 'Choose in which row you want to mark the common dice (1): red, 2): yellow, 3): blue, 4): green) or pass ?',),
-        (QWIXX_TURN_COLOR, 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',),
+        (
+            QWIXX_TURN_WHITE,
+            'Choose in which row you want to mark the common dice (1): red, 2): yellow, '
+            '3): blue, 4): green) or pass ?',
+        ),
+        (
+            QWIXX_TURN_COLOR,
+            'Choose in which row you want to mark acommon die with a colored die (0/3),'
+            'common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+        ),
     ])
     def test_next_turn_play(self, turn_color, expected):
         self.qwixx.game_state = QWIXX_STATE_PLAY
@@ -219,7 +227,6 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.mark_with_color(1, 1)
         self.assertEqual(self.qwixx.score_pad[0].rows['red'].marks, [4])
 
-
     @patch.object(Qwixx, 'mark_with_white')
     def test_play_play_color(self, patched_mark_with_white):
         self.qwixx.play_start(4)
@@ -239,7 +246,14 @@ class TestQwixx(unittest.TestCase):
         (0, 1, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE, QWIXX_TURN_COLOR,),
         (1, 1, QWIXX_TURN_COLOR, QWIXX_TURN_WHITE, QWIXX_TURN_WHITE,),
     ])
-    def test_set_next_player(self, current_player, current_color_player, turn_color, previous_turn_color, expected_next_turn_color):
+    def test_set_next_player(
+        self,
+        current_player,
+        current_color_player,
+        turn_color,
+        previous_turn_color,
+        expected_next_turn_color,
+    ):
         self.qwixx.play_start(4)
         self.qwixx.game_state = QWIXX_STATE_PLAY
         self.qwixx.current_player = current_player
@@ -272,4 +286,3 @@ class TestQwixx(unittest.TestCase):
         row.blocked_rows.extend(blocked_row)
         self.qwixx.you_can_play
         self.assertEqual(self.qwixx.is_playing, expected)
-

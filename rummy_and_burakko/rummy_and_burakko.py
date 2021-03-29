@@ -14,7 +14,10 @@ GAME_STATE_MAKE_MOVE = 'make_move'
 game_state_next_turn = {
     GAME_STATE_START_GAME: 'Enter number of players',
     GAME_STATE_PLAYERS_INPUT: 'Enter player names',
-    GAME_STATE_SELECT_OPTION: 'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n3)Take a tile from a set\n4)End turn',
+    GAME_STATE_SELECT_OPTION: (
+        'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n'
+        '3)Take a tile from a set\n4)End turn'
+    ),
     GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
     GAME_STATE_NEW_SET_TILES: 'Put the index of tiles to play in the correct order',
     GAME_STATE_PUT_A_TILE: 'Puting a tile: Select a tile, select the set, select the index in the chosen set',

@@ -26,8 +26,8 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.player_test.tiles_in_hand), 1)
 
     @parameterized.expand([
-        (['a', 'b'], ['c']*100, 7, 95),
-        (['a', 'b'], ['c']*3, 5, 0),
+        (['a', 'b'], ['c'] * 100, 7, 95),
+        (['a', 'b'], ['c'] * 3, 5, 0),
         (['a', 'b'], [], 2, 0),
     ])
     def test_full_draw(
