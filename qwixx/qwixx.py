@@ -24,11 +24,16 @@ game_state_color_next_turn = {
 OPTION_PLAY = 1
 OPTION_PASS = 2
 
-COLOR_DICT = {
+COLOR_ROW = {
     1: 'red',
     2: 'yellow',
     3: 'blue',
     4: 'green',
+}
+
+COLOR_DICE = {
+    1: 'white1',
+    2: 'white2'
 }
 
 
@@ -71,14 +76,16 @@ class Qwixx:
                 self.dice_set.pop(index)
                 break
 
-    # def mark_with_color(self, color):
+    def mark_with_color(self, white_index, color_index):
+        color = COLOR_ROW[color_index]
+        s_pad = self.score_pad[self.current_player]
+        first_die = self.dice_set.get_value_of_die(COLOR_DICE[white_index])
+        second_die = self.dice_set.get_value_of_die(color)
+        total = first_die + second_die
+        s_pad.mark_number_in_row(total, color)
 
     def mark_with_white(self, color_index):
-        # if color == 'pass':
-        #   self.set_next_player()
-        # if color not in ['red', 'yellow', 'blue', 'green']:
-        #   raise Exception('Invalid color')
-        color = COLOR_DICT[color_index]
+        color = COLOR_ROW[color_index]
         s_pad = self.score_pad[self.current_player]
         first_die = self.dice_set.get_value_of_die('white_1')
         second_die = self.dice_set.get_value_of_die('white_2')
@@ -114,7 +121,7 @@ class Qwixx:
         if self.turn_color == QWIXX_TURN_WHITE:
             self.mark_with_white(args[0])
         else:
-            pass  # self.mark_with_color(args[0], args[1], args[2])
+            self.mark_with_color(args[0], args[1])
 
     @property
     def input_args(self):

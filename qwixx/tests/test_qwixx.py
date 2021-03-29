@@ -52,7 +52,7 @@ class TestQwixx(unittest.TestCase):
 
     @patch.object(ScorePad, 'mark_number_in_row')
     @patch.object(SetDices, 'get_value_of_die', return_value=2)
-    def test_mark_with_white(self, mock_value_of_die, mock_mark_number):
+    def test_mark_with_white_call(self, mock_value_of_die, mock_mark_number):
         self.qwixx.score_pad = [ScorePad()]
         self.qwixx.mark_with_white(1)
         mock_mark_number.assert_called_once_with(4, 'red')
@@ -180,12 +180,45 @@ class TestQwixx(unittest.TestCase):
         )
 
     @patch.object(Qwixx, 'play_turn')
-    def test_play_play_turn(self, patched_mark_with_white):
+    def test_play_play(self, mock_play_turn):
         self.qwixx.play_start(4)
-        self.qwixx.turn_color = QWIXX_TURN_WHITE
         self.qwixx.game_state = QWIXX_STATE_PLAY
         self.qwixx.play(1)
-        patched_mark_with_white.assert_called_once_with(1)
+        mock_play_turn.assert_called_once_with(1)
+
+    @parameterized.expand([
+        (QWIXX_TURN_WHITE, 1, '',),
+        (QWIXX_TURN_COLOR, 1, 1,),
+    ])
+    @patch.object(Qwixx, 'mark_with_color')
+    @patch.object(Qwixx, 'mark_with_white')
+    def test_play_play_turn(
+        self,
+        turn_color,
+        dice1,
+        dice2,
+        patched_mark_with_white,
+        patched_mark_with_color,
+    ):
+        self.qwixx.turn_color = turn_color
+        self.qwixx.play_turn(dice1, dice2)
+        if self.qwixx.turn_color == QWIXX_TURN_WHITE:
+            patched_mark_with_white.assert_called_once_with(dice1)
+        else:
+            patched_mark_with_color.assert_called_once_with(dice1, dice2)
+
+    @patch.object(SetDices, 'get_value_of_die', return_value=3)
+    def test_mark_with_white(self, mock_get_value_of_die):
+        self.qwixx.play_start(4)
+        self.qwixx.mark_with_white(1)
+        self.assertEqual(self.qwixx.score_pad[0].rows['red'].marks, [6])
+
+    @patch.object(SetDices, 'get_value_of_die', return_value=2)
+    def test_mark_with_color(self, mock_get_value_of_die):
+        self.qwixx.play_start(4)
+        self.qwixx.mark_with_color(1, 1)
+        self.assertEqual(self.qwixx.score_pad[0].rows['red'].marks, [4])
+
 
     @patch.object(Qwixx, 'mark_with_white')
     def test_play_play_color(self, patched_mark_with_white):
