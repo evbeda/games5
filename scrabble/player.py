@@ -35,7 +35,8 @@ class Player:
         return ' | '.join([tile.letter for tile in self.tiles_in_hand])
 
     def add_points(self, points):
-        pass
+        self.prev_score = self.score
+        self.score += points
 
     def revert_points(self):
         self.score = self.prev_score
