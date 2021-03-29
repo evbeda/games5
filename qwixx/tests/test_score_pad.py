@@ -44,27 +44,3 @@ class TestScorePad(unittest.TestCase):
         self.score_pad.penalty = penalty
         result = self.score_pad.calculate_score()
         self.assertEqual(result, expected)
-
-    @patch.object(Row, 'set_mark')
-    def test_mark_number_in_row(self, mock_set_mark):
-        # data
-        self.score_pad.rows['red'].marks = [2, 3, 7]
-        # process
-        num = 10
-        self.score_pad.mark_number_in_row(num, 'red')
-        mock_set_mark.assert_called_once_with(num)
-
-    def test_pass_turn(self):
-        self.score_pad.penalty = 2
-        self.score_pad.pass_turn()
-        self.assertEqual(self.score_pad.penalty, 3)
-        with self.assertRaises(ReachPenaltyLimit):
-            self.score_pad.pass_turn()
-            self.assertEqual(self.score_pad.penalty, 4)
-
-    @patch.object(ScorePad, 'mark_number_in_row')
-    def test_mark_number_mocked(self, mock_mark_number_in_row):
-        # process
-        num = 10
-        self.score_pad.mark_number(num, 'red')
-        mock_mark_number_in_row.assert_called_once_with(num, 'red')
