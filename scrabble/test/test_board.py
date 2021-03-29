@@ -78,17 +78,13 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(result, expected)
 
     @parameterized.expand([
-        ('sol', 0, 0, True, True),
-        ('pala', 4, 7, False, True),
-        ('sol', 6, 5, False, True),
-        ('sol', 7, 5, False, False),
-        ('martillo', 7, 2, True, False),
+        ('sol', [(1, 'o')], True),
+        ('sol', [(1, 'h')], False),
+        ('sol', [], True),
+        # ('sol', [(0, 's'), (1, 'o'), (2, 'l')], False),
     ])
-    def test_can_place_word(self, word, row, col, direction, expected):
-        word_tile = self.b.word_to_tile('hola')
-        self.b.place_letters(word_tile, 7, 4, True, [0, 1, 2, 3])
-
-        self.assertEqual(self.b.can_place_word(word, row, col, direction), expected)
+    def test_can_place_word(self, word, tiles_in_board, expected):
+        self.assertEqual(self.b.can_place_word(word, tiles_in_board), expected)
 
     def test_place_letters(self):  # , word, row, col, direction):
         word = self.b.word_to_tile('hola')
@@ -118,7 +114,7 @@ class TestBoard(unittest.TestCase):
     def test_get_spots_to_place_word(self, len_word, row, col, dire, expected):
         word_tile = self.b.word_to_tile('barco')
         self.b.place_letters(word_tile, 7, 4, True, range(len(word_tile)))
-            
+
         spots_word = self.b.get_spots_to_place_word(len_word, row, col, dire)
 
         for sfw, exp in zip(spots_word, expected):
