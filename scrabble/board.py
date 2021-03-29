@@ -78,25 +78,28 @@ class Board:
     def revert_board(self):
         self.spots = self.spots_orig
 
-    # def place_word(self, word, row, col, direction, hand):
+    # def place_word(self, word, row, col, direction, player):
     #     self.spots_orig = deepcopy(self.spots)
     #     if self.first and self.can_place_first_word(word, row, col, direction):
     #         self.place_letters(word, row, col, direction, range(len(word)))
+    #         spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
+    #         player.add_points(self.calculate_score(spot_list, word))
     #         self.first = False
     #     else:
-    #         spot_list = self.get_spots_to_place_word(word, row, col, direction)
+    #         spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
     #         existing_tiles = self.tiles_in_board(spot_list)
     #         if self.can_place_word(word, existing_tiles):
     #             remain_tiles = self.tiles_diff(word, existing_tiles)
     #             unzipped_remain_tiles = zip(*remain_tiles)
     #             unzipped_list = list(unzipped_remain_tiles)
     #             if all(
-    #                 [item in [tile.letter for tile in hand]
+    #                 [item in [tile.letter for tile in player.tiles_in_hand]
     #                     for item in unzipped_list[1]]
     #             ):
     #                 self.place_letters(
     #                     word, row, col, direction, unzipped_list[0]
     #                 )
+    #                 player.add_points(self.calculate_score(spot_list, word))
 
     def can_place_first_word(self, word, row, col, direction):
         return (
