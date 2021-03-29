@@ -3,6 +3,7 @@ from unittest.mock import patch
 from parameterized import parameterized
 from ..rummy_and_burakko import RummyAndBurakko
 from ..game import Game
+from ..board import Board
 
 
 class TestRummyAndBurakko(unittest.TestCase):
@@ -167,16 +168,16 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.assertEqual(mock_players.call_count, call_count[1])
         self.assertEqual(mock_make_move.call_count, call_count[2])
 
-    @patch.object(Game, 'make_play')
-    def test_play_make_move(self, mock):
+    @patch.object(Board, 'give_one_tile_from_board')
+    def test_play_make_move(self, m_give_one):
         # data
         players = ["player_1", "player_2", 'player_3']
         self.rummy.game = Game(players)
 
-        self.rummy.option = 1
+        self.rummy.option = 3
         data = [0, 1, 3, 5]
         # process
         self.rummy.play_make_move(*data)
         # assert
-        mock.assert_called_once_with(self.rummy.option, tuple(data))
+        m_give_one.assert_called_once_with(*data)
         self.assertEqual(self.rummy.game_state, 'select_option')
