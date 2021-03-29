@@ -179,6 +179,13 @@ class TestQwixx(unittest.TestCase):
             'Invalid Option',
         )
 
+    @patch.object(Qwixx, 'play_turn')
+    def test_play_play(self, mock_play_turn):
+        self.qwixx.play_start(4)
+        self.qwixx.game_state = QWIXX_STATE_PLAY
+        self.qwixx.play(1)
+        mock_play_turn.assert_called_once_with(1)
+
     @parameterized.expand([
         (QWIXX_TURN_WHITE, 1, '',),
         (QWIXX_TURN_COLOR, 1, 1,),
