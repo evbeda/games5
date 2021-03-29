@@ -17,11 +17,18 @@ game_state_next_turn = {
     QWIXX_STATE_OPTION: 'Game option :\n1) play \n2) pass',
 }
 game_state_color_next_turn = {
-    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (red, yellow, blue, green) or pass ?',
+    QWIXX_TURN_WHITE: 'Choose in which row you want to mark the common dice (1: red, 2: yellow, 3: blue, 4: green) or pass ?',
     QWIXX_TURN_COLOR: 'Choose in which row you want to mark acommon die with a colored die (0/3),common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
 }
 OPTION_PLAY = 1
 OPTION_PASS = 2
+
+COLOR_DICT = {
+    1: 'red',
+    2: 'yellow',
+    3: 'blue',
+    4: 'green',
+}
 
 
 class Qwixx:
@@ -65,11 +72,12 @@ class Qwixx:
 
     # def mark_with_color(self, color):
 
-    def mark_with_white(self, color):
+    def mark_with_white(self, color_index):
         # if color == 'pass':
         #   self.set_next_player()
         # if color not in ['red', 'yellow', 'blue', 'green']:
         #   raise Exception('Invalid color')
+        color = COLOR_DICT[color_index]
         s_pad = self.score_pad[self.current_player]
         first_die = self.dice_set.get_value_of_die('white_1')
         second_die = self.dice_set.get_value_of_die('white_2')
