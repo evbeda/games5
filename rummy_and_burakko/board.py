@@ -63,3 +63,9 @@ class Board():
                 )
         else:
             raise Exception
+
+    def place_new_set(self, tiles):
+        self.last_id = self.last_id + 1
+        for tile in tiles:
+            tile.set_id = self.last_id
+        self.sets[self.last_id] = SetTiles(tiles)
