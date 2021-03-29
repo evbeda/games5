@@ -265,3 +265,16 @@ class TestGame(unittest.TestCase):
         # assert
         self.assertEqual(player.temp_hand, expected_1)
         self.assertEqual(self.game.board.reused_tiles, expected_2)
+
+    @patch.object(Board, 'place_new_set')
+    @patch.object(Game, 'clean')
+    @patch.object(Game, 'make_tile_array')
+    def test_put_new_set(self, m_make, m_clean, m_place):
+        # data
+        indexes = [1, 2, 3, 4, 5]
+        # proces
+        self.game.put_new_set(indexes)
+        # assert
+        m_make.assert_called_once()
+        m_clean.assert_called_once()
+        m_place.assert_called_once()
