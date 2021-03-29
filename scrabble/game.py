@@ -39,9 +39,7 @@ class Game:
 
     def place_word(self, x, y, direction, word):
         self.board.place_word(
-            word, y, x, direction, self.players.get(
-                self.current_player
-            ).tiles_in_hand
+            word, y, x, direction, self.players.get(self.current_player)
         )
 
     @property
