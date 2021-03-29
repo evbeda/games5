@@ -268,13 +268,13 @@ class TestGame(unittest.TestCase):
 
     @patch.object(Board, 'place_new_set')
     @patch.object(Game, 'clean')
-    @patch.object(Game, 'make_tile_array')
-    def test_put_new_set(self, m_make, m_clean, m_place):
+    @patch.object(Game, 'make_tile_array', return_value=(1, 2, 3))
+    def test_put_new_set_calls(self, m_make, m_clean, m_place):
         # data
         indexes = [1, 2, 3, 4, 5]
         # proces
         self.game.put_new_set(indexes)
         # assert
-        m_make.assert_called_once()
-        m_clean.assert_called_once()
-        m_place.assert_called_once()
+        m_make.assert_called_once_with(indexes)
+        m_clean.assert_called_once_with(indexes)
+        m_place.assert_called_once_with((1, 2, 3))
