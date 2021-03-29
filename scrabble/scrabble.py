@@ -143,7 +143,7 @@ class Scrabble:
             self.game_state = GAME_STATE_SKIP_TURN
 
     def play(self, *args):
-        method_name = 'play_' + self.game_state
+        method_name = f'play_{self.game_state}'
         method = getattr(self, method_name)
         method(*args)
         return ''
