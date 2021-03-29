@@ -29,15 +29,17 @@ class Game:
         self.players[self.current_turn].temporary_hand()
 
     def show_game(self):
+        player = self.players[self.current_turn]
         return "\n".join([
             "Mesa",
             self.board.get_board(),
             "Mano\n",
             self.players[self.current_turn].get_hand(),
+            "Fichas sueltas\n",
+            self.board.get_reused_tiles(player.get_lenght()),
         ])
 
     def make_play(self, option, args):
-        # player = self.players[self.current_turn] NOT IN USE
         options = {
             # 1: self.put_new_set(*args)
             # 2: self.board.put_a_tile(player, *args)
