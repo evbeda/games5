@@ -58,7 +58,7 @@ class TestGame(unittest.TestCase):
         self.t_game.skip_turn()
         self.assertEqual(self.t_game.skipped_turns, 1)
         change_turn_patched.assert_called()
-    
+
     @patch.object(Game, 'game_over')
     def test_skip_turn_game_over(self, game_over_patched):
         self.t_game.skipped_turns = 5
