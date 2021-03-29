@@ -34,8 +34,8 @@ class Board():
     def give_one_tile_from_board(self, set_id, index):
         if len(self.sets[set_id].tiles) > 0:
             self.reused_tiles.append(
-                    self.sets[set_id].extract_one_tile(index)
-                )
+                self.sets[set_id].extract_one_tile(index)
+            )
         else:
             raise Exception
 

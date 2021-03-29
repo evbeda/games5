@@ -82,10 +82,10 @@ class TestBoard(unittest.TestCase):
         }
 
         board_str = (
-            "1: L[ 0:r5 1:b5 2:y5 ]\n" +
-            "2: L[ 0:r3 1:b3 2:y3 3:w3 ]\n" +
+            "1: L[ 0:r5 1:b5 2:y5 ]\n"
+            "2: L[ 0:r3 1:b3 2:y3 3:w3 ]\n"
             "3: S[ 0:r3 1:r4 2:r5 3:r6 ]"
-            )
+        )
 
         self.assertEqual(self.board.get_board(), board_str)
 

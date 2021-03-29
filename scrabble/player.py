@@ -10,7 +10,7 @@ class Player:
         self.prev_score = 0
 
     def one_draw(self, tiles_sack):
-        index = random.randint(0, len(tiles_sack.tiles)-1)
+        index = random.randint(0, len(tiles_sack.tiles) - 1)
         tile_to_draw = tiles_sack.draw_tile(index)
         self.tiles_in_hand.append(tile_to_draw)
 

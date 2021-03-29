@@ -71,9 +71,9 @@ class TestGame(unittest.TestCase):
         mock.assert_called_once_with(first_order)
 
     board = (
-            "1: L[ 0:r5 1:b5 2:y5 ]\n" +
-            "2: L[ 0:r3 1:b3 2:y3 3:w3 ]\n" +
-            "3: S[ 0:r3 1:r4 2:r5 3:r6 ]"
+        "1: L[ 0:r5 1:b5 2:y5 ]\n"
+        "2: L[ 0:r3 1:b3 2:y3 3:w3 ]\n"
+        "3: S[ 0:r3 1:r4 2:r5 3:r6 ]"
     )
     hand = "player_1> 0:r11 1:y2 2:y13 3:b5"
 
@@ -82,10 +82,11 @@ class TestGame(unittest.TestCase):
     def test_show_game(self, mock_board, mock_player):
         # data
         expected = (
-            "Mesa\n" +
-            mock_board.return_value +
-            "\nMano\n\n" +
-            mock_player.return_value
+            "Mesa\n{}"
+            "\nMano\n\n{}"
+        ).format(
+            mock_board.return_value,
+            mock_player.return_value,
         )
         # process
         self.game.create_players(["player_1", "player_2"])
@@ -145,7 +146,7 @@ class TestGame(unittest.TestCase):
     def test_make_play_arguments(self, mock):
         # data
         self.game.players = [Player("test_1")]
-        player = self.game.players[self.game.current_turn]
+        # NOT IN USE player = self.game.players[self.game.current_turn]
         option = 3
         set_id = 1
         index = 3
