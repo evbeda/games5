@@ -8,9 +8,9 @@ class Game:
     def __init__(self, name_players):
         if len(name_players) not in range(1, 5):
             raise Exception
-        self.players = self.create_player(name_players)
         self.board = Board()
         self.tile_bag = TileBag()
+        self.players = self.create_player(name_players)
         self.first = 0
         self.skipped_turns = 0
         self.lost_turns = []
@@ -19,7 +19,12 @@ class Game:
         self.is_playing = True
 
     def create_player(self, name_players):
-        return [Player(j, name) for j, name in enumerate(name_players)]
+        players = []
+        for j, name in enumerate(name_players):
+            player = Player(j, name)
+            player.full_draw(self.tile_bag)
+            players.append(player)
+        return players
 
     # def first_player(self):
     #     ref = []

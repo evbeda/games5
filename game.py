@@ -1,5 +1,6 @@
 from guess_number_game.guess_number_game import GuessNumberGame
 from qwixx.qwixx import Qwixx
+from scrabble.scrabble import Scrabble
 
 
 class Game(object):
@@ -9,6 +10,7 @@ class Game(object):
         self.games = [
             GuessNumberGame,
             Qwixx,
+            Scrabble,
         ]
 
     def output(self, text):
