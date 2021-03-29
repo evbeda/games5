@@ -16,7 +16,7 @@ class Tile:
             if letter in t[0]:
                 self.score = t[1]
                 break
-     
+
     @property
     def order(self):
 
