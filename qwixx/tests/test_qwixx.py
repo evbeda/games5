@@ -226,3 +226,10 @@ class TestQwixx(unittest.TestCase):
             self.qwixx.turn_color,
             expected_next_turn_color,
         )
+
+    def test_you_cant_play(self):
+        row = Row
+        row.blocked_rows.clear()
+        row.blocked_rows.extend(['blue', 'red'])
+        self.qwixx.you_can_play
+        self.assertFalse(self.qwixx.is_playing)
