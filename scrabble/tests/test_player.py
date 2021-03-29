@@ -81,3 +81,9 @@ class TestPlayer(unittest.TestCase):
             Tile(letter) for letter in letters
         ]
         self.assertEqual(self.player_test.get_hand(), expected)
+
+    def test_add_points(self):
+        self.player_test.score = 50
+        self.player_test.add_points(5)
+        self.assertEqual(self.player_test.score, 55)
+        self.assertEqual(self.player_test.prev_score, 50)
