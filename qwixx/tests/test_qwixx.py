@@ -82,10 +82,10 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (2, 0, 374),
-        (4, 3, 374),
+        (2, 0, 5, 374),
+        (4, 3, 5, 374),
     ])
-    def test_board(self, cant_score_pad, id_player, cant_letter):
+    def test_board(self, cant_score_pad, id_player, marks, cant_letter):
         qwixx = Qwixx()
         qwixx.create_scored_pad(cant_score_pad)
         qwixx.current_player = id_player

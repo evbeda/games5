@@ -163,10 +163,10 @@ class Qwixx:
 
     def output_row(self, row):
         output = ' '
-        output += '' + row.color
-        output += ' ' + str(tuple(range(2, 13)))
-        # buscar la forma de representar las marcas en el output
-        output += ' ' + self.is_locked(row)
+        output += '{}'.format(row.color)
+        output += '{}'.format(str(tuple(range(2, 13))))
+        output += '{}'.format(row.marks)
+        output += '{}'.format(self.is_locked(row))
         output += "\n"
         return output
 
