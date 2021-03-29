@@ -75,7 +75,7 @@ class Board:
         return board_str
 
     def revert_board(self):
-        pass
+        self.spots = self.spots_orig
 
     # def place_word(self, word, row, col, direction, hand):
     #     self.spots_orig = self.spots.copy()
