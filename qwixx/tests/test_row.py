@@ -1,6 +1,6 @@
 import unittest
 from parameterized import parameterized
-from .row import Row
+from ..row import Row
 from unittest.mock import patch
 
 

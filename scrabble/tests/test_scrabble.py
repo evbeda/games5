@@ -2,9 +2,9 @@ import unittest
 from unittest.mock import patch
 from parameterized import parameterized
 from ..scrabble import Scrabble
-from ..game.game import Game
-from ..game.player import Player
-from ..game.tile import Tile
+from ..game import Game
+from ..player import Player
+from ..tile import Tile
 
 
 class TestScrabble(unittest.TestCase):

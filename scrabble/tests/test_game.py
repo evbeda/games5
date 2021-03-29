@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized
-from ..game.game import Game
-from ..game.player import Player
-from ..game.tile import Tile
-from ..game.board import Board
+from ..game import Game
+from ..player import Player
+from ..tile import Tile
+from ..board import Board
 
 
 class TestGame(unittest.TestCase):

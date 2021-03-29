@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized
-from ..game.player import Player
-from ..game.tile_bag import TileBag
-from ..game.tile import Tile
+from ..player import Player
+from ..tile_bag import TileBag
+from ..tile import Tile
 
 
 class TestPlayer(unittest.TestCase):

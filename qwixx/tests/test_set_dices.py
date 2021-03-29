@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
-from .set_dices import SetDices
-from .dice import Dice
+from ..set_dices import SetDices
+from ..dice import Dice
 
 
 class TestSetDices(unittest.TestCase):
