@@ -38,4 +38,4 @@ class Player:
         pass
 
     def revert_points(self):
-        pass
+        self.score = self.prev_score
