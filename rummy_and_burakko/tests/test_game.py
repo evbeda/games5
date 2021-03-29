@@ -76,17 +76,20 @@ class TestGame(unittest.TestCase):
         "3: S[ 0:r3 1:r4 2:r5 3:r6 ]"
     )
     hand = "player_1> 0:r11 1:y2 2:y13 3:b5"
+    reused = '5:r3   6:r4   7:r5'
 
+    @patch.object(Board, "get_reused_tiles", return_value=reused)
     @patch.object(Player, "get_hand", return_value=hand)
     @patch.object(Board, "get_board", return_value=board)
-    def test_show_game(self, mock_board, mock_player):
+    def test_show_game(self, m_get_board, m_get_hand, m_reused):
         # data
         expected = (
-            "Mesa\n{}"
-            "\nMano\n\n{}"
-        ).format(
-            mock_board.return_value,
-            mock_player.return_value,
+            "Mesa\n" +
+            m_get_board.return_value +
+            "\nMano\n\n" +
+            m_get_hand.return_value +
+            "\nFichas sueltas\n\n" +
+            m_reused.return_value
         )
         # process
         self.game.create_players(["player_1", "player_2"])
@@ -94,8 +97,9 @@ class TestGame(unittest.TestCase):
         result = self.game.show_game()
         # assert
         self.assertEqual(result, expected)
-        mock_board.assert_called_once()
-        mock_player.assert_called_once()
+        m_get_board.assert_called_once()
+        m_get_hand.assert_called_once()
+        m_reused.assert_called_once()
 
     @patch.object(Player, "valid_hand", return_value=True)
     @patch.object(Board, "valid_sets", return_value=False)
@@ -146,7 +150,6 @@ class TestGame(unittest.TestCase):
     def test_make_play_arguments(self, mock):
         # data
         self.game.players = [Player("test_1")]
-        # NOT IN USE player = self.game.players[self.game.current_turn]
         option = 3
         set_id = 1
         index = 3
