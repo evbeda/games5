@@ -199,7 +199,7 @@ class TestBoard(unittest.TestCase):
     ])
     @patch.object(Board, 'place_letters')
     @patch.object(Player, 'add_points')
-    def test_place_word1(
+    def test_place_first_word(
         self, word, row, col, direction, expected,
         mock_add_points, mock_place_letters
     ):
@@ -209,7 +209,7 @@ class TestBoard(unittest.TestCase):
             ]
         self.b.first = True
 
-        self.b.place_word(word, row, col, direction, player)
+        self.b.place_first_word(word, row, col, direction, player)
         if expected:
             mock_place_letters.assert_called_once()
             # mock_add_points.assert_called_once()
