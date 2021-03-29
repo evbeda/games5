@@ -193,3 +193,26 @@ class TestBoard(unittest.TestCase):
         else:
             mock_place_letters.assert_not_called()
             # mock_add_points.assert_not_called()
+
+    @parameterized.expand([
+        ('holanda', 7, 6, True, True),
+    ])
+    @patch.object(Board, 'place_letters')
+    @patch.object(Player, 'add_points')
+    def test_place_word1(
+        self, word, row, col, direction, expected,
+        mock_add_points, mock_place_letters
+    ):
+        player = Player(0, 'andres')
+        player.tiles_in_hand = [
+            Tile(x) for x in ['h', 'o', 'l', 'a', 'n', 'd', 'a']
+            ]
+        self.b.first = True
+
+        self.b.place_word(word, row, col, direction, player)
+        if expected:
+            mock_place_letters.assert_called_once()
+            # mock_add_points.assert_called_once()
+        else:
+            mock_place_letters.assert_not_called()
+            # mock_add_points.assert_not_called()
