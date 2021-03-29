@@ -3,6 +3,7 @@ from .score_pad import (
     ReachPenaltyLimit,
 )
 from .set_dices import SetDices
+from .row import Row
 
 
 QWIXX_STATE_START = 'start_game'
@@ -180,9 +181,10 @@ class Qwixx:
         output += '{}'.format(self.is_locked(row))
         output += "\n"
         return output
-
-    # def you_can_play(self):
-    #     if len(Row.blocked_rows) < 2:
-    #         self.is_playing = True
-    #     else:
-    #         self.is_playing = False
+        
+    @property
+    def you_can_play(self):
+        if len(Row.blocked_rows) < 2:
+            self.is_playing = True
+        else:
+            self.is_playing = False
