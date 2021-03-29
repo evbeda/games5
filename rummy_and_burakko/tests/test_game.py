@@ -195,3 +195,38 @@ class TestGame(unittest.TestCase):
         # assert
         mock_player.assert_called_once_with()
         self.assertEqual(result, mock_player.return_value)
+
+    @parameterized.expand([
+        # (indexes, call_count_1, call_count_2, expected)
+        ([14, 5, 1, 7], 3, 1, [6, 1, 2, 3]),
+        ([0, 12, 13, 14], 2, 2, [1, 2, 6, 7]),
+        ([13, 14, 15, 16], 0, 4, [6, 7, 8, 9]),
+        ([0, 5, 10, 12], 4, 0, [1, 2, 3, 4]),
+    ])
+    @patch.object(
+        Board,
+        'get_a_reused_tile',
+        side_effect=[6, 7, 8, 9, 10]
+    )
+    @patch.object(
+        Player,
+        'get_a_tile',
+        side_effect=[1, 2, 3, 4, 5]
+    )
+    def test_make_tile_array(
+        self,
+        indexes,
+        cc_1,
+        cc_2,
+        expected,
+        mock_player,
+        mock_board,
+    ):
+        # process
+        self.game.distribute_tiles()
+        self.game.next_turn()
+        result = self.game.make_tile_array(indexes)
+        # assert
+        self.assertEqual(mock_player.call_count, cc_1)
+        self.assertEqual(mock_board.call_count, cc_2)
+        self.assertEqual(result, expected)
