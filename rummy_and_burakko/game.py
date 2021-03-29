@@ -41,13 +41,13 @@ class Game:
 
     def make_play(self, option, args):
         options = {
-            # 1: self.put_new_set(args),
+            1: self.put_new_set,
             # 2: self.board.put_a_tile(player, *args),
-            3: self.board.give_one_tile_from_board(*args),
+            3: self.board.give_one_tile_from_board,
         }
-        options[option]
+        options[option](*args)
 
-    def put_new_set(self, indexes):
+    def put_new_set(self, *indexes):
         # intercambiar indices por tiles (copiando)
         tiles = self.make_tile_array(indexes)
         # eliminar tiles respecto a los indices

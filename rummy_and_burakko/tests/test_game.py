@@ -117,18 +117,18 @@ class TestGame(unittest.TestCase):
 
     @parameterized.expand([
         # (option, call_count)
-        # (1, (1, 0, 0)),
+        (1, (1, 0, 0)),
         # (2, (0, 1, 0)),
         (3, (0, 0, 1)),
     ])
     @patch.object(Board, "give_one_tile_from_board")
     # @patch.object(Board, "put_a_tile")
-    # @patch.object(Game, "put_new_set")
+    @patch.object(Game, "put_new_set")
     def test_make_play_calls(
         self,
         option,
         call_count,
-        # mock_new_set,
+        mock_new_set,
         # mock_put_a_tile,
         mock_take_tile,
     ):
@@ -139,7 +139,7 @@ class TestGame(unittest.TestCase):
         # process
         self.game.make_play(option, [arg_1, arg_2])
         # assert
-        # self.assertEqual(mock_new_set.call_count, call_count[0])
+        self.assertEqual(mock_new_set.call_count, call_count[0])
         # self.assertEqual(mock_put_a_tile.call_count, call_count[1])
         self.assertEqual(mock_take_tile.call_count, call_count[2])
 
@@ -272,9 +272,9 @@ class TestGame(unittest.TestCase):
     @patch.object(Game, 'make_tile_array', return_value=(1, 2, 3))
     def test_put_new_set_calls(self, m_make, m_clean, m_place):
         # data
-        indexes = [1, 2, 3, 4, 5]
+        indexes = (1, 2, 3, 4, 5)
         # proces
-        self.game.put_new_set(indexes)
+        self.game.put_new_set(*indexes)
         # assert
         m_make.assert_called_once_with(indexes)
         m_clean.assert_called_once_with(indexes)
