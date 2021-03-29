@@ -14,6 +14,8 @@ GAME_STATE_SKIP_TURN = 'skip_turn'
 
 class Scrabble:
 
+    name = 'Scrabble'
+
     @property
     def is_playing(self):
         return self.game.is_playing if self.game is not None else True
@@ -47,7 +49,7 @@ class Scrabble:
 
     @property
     def board(self):
-        return self.game.print_board()
+        return self.game.print_board() if self.game else ''
 
     def next_turn_state_query(self):
         game_state_next_turn = {
@@ -92,7 +94,8 @@ class Scrabble:
             self.game_state = GAME_STATE_SELECT_ACTION
 
         if self.is_playing:
-            query += self.next_turn_show_hand() + '\n\n'
+            if self.game is not None:
+                query += self.next_turn_show_hand() + '\n\n'
             query += self.next_turn_state_query()
         else:
             query += self.game.get_game_results()
@@ -143,3 +146,4 @@ class Scrabble:
         method_name = 'play_' + self.game_state
         method = getattr(self, method_name)
         method(*args)
+        return ''
