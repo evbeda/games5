@@ -144,8 +144,10 @@ class TestQwixx(unittest.TestCase):
         )
 
     def test_play_option_exception(self):
-        with self.assertRaises(Exception):
-            self.qwixx.play_option(3)
+        self.assertEqual(
+            self.qwixx.play_option(3),
+            'Invalid Option',
+        )
 
     @patch.object(Qwixx, 'play_turn')
     def test_play_play_turn(self, patched_mark_with_white):
