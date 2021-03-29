@@ -6,7 +6,7 @@ class Player:
     def __init__(self, id, name):
         self.id = id
         self.name = name
-        prev_tiles_in_hand = []
+        self.prev_tiles_in_hand = []
         self.tiles_in_hand = []
         self.score = 0
         self.prev_score = 0
