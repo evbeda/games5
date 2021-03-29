@@ -1,7 +1,7 @@
 import unittest
-from ..game.board import Board
-from ..game.spot import Spot
-from ..game.tile import Tile
+from ..board import Board
+from ..spot import Spot
+from ..tile import Tile
 from parameterized import parameterized
 from unittest.mock import patch
 

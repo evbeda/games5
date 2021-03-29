@@ -1,4 +1,4 @@
-from .game.game import Game
+from .game import Game
 
 GAME_STATE_CREATE_GAME = 'create_game'
 GAME_STATE_INPUT_PLAYERS = 'input_players'

@@ -1,7 +1,7 @@
 import unittest
 from parameterized import parameterized
 
-from ..game.tile import Tile
+from ..tile import Tile
 
 
 class TestTile(unittest.TestCase):

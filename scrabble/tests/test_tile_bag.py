@@ -1,6 +1,6 @@
 import unittest
-from ..game.tile_bag import TileBag
-from ..game.tile import Tile
+from ..tile_bag import TileBag
+from ..tile import Tile
 
 
 class TesttileBag(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from .dice import Dice
+from ..dice import Dice
 
 
 class TestDice(unittest.TestCase):

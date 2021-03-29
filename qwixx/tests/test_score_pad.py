@@ -1,8 +1,8 @@
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch
-from .score_pad import ScorePad
-from .row import Row
+from ..score_pad import ScorePad
+from ..row import Row
 
 
 class TestScorePad(unittest.TestCase):

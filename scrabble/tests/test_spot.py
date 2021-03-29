@@ -1,7 +1,7 @@
 import unittest
 from parameterized import parameterized
-from ..game.spot import Spot
-from ..game.tile import Tile
+from ..spot import Spot
+from ..tile import Tile
 
 
 class TestSpot(unittest.TestCase):

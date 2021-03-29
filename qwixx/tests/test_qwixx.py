@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
 from parameterized import parameterized
-from .qwixx import (
+from ..qwixx import (
     Qwixx,
     QWIXX_STATE_START,
     QWIXX_STATE_OPTION,
@@ -12,9 +12,9 @@ from .qwixx import (
     OPTION_PLAY,
     OPTION_PASS,
 )
-from .set_dices import SetDices
-from .score_pad import ScorePad
-from .row import Row
+from ..set_dices import SetDices
+from ..score_pad import ScorePad
+from ..row import Row
 
 
 class TestQwixx(unittest.TestCase):

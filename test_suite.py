@@ -2,11 +2,11 @@ import unittest
 
 from guess_number_game.test_guess_number_game import TestGuessNumberGame
 
-from qwixx.test_dice import TestDice
-from qwixx.test_qwixx import TestQwixx as QwixxTestQwixx
-from qwixx.test_row import TestRow
-from qwixx.test_score_pad import TestScorePad
-from qwixx.test_set_dices import TestSetDices
+from qwixx.tests.test_dice import TestDice
+from qwixx.tests.test_qwixx import TestQwixx as QwixxTestQwixx
+from qwixx.tests.test_row import TestRow
+from qwixx.tests.test_score_pad import TestScorePad
+from qwixx.tests.test_set_dices import TestSetDices
 
 from rummy_and_burakko.tests.test_board import TestBoard as RTestBoard
 from rummy_and_burakko.tests.test_game import TestGame as RTestGame
@@ -16,13 +16,13 @@ from rummy_and_burakko.tests.test_set_tiles import TestSetTiles
 from rummy_and_burakko.tests.test_tile import TestTiles
 from rummy_and_burakko.tests.test_rummy_and_burakko import TestRummyAndBurakko
 
-from scrabble.test.test_board import TestBoard as STestBoard
-from scrabble.test.test_game import TestGame as STestGame
-from scrabble.test.test_player import TestPlayer as STestPlayer
-from scrabble.test.test_scrabble import TestScrabble
-from scrabble.test.test_spot import TestSpot
-from scrabble.test.test_tile_bag import TesttileBag as STestTileBag
-from scrabble.test.test_tile import TestTile
+from scrabble.tests.test_board import TestBoard as STestBoard
+from scrabble.tests.test_game import TestGame as STestGame
+from scrabble.tests.test_player import TestPlayer as STestPlayer
+from scrabble.tests.test_scrabble import TestScrabble
+from scrabble.tests.test_spot import TestSpot
+from scrabble.tests.test_tile_bag import TesttileBag as STestTileBag
+from scrabble.tests.test_tile import TestTile
 from test_game import TestGame
 
 
