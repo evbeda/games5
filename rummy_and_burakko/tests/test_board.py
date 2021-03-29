@@ -157,3 +157,15 @@ class TestBoard(unittest.TestCase):
         result = self.board.get_reused_tiles(start_index)
         # assert
         self.assertEqual(result, expected)
+
+    def test_place_new_set(self):
+        tiles_array = [Tile('r', 3), Tile('r', 4), Tile('r', 5)]
+        expected_sets = {
+            1: SetTiles(tiles_array)
+        }
+        self.board.place_new_set(tiles_array)
+        for index in range(len(tiles_array)):
+            self.assertEqual(
+                self.board.sets[1].tiles[index],
+                expected_sets[1].tiles[index]
+            )
