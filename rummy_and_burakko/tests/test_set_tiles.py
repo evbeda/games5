@@ -56,6 +56,10 @@ class TestSetTiles(unittest.TestCase):
             ('red', 7), ('red', 5), ('red', 6), ('red', 7), ('red', 5),
             ('red', 6), ('red', 7), ('blue', 6)
         )),
+        (True, (('blue', 1), ('blue', 2), ('*', 0), ('blue', 4), ('blue', 5))),
+        (True, (('blue', 1), ('blue', 2), ('blue', 3), ('*', 0), ('blue', 5))),
+        (True, (('blue', 1), ('*', 0), ('blue', 3), ('blue', 4), ('blue', 5))),
+        (True, (('blue', 2), ('*', 0), ('blue', 4), ('blue', 5), ('blue', 6))),
     ])
     def test_is_a_stair(self, expected, tiles):
         # set variables

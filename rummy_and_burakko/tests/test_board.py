@@ -138,7 +138,7 @@ class TestBoard(unittest.TestCase):
         self.board.place_new_set(tiles_array)
         for index in range(len(tiles_array)):
             self.assertEqual(
-                self.board.sets[1].tiles[index],
+                self.board.temp_sets[1].tiles[index],
                 expected_sets[1].tiles[index]
             )
 
