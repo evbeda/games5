@@ -87,3 +87,9 @@ class TestPlayer(unittest.TestCase):
         self.player_test.add_points(5)
         self.assertEqual(self.player_test.score, 55)
         self.assertEqual(self.player_test.prev_score, 50)
+
+    def test_revert_points(self):
+        self.player_test.score = 55
+        self.player_test.prev_score = 50
+        self.player_test.revert_points()
+        self.assertEqual(self.player_test.score, 50)
