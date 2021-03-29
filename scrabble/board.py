@@ -74,6 +74,9 @@ class Board:
 
         return board_str
 
+    def revert_board(self):
+        pass
+
     # def place_word(self, word, row, col, direction, hand):
     #     self.spots_orig = self.spots.copy()
     #     if self.first and self.can_place_first_word(word, row, col, direction):
