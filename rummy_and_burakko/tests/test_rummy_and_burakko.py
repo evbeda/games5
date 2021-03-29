@@ -52,9 +52,9 @@ class TestRummyAndBurakko(unittest.TestCase):
         # data
         players = ["test_1", "test_2", "test_3"]
         # process
-        self.rummy.play_players_input(players)
+        self.rummy.play_players_input(*players)
         # assert
-        m_init.assert_called_once_with(players)
+        m_init.assert_called_once_with(tuple(players))
         m_order.assert_called_once_with()
         m_distribute.assert_called_once_with()
         m_next_turn.assert_called_once_with()
@@ -176,7 +176,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.rummy.option = 1
         data = [0, 1, 3, 5]
         # process
-        self.rummy.play_make_move(data)
+        self.rummy.play_make_move(*data)
         # assert
-        mock.assert_called_once_with(self.rummy.option, data)
+        mock.assert_called_once_with(self.rummy.option, tuple(data))
         self.assertEqual(self.rummy.game_state, 'select_option')
