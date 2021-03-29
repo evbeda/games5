@@ -179,13 +179,27 @@ class TestQwixx(unittest.TestCase):
             'Invalid Option',
         )
 
-    @patch.object(Qwixx, 'play_turn')
-    def test_play_play_turn(self, patched_mark_with_white):
-        self.qwixx.play_start(4)
-        self.qwixx.turn_color = QWIXX_TURN_WHITE
-        self.qwixx.game_state = QWIXX_STATE_PLAY
-        self.qwixx.play(1)
-        patched_mark_with_white.assert_called_once_with(1)
+    @parameterized.expand([
+        (QWIXX_TURN_WHITE, 1, '',),
+        (QWIXX_TURN_COLOR, 1, 1,),
+    ])
+    @patch.object(Qwixx, 'mark_with_color')
+    @patch.object(Qwixx, 'mark_with_white')
+    def test_play_play_turn(
+        self,
+        turn_color,
+        dice1,
+        dice2,
+        patched_mark_with_white,
+        patched_mark_with_color,
+    ):
+        self.qwixx.turn_color = turn_color
+        self.qwixx.play_turn(dice1, dice2)
+        if self.qwixx.turn_color == QWIXX_TURN_WHITE:
+            patched_mark_with_white.assert_called_once_with(dice1)
+        else:
+            patched_mark_with_color.assert_called_once_with(dice1, dice2)
+
 
     @patch.object(Qwixx, 'mark_with_white')
     def test_play_play_color(self, patched_mark_with_white):
