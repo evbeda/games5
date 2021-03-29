@@ -1,4 +1,5 @@
 import random
+from .tile import Tile
 
 
 class Player:
@@ -23,12 +24,11 @@ class Player:
             self.one_draw(tiles_sack)
             diff -= 1
 
-    def put_t_draw_t(self, tiles_sack, indexs):
-        indexs.sort(reverse=True)
-        for index in indexs:
-            tile = self.tiles_in_hand.pop(index)
+    def put_t_draw_t(self, tiles_sack, letters):
+        for letter in letters:
+            tile = self.tiles_in_hand.pop(
+                self.tiles_in_hand.index(Tile(letter)))
             tiles_sack.add_tile(tile)
-            # tiles_sack.append(tile)
         self.full_draw(tiles_sack)
 
     def get_hand(self):
