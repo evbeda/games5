@@ -115,7 +115,6 @@ class TestGame(unittest.TestCase):
         # (1, (1, 0, 0, 0)),
         # (2, (0, 1, 0, 0)),
         (3, (0, 0, 1, 0)),
-        (4, (0, 0, 0, 1)),
     ])
     @patch.object(Game, "end_turn")
     @patch.object(Board, "give_one_tile_from_board")
@@ -153,7 +152,7 @@ class TestGame(unittest.TestCase):
         # process
         self.game.make_play(option, [set_id, index])
         # assert
-        mock.assert_called_once_with(player, set_id, index)
+        mock.assert_called_once_with(set_id, index)
 
     @parameterized.expand([
         # (return_value, validate.call_count, give_one_tile.call_count)
