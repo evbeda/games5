@@ -71,6 +71,12 @@ class RummyAndBurakko():
 
     def next_turn(self):
         message = '\n'
+        if self.game_state == GAME_STATE_END_TURN:
+            self.game.end_turn()
+            self.game.next_turn()
+            message += self.game.show_game()
+            self.game_state = GAME_STATE_SELECT_OPTION
+
         message += game_state_next_turn[self.game_state]
         return message
 
