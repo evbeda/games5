@@ -33,9 +33,3 @@ class ScorePad:
 
     def mark_number_in_row(self, number, color):
         self.rows[color].set_mark(number)
-
-    def mark_number(self, number, color):
-        self.mark_number_in_row(number, color)
-
-    def pass_turn(self):
-        return self.add_penalty()
