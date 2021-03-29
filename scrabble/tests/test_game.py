@@ -24,25 +24,6 @@ class TestGame(unittest.TestCase):
         with self.assertRaises(Exception):
             Game(5)
 
-    # class DrawGenerator:
-    #     letters = 'cas'
-
-    #     def __init__(self):
-    #         self.last_index = -1
-
-    #     def __call__(self, *args, **kwargs):
-    #         self.last_index += 1
-    #         return self.letters[self.last_index]
-
-    # draw_generator = DrawGenerator()
-    # def test_first_player(self):
-    #     with patch.object(Player, 'one_draw', side_effect='draw_generator') as mock_one_draw:
-    #         players = ["player_1"]
-    #         t_game = Game(players)
-    #         x = t_game.first_player()
-    #         self.assertEqual(mock_one_draw.call_count, 3)
-    #         self.assertEqual(x, 0)
-
     @patch.object(Board, 'get_board')
     def test_print_board(self, get_board_patched):
         self.t_game.print_board()
