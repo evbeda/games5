@@ -83,23 +83,30 @@ class Board:
         if self.first and self.can_place_first_word(word, row, col, direction):
             self.place_letters(word, row, col, direction, range(len(word)))
             spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
-            player.add_points(self.calculate_score(spot_list, word))
+            # player.add_points(self.calculate_score(spot_list, word))
             self.first = False
         else:
             spot_list = self.get_spots_to_place_word(len(word), row, col, direction)
+            print(1)
             existing_tiles = self.tiles_in_board(spot_list)
+            print(2)
             if self.can_place_word(word, existing_tiles):
+                print(3)
                 remain_tiles = self.tiles_diff(word, existing_tiles)
+                print(4)
                 unzipped_remain_tiles = zip(*remain_tiles)
+                print(5)
                 unzipped_list = list(unzipped_remain_tiles)
-                if all(
-                    [item in [tile.letter for tile in player.tiles_in_hand]
-                        for item in unzipped_list[1]]
-                ):
+                print(6)
+                var = sorted([tile.letter for tile in player.tiles_in_hand])
+                var2 = sorted(unzipped_list[1])
+                if all([var2.count(i) <= var.count(i) for i in var2]):
+                    print(7)
                     self.place_letters(
                         word, row, col, direction, unzipped_list[0]
                     )
-                    player.add_points(self.calculate_score(spot_list, word))
+                    print(8)
+                    # player.add_points(self.calculate_score(spot_list, word))
 
     def can_place_first_word(self, word, row, col, direction):
         return (
