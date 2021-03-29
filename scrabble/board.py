@@ -93,12 +93,14 @@ class Board:
                 #     len(word), row, col, direction)
                 # player.add_points(self.calculate_score(spot_list, word))
                 self.first = False
+                return True
+        return False
 
     def place_word(self, *args):
         if self.first:
-            self.place_first_word(*args)
+            return self.place_first_word(*args)
         else:
-            self.place_other_word(*args)
+            return self.place_other_word(*args)
 
     def place_other_word(self, word, row, col, direction, player):
         spot_list = self.get_spots_to_place_word(
@@ -115,6 +117,8 @@ class Board:
                     word, row, col, direction, unzipped_list[0]
                 )
                 # player.add_points(self.calculate_score(spot_list, word))
+                return True
+        return False
 
     def can_place_first_word(self, word, row, col, direction):
         return (

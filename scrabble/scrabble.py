@@ -115,8 +115,10 @@ class Scrabble:
         x = int(x)
         y = int(y)
         h = h == 'h'
-        self.game.place_word(x, y, h, word)
-        self.game_state = GAME_STATE_ASK_CHALLENGE
+        if self.game.place_word(x, y, h, word):
+            self.game_state = GAME_STATE_ASK_CHALLENGE
+        else:
+            return 'Invalid placement'
 
     def play_change_letters(self, *letters):
         self.game.change_player_tiles(letters)
@@ -145,5 +147,4 @@ class Scrabble:
     def play(self, *args):
         method_name = f'play_{self.game_state}'
         method = getattr(self, method_name)
-        method(*args)
-        return ''
+        return method(*args) or ''
