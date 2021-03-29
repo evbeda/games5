@@ -3,8 +3,8 @@ from unittest.mock import patch
 from parameterized import parameterized
 from ..scrabble import Scrabble
 from ..game import Game
-from ..player import Player
-from ..tile import Tile
+# from ..player import Player
+# from ..tile import Tile
 
 
 class TestScrabble(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestScrabble(unittest.TestCase):
     @patch.object(Game, 'print_board')
     def test_board(self, print_board_patched):
         self.scrabble.game = Game(["Pedro"])
-        board = self.scrabble.board
+        self.scrabble.board
         print_board_patched.assert_called()
 
     @parameterized.expand([
@@ -40,7 +40,7 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.play(3)
         self.assertEqual(self.scrabble.input_player_args, 3)
         self.assertEqual(self.scrabble.game_state, 'input_players')
-    
+
     def test_play_create_game_invalid(self):
         player_count = 5
         self.scrabble.play(player_count)
@@ -111,7 +111,9 @@ class TestScrabble(unittest.TestCase):
         ('no', False),
     ])
     @patch.object(Game, 'resolve_challenge')
-    def test_play_challenge_result(self, user_input, expected_param, resolve_challenge_patched):
+    def test_play_challenge_result(
+        self, user_input, expected_param, resolve_challenge_patched
+    ):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
         self.scrabble.game_state = 'in_challenge'
@@ -137,10 +139,14 @@ class TestScrabble(unittest.TestCase):
         ('create_game', 'Enter number of players'),
         ('input_players', 'Enter player names'),
         ('change_letters', 'Which letters do you want to change?'),
-        ('play_word', 'Enter start coordinates, orientation and word\nx  y  h/v  word'),
+        ('play_word', 'Enter start coordinates, '
+            'orientation and word\nx  y  h/v  word'),
         ('ask_challenge', 'Any player wants to challenge'),
-        ('in_challenge', 'Look up new words in a dictionary. Are they correct?'),
-        ('select_action', 'Enter "play" to play a new word, "pass" to end your turn or any number to change that amount of tiles'),
+        ('in_challenge', 'Look up new words in a dictionary. '
+            'Are they correct?'),
+        ('select_action', 'Enter "play" to play a new word, '
+            '"pass" to end your turn or '
+            'any number to change that amount of tiles'),
     ])
     def test_next_turn_state_query(self, state, expected):
         self.scrabble.game_state = state
@@ -157,7 +163,9 @@ class TestScrabble(unittest.TestCase):
     @patch.object(Scrabble, 'next_turn_state_query')
     @patch.object(Scrabble, 'next_turn_show_hand')
     @patch.object(Game, 'change_turn')
-    def test_next_turn_changed_letters(self, change_turn_patched, show_hand_patched, state_query_patched):
+    def test_next_turn_changed_letters(
+        self, change_turn_patched, show_hand_patched, state_query_patched
+    ):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
         self.scrabble.game_state = 'changed_letters'
@@ -165,11 +173,13 @@ class TestScrabble(unittest.TestCase):
         self.assertEqual(show_hand_patched.call_count, 2)
         state_query_patched.assert_called()
         change_turn_patched.assert_called()
-        
+
     @patch.object(Scrabble, 'next_turn_state_query')
     @patch.object(Scrabble, 'next_turn_show_hand')
     @patch.object(Game, 'change_turn')
-    def test_next_turn_change_turn(self, change_turn_patched, show_hand_patched, state_query_patched):
+    def test_next_turn_change_turn(
+        self, change_turn_patched, show_hand_patched, state_query_patched
+    ):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
         self.scrabble.game_state = 'change_turn'
@@ -181,7 +191,9 @@ class TestScrabble(unittest.TestCase):
     @patch.object(Scrabble, 'next_turn_state_query')
     @patch.object(Scrabble, 'next_turn_show_hand')
     @patch.object(Game, 'change_turn')
-    def test_next_turn_change_turn(self, change_turn_patched, show_hand_patched, state_query_patched):
+    def test_next_turn_change_turn_on_play(
+        self, change_turn_patched, show_hand_patched, state_query_patched
+    ):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
         self.scrabble.game_state = 'play_word'
@@ -193,7 +205,9 @@ class TestScrabble(unittest.TestCase):
     @patch.object(Scrabble, 'next_turn_state_query')
     @patch.object(Scrabble, 'next_turn_show_hand')
     @patch.object(Game, 'skip_turn')
-    def test_next_turn_skip_turn(self, skip_turn_patched, show_hand_patched, state_query_patched):
+    def test_next_turn_skip_turn(
+        self, skip_turn_patched, show_hand_patched, state_query_patched
+    ):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
         self.scrabble.game_state = 'skip_turn'
@@ -209,7 +223,7 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.game.is_playing = False
         self.scrabble.next_turn()
         get_game_results_patched.assert_called()
-        
+
     def test_is_playing(self):
         player_names = ["Pedro", "Ricardo"]
         self.scrabble.game = Game(player_names)
