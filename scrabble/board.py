@@ -1,5 +1,6 @@
 from .spot import Spot
 from .tile import Tile
+from copy import deepcopy
 
 BOARD_MULT = (
     ((  # Multiplier x2 for letters
@@ -78,7 +79,7 @@ class Board:
         self.spots = self.spots_orig
 
     # def place_word(self, word, row, col, direction, hand):
-    #     self.spots_orig = self.spots.copy()
+    #     self.spots_orig = deepcopy(self.spots)
     #     if self.first and self.can_place_first_word(word, row, col, direction):
     #         self.place_letters(word, row, col, direction, range(len(word)))
     #         self.first = False
