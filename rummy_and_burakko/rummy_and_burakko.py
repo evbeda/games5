@@ -41,7 +41,7 @@ class RummyAndBurakko():
             GAME_STATE_PUT_A_TILE: 3,
             GAME_STATE_GET_A_TILE: 3,
         }
-        return game_state_args[self.game_state]()
+        return game_state_args[self.game_state]
 
     @property
     def board(self):

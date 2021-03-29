@@ -33,7 +33,7 @@ class Game:
         return "\n".join([
             "Mesa",
             self.board.get_board(),
-            "Mano\n",
+            "Mano",
             self.players[self.current_turn].get_hand(),
             "Fichas sueltas\n",
             self.board.get_reused_tiles(player.get_lenght()),

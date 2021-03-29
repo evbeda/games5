@@ -86,7 +86,7 @@ class TestGame(unittest.TestCase):
         expected = (
             "Mesa\n" +
             m_get_board.return_value +
-            "\nMano\n\n" +
+            "\nMano\n" +
             m_get_hand.return_value +
             "\nFichas sueltas\n\n" +
             m_reused.return_value
