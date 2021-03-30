@@ -94,18 +94,12 @@ class SetTiles():
         return value * len(self.tiles)
 
     def stair_value(self):
-        value = self.tiles[0].get_number()
         q_tiles = len(self.tiles)
-        incr = 1
-        if value == 0:
+        start = self.tiles[0].get_number()
+        end = start + q_tiles
+        if start == 0:
             last_index = len(self.tiles) - 1
-            value = self.tiles[last_index].get_number()
-            incr = -1
+            end = self.tiles[last_index].get_number() + 1
+            start = end - q_tiles
 
-        res = value
-        while q_tiles - 1 != 0:
-            res += value + incr
-            incr += (1 * incr)
-            q_tiles -= 1
-
-        return res
+        return sum(list(range(start, end)))
