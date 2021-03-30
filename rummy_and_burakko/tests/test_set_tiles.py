@@ -153,3 +153,36 @@ class TestSetTiles(unittest.TestCase):
         set_tile = SetTiles([])
         result = set_tile.get_set_value()
         self.assertEqual(result, 0)
+
+    @parameterized.expand([
+        # (return_value_1, return_value_2, call_count_1, call_count_2, expected)
+        (True, True, 1, 0, 25),
+        (False, True, 0, 1, 30),
+        (False, False, 0, 0, 0),
+    ])
+    @patch.object(SetTiles, 'is_a_stair')
+    @patch.object(SetTiles, 'is_a_leg')
+    @patch.object(SetTiles, 'stair_value', return_value=30)
+    @patch.object(SetTiles, 'leg_value', return_value=25)
+    def test_get_set_value_calls(
+        self,
+        rv_1,
+        rv_2,
+        cc_1,
+        cc_2,
+        expected,
+        mock_leg,
+        mock_stair,
+        mock_is_leg,
+        mock_is_stair,
+    ):
+        # data
+        set_tile = SetTiles([Tile('r', 3)])
+        mock_is_leg.return_value = rv_1
+        mock_is_stair.return_value = rv_2
+        # process
+        result = set_tile.get_set_value()
+        # assert
+        self.assertEqual(mock_leg.call_count, cc_1)
+        self.assertEqual(mock_stair.call_count, cc_2)
+        self.assertEqual(result, expected)
