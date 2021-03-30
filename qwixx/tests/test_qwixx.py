@@ -84,7 +84,7 @@ class TestQwixx(unittest.TestCase):
 
     @parameterized.expand([
         (QWIXX_STATE_START, 'Enter number of players',),
-        (QWIXX_STATE_OPTION, 'Game option :\n1) play \n2) pass',),
+        (QWIXX_STATE_OPTION, 'Game option:\n1) play \n2) pass',),
     ])
     def test_next_turn(self, state, expected):
         self.qwixx.game_state = state
@@ -111,8 +111,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (2, 0, 5, 470),
-        (4, 3, 5, 470),
+        (2, 0, 5, 863),
+        (4, 3, 5, 863),
     ])
     def test_board(self, cant_score_pad, id_player, marks, cant_letter):
         qwixx = Qwixx()
@@ -121,8 +121,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(len(qwixx.board), cant_letter)
 
     @parameterized.expand([
-        (Row('rojo'), 'green', 'not loked'),
-        (Row('rojo'), 'rojo', 'is loked'),
+        (Row('rojo'), 'green', 'not locked'),
+        (Row('rojo'), 'rojo', 'is locked'),
     ])
     def test_is_locked(self, row, color_row, expected):
         row.blocked_rows.append(color_row)
@@ -130,8 +130,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.is_locked(row), expected)
 
     @parameterized.expand([
-        (Row('rojo'), 54),
-        (Row('blue'), 55),
+        (Row('rojo'), 109),
+        (Row('blue'), 109),
     ])
     def test_output_row(self, row, expected):
         self.assertEqual(len(self.qwixx.output_row(row)), expected)
