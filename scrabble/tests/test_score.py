@@ -82,8 +82,12 @@ class TestScore(unittest.TestCase):
     ])
     @patch.object(Score, 'search_horiz_word')
     def test_search_horiz_letter(self, word, row, col, mock_search_horiz_word):
+        self.b.spots[6][7].set_tile(Tile('h'))
+        self.b.spots[7][7].set_tile(Tile('o'))
+        self.b.spots[8][7].set_tile(Tile('l'))
+        self.b.spots[9][7].set_tile(Tile('a'))
         self.b.spots[7][6].set_tile(Tile('r'))
-        Score.search_horiz_letter(word, row, col, spots)
+        Score.search_horiz_letter(word, row, col, self.b.spots)
         mock_search_horiz_word.assert_called()
 
     @parameterized.expand([
@@ -91,7 +95,12 @@ class TestScore(unittest.TestCase):
     ])
     @patch.object(Score, 'search_vert_word')
     def test_search_vert_letter(self, word, row, col, mock_search_vert_word):
+        self.b.spots[6][7].set_tile(Tile('h'))
+        self.b.spots[6][8].set_tile(Tile('o'))
+        self.b.spots[6][9].set_tile(Tile('l'))
+        self.b.spots[6][10].set_tile(Tile('a'))
         self.b.spots[5][7].set_tile(Tile('r'))
+        Score.search_vert_letter(word, row, col, self.b.spots)
         mock_search_vert_word.assert_called()
 
     def test_search_horiz_word(self, row, col, spots):
