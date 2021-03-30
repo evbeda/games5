@@ -1,17 +1,14 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@1.3.3
-
 jobs:
   build-and-test:
-    executor: python/default
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
-      # - python/load-cache
-      - python/install-packages:
-          pkg-manager: pip
-      # - python/save-cache
+      - run:
+          name: Create test reports directory
+          command: mkdir /tmp/test-artifacts
       - run:
           name: Setup Code Climate test-reporter
           command: |
@@ -20,15 +17,18 @@ jobs:
               chmod +x ./cc-test-reporter
               ./cc-test-reporter before-build
       - run:
-          name: Coverage Running Tests
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Running Tests
           command: |
-              coverage run -m test_suite
-              coverage xml --omit=env/*,tests/*
-              coverage report
+              set -e
+              python -m test_suite
+              coverage run -m test_suite && coverage xml --omit=env/*,tests/*
       - run:
           name: Update CodeClimate coverage report
           command: |
-              ./cc-test-reporter after-build -t coverage.py --exit-code $?
+              ./cc-test-reporter after-build --exit-code $?
       - run:
           name: Running Flake8
           command: flake8
@@ -37,5 +37,3 @@ workflows:
   main:
     jobs:
       - build-and-test
-      - python/test:
-          args: test_suite
