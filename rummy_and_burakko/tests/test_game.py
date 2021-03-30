@@ -302,3 +302,15 @@ class TestGame(unittest.TestCase):
         m_make.assert_called_once_with(indexes)
         m_clean.assert_called_once_with(indexes)
         m_place.assert_called_once_with((1, 2, 3))
+
+    @parameterized.expand([
+        (True, 30, True),
+        (False, 30, True),
+        (True, 29, False),
+        (False, 30, True),
+    ])
+    def test_validate_first_turn(self, is_first_play, score, expected):
+        self.game.current_turn = 0
+        self.game.players[0].first_move = is_first_play
+        self.game.board.current_play_score = score
+        self.assertEqual(self.game.validate_first_move(), expected)
