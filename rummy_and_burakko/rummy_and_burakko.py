@@ -45,9 +45,9 @@ class RummyAndBurakko():
 
     @property
     def board(self):
-        if self.game is not None:
-            return self.game.show_game()
-        return "Starting..."
+        if self.game is None:
+            return "Starting..."
+        return self.game.show_game()
 
     def __init__(self):
         self.game = None
