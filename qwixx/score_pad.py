@@ -1,14 +1,9 @@
 from .row import (
     Row,
-    # NotCanmark,
 )
 
 
 class ReachPenaltyLimit(Exception):
-    pass
-
-
-class ItCannotBeMarked(Exception):
     pass
 
 
@@ -39,7 +34,4 @@ class ScorePad:
         return score - penalty
 
     def mark_number_in_row(self, number, color):
-        # try:
         self.rows[color].set_mark(number)
-        # except Exception:
-        #     raise ItCannotBeMarked()
