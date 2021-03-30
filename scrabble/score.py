@@ -21,13 +21,14 @@ class Score:
         return list_words
 
     @staticmethod
-    def get_score(*args):
-        words = Score.define_direction(*args)
+    def get_score(placed_word, *args):
+        words = Score.define_direction(placed_word, *args)
+        words.append(placed_word)
         return sum([Score.multiply_score(word) for word in words])
 
     @staticmethod
     def define_direction(*args):
-        pass
+        return []
 
     # mi palabra original es horizontal
     @staticmethod
