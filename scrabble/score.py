@@ -2,29 +2,66 @@ class Score:
 
     # mi palabra original es vertical
     @staticmethod
-    def search_horiz_word(self, word, row, col, direccion, spots):
+    def search_horiz_letter(self, word, row, col, direction, spots):
         len_word = len(word)
         end_word = row + len_word
+        list_words = []
         for i in range(row, end_word):
             if spots[i][col - 1].tile is not None:
-                self.metodo_nuevo(direccion, i, col - 1)
+                list_words.append(self.search_horiz_word(i, col - 1, spots))
             elif spots[i][col + 1].tile is not None:
-                self.metodo_nuevo(direccion, i, col + 1)
+                list_words.append(self.search_horiz_word(i, col + 1, spots))
+        return list_words
 
     # mi palabra original es horizontal
     @staticmethod
-    def search_vert_word(self, word, row, col, direccion, spots):
+    def search_vert_letter(self, word, row, col, direction, spots):
         len_word = len(word)
         end_word = col + len_word
+        list_words = []
         for i in range(row, end_word):
             if spots[row - 1][i].tile is not None:
-                self.metodo_nuevo(direccion, row - 1, i, spots)
+                list_words.append(self.search_vert_word(row - 1, i, spots))
             elif spots[i][col + 1].tile is not None:
-                self.metodo_nuevo(direccion, row + 1, i, spots)
+                list_words.append(self.search_vert_word(row + 1, i, spots))
+        return list_words
+
+    # metodo para obtener nuevas palabras formadas
+    @staticmethod
+    def search_horiz_word(row, col, spots):
+        sublist1 = []
+        sublist2 = []
+        sublist3 = []
+        for i in range(col, -1, -1):
+            if spots[row][i].tile is not None:
+                sublist1.append(spots[row][col])
+            else:
+                break
+        for i in range(col, 15, 1):
+            if spots[row][i].tile is not None:
+                sublist2.append(spots[row][col])
+            else:
+                break
+        sublist3 = sublist1[::-1] + sublist2
+        return sublist3
 
     @staticmethod
-    def nuevo_metodo(direccion, row, col, spots):
-        pass
+    def search_vert_word(row, col, spots):
+        sublist1 = []
+        sublist2 = []
+        sublist3 = []
+        for i in range(row, -1, -1):
+            if spots[i][col].tile is not None:
+                sublist1.append(spots[row][col])
+            else:
+                break
+        for i in range(row, 15, 1):
+            if spots[i][col].tile is not None:
+                sublist2.append(spots[row][col])
+            else:
+                break
+        sublist3 = sublist1[::-1] + sublist2
+        return sublist3
 
     @staticmethod
     def multiply_score(spots):
