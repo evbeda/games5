@@ -19,6 +19,8 @@ class Score:
                     word_mult *= spot.mult_value
                 if spot.mult_type == 'l':
                     score += spot.tile.score * spot.mult_value
+                else:
+                    score += spot.tile.score
             else:
                 score += spot.tile.score
             spot.mult_not_used = False
