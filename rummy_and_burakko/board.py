@@ -1,4 +1,5 @@
 from .set_tiles import SetTiles
+import copy
 
 
 class Board():
@@ -21,7 +22,7 @@ class Board():
         ])
 
     def temporary_sets(self):
-        self.temp_sets = self.sets.copy()
+        self.temp_sets = copy.deepcopy(self.sets)
 
     def valid_sets(self):
         return all(
@@ -29,7 +30,7 @@ class Board():
         )
 
     def validate_turn(self):
-        self.sets = self.temp_sets.copy()
+        self.sets = copy.deepcopy(self.temp_sets)
 
     def give_one_tile_from_board(self, set_id, index):
         if len(self.sets[set_id].tiles) > 0:
