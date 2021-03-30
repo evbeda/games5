@@ -1,6 +1,3 @@
-from .tile import Tile
-
-
 class Score:
 
     # def score_word(self):
@@ -13,16 +10,15 @@ class Score:
     #     pass
 
     @staticmethod
-    def multiply_score(spots, word):
+    def multiply_score(spots):
         score = 0
         word_mult = 1
-        for spot, letter in zip(spots, word):
-            if spot.tile is None and spot.mult_type == 'w':
+        for spot in spots:
+            if spot.mult_not_used and spot.mult_type == 'w':
                 word_mult *= spot.mult_value
-
-            if spot.tile is None and spot.mult_type == 'l':
-                score += Tile(letter).score * spot.mult_value
+            if spot.mult_not_used and spot.mult_type == 'l':
+                score += spot.tile.score * spot.mult_value
             else:
-                score += Tile(letter).score
-
+                score += spot.tile.score
+            spot.mult_not_used = False
         return score * word_mult

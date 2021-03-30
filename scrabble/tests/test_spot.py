@@ -7,18 +7,19 @@ from ..tile import Tile
 class TestSpot(unittest.TestCase):
 
     def test_spot_constructor(self):
-        s = Spot(0, 'c')
-        self.assertEqual(s.mult_value, 0)
+        s = Spot(1, 'c')
+        self.assertEqual(s.mult_value, 1)
         self.assertEqual(s.mult_type, 'c')
+        self.assertEqual(s.mult_not_used, True)
 
     def test_set_tile(self):
         t = Tile('a')
-        s = Spot(0, 'c')
+        s = Spot(1, 'c')
         s.set_tile(t)
         self.assertEqual(s.tile.letter, t.letter)
 
     @parameterized.expand([
-        (Spot(0, 'c'), Tile('a'), ' a '),
+        (Spot(1, 'c'), Tile('a'), ' a '),
         (Spot(2, 'l'), None, '2xL'),
         (Spot(2, 'l'), Tile('a'), ' a '),
         (Spot(2, 'w'), None, '2xW'),
@@ -27,7 +28,7 @@ class TestSpot(unittest.TestCase):
         (Spot(2, 'l'), Tile('a'), ' a '),
         (Spot(3, 'l'), None, '3xL'),
         (Spot(2, 'l'), Tile('a'), ' a '),
-        (Spot(0, 'c'), None, '   '),
+        (Spot(1, 'c'), None, '   '),
     ])
     def test_spot_format(self, spot, tile, expected):
         s = spot

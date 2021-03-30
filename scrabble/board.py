@@ -58,7 +58,7 @@ class Board:
                 for y in range(15)] for x in range(15)]
 
     def multiplier(self, x, y):
-        mult = (0, 'c')
+        mult = (1, 'c')
 
         for set_mult in BOARD_MULT:
             if (x, y) in set_mult[0]:
