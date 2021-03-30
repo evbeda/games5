@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@0.2.1
+  python: circleci/python@1.3.3
 
 jobs:
   build-and-test:
@@ -9,23 +9,26 @@ jobs:
     steps:
       - checkout
       # - python/load-cache
-      - python/install-deps
+      - python/install-packages:
+          pkg-manager: pip
       # - python/save-cache
-      - run:
-          name: Create test reports directory
-          command: mkdir /tmp/test-artifacts
       - run:
           name: Setup Code Climate test-reporter
           command: |
               # download test reporter as a static binary
               curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
               chmod +x ./cc-test-reporter
-      - run:
-          name: Running Tests
-          command: |
               ./cc-test-reporter before-build
-              coverage run test_suite.py && coverage xml --omit=*/site-packages/*,tests/* && coverage report
-              ./cc-test-reporter after-build -t coverage.py
+      - run:
+          name: Coverage Running Tests
+          command: |
+              coverage run -m test_suite
+              coverage xml --omit=env/*,tests/*
+              coverage report
+      - run:
+          name: Update CodeClimate coverage report
+          command: |
+              ./cc-test-reporter after-build -t coverage.py --exit-code $?
       - run:
           name: Running Flake8
           command: flake8
@@ -34,3 +37,5 @@ workflows:
   main:
     jobs:
       - build-and-test
+      - python/test:
+          args: test_suite

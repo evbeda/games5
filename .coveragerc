@@ -4,7 +4,6 @@ source =
     qwixx
     rummy_and_burakko
     scrabble
-    game.py
 omit =
     env/*
     */test*
