@@ -13,5 +13,5 @@ class Spot:
             f' {self.tile.letter} '
             if self.tile else
             f'{self.mult_value}x{self.mult_type.upper()}'
-            if self.mult_value else '   '
+            if self.mult_type != 'c' else '   '
         )

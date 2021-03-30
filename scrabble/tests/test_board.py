@@ -16,13 +16,13 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(len(self.b.spots), 15)
         self.assertEqual(len(self.b.spots[0]), 15)
 
-    @patch.object(Board, 'multiplier', return_value=(0, 'c'))
+    @patch.object(Board, 'multiplier', return_value=(1, 'c'))
     def test_set_spots(self, multiplier_mock):
         Board()
         self.assertEqual(multiplier_mock.call_count, 225)
 
     @parameterized.expand([
-        (0, 1, (0, 'c')),    # common spot
+        (0, 1, (1, 'c')),    # common spot
         (0, 11, (2, 'l')),   # spot with mult x2 letter
         (9, 5, (3, 'l')),    # spot with mult x3 letter
         (7, 7, (2, 'w')),    # spot with mult x2 word
@@ -133,7 +133,7 @@ class TestBoard(unittest.TestCase):
     def test_tiles_in_board(self, tiles, expected):
         spots = []
         for t in tiles:
-            spot = Spot(0, 'c')
+            spot = Spot(1, 'c')
             if t:
                 spot.set_tile(t)
             spots.append(spot)
