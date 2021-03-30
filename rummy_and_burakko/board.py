@@ -22,8 +22,9 @@ class Board():
             for index, tile in enumerate(self.reused_tiles, start_index)
         ])
 
-    def temporary_sets(self):
+    def temp_board(self):
         self.temp_sets = copy.deepcopy(self.sets)
+        self.reused_tiles = []
 
     def valid_sets(self):
         return all(
