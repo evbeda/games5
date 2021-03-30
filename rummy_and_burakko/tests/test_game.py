@@ -280,4 +280,3 @@ class TestGame(unittest.TestCase):
         m_make.assert_called_once_with(indexes)
         m_clean.assert_called_once_with(indexes)
         m_place.assert_called_once_with((1, 2, 3))
-
