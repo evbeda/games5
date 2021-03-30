@@ -186,11 +186,13 @@ class TestGame(unittest.TestCase):
     @patch.object(Player, "validate_turn")
     @patch.object(Board, "validate_turn")
     @patch.object(Player, "change_state")
+    @patch.object(Player, "change_first_move")
     def test_end_turn(
         self,
         rv,
         call_count_1,
         call_count_2,
+        mock_player_change_first_move,
         mock_player_change_state,
         mock_board,
         mock_player_validate,
@@ -207,6 +209,10 @@ class TestGame(unittest.TestCase):
             self.assertEqual(mock_player_change_state.call_count, 1)
             self.assertEqual(mock_board.call_count, call_count_1)
             self.assertEqual(mock_player_validate.call_count, call_count_1)
+            self.assertEqual(
+                mock_player_change_first_move.call_count,
+                call_count_1,
+            )
             self.assertEqual(mock_bag.call_count, call_count_2)
             self.assertEqual(self.game.board.current_play_score, 0)
 
