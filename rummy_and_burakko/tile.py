@@ -10,6 +10,9 @@ class Tile():
     def assign_set_id(self, set_id):
         self.set_id = set_id
 
+    def get_number(self):
+        return self.number
+
     def __eq__(self, other):
         if isinstance(other, Tile):
             return self.color == other.color and self.number == other.number
