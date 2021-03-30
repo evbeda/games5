@@ -37,8 +37,8 @@ COLOR_ROW = {
 }
 
 COLOR_DICE = {
-    1: 'white1',
-    2: 'white2'
+    1: 'white_1',
+    2: 'white_2'
 }
 
 
