@@ -103,14 +103,34 @@ class TestScore(unittest.TestCase):
         Score.search_vert_letter(word, row, col, self.b.spots)
         mock_search_vert_word.assert_called()
 
-    def test_search_horiz_word(self, row, col, spots):
+    @parameterized.expand([
+        (7, 6, 'roca'),
+    ])
+    def test_search_horiz_word(self, row, col, expected_word):
+        self.b.spots[7][6].set_tile(None)
         self.b.spots[7][6].set_tile(Tile('r'))
+        self.b.spots[7][7].set_tile(Tile('o'))
         self.b.spots[7][8].set_tile(Tile('c'))
         self.b.spots[7][9].set_tile(Tile('a'))
-        pass
+        self.b.spots[7][6].set_tile(None)
+        expected = []
+        for letter in expected_word:
+            spot = Spot(1, 'c')
+            spot.set_tile(Tile(letter))
+            expected.append(spot)
+        self.assertEqual(Score.search_horiz_word(row, col, self.b.spots), expected)
 
-    def test_search_vert_word(self, row, col, spots):
+    @parameterized.expand([
+        (7, 6, 'roca'),
+    ])
+    def test_search_vert_word(self, row, col, expected_word):
         self.b.spots[5][7].set_tile(Tile('r'))
+        self.b.spots[6][7].set_tile(Tile('r'))
         self.b.spots[7][7].set_tile(Tile('c'))
         self.b.spots[8][7].set_tile(Tile('a'))
-        pass
+        expected = []
+        for letter in expected_word:
+            spot = Spot(1, 'c')
+            spot.set_tile(Tile(letter))
+            expected.append(spot)
+        self.assertEqual(Score.search_vert_word(row, col, self.b.spots), expected)
