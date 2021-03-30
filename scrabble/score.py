@@ -22,11 +22,11 @@ class Score:
 
     @staticmethod
     def get_score(*args):
-        words = Score.search_words(*args)
+        words = Score.define_direction(*args)
         return sum([Score.multiply_score(word) for word in words])
 
     @staticmethod
-    def search_words(*args):
+    def define_direction(*args):
         pass
 
     # mi palabra original es horizontal
