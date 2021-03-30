@@ -10,6 +10,7 @@ class TestSpot(unittest.TestCase):
         s = Spot(0, 'c')
         self.assertEqual(s.mult_value, 0)
         self.assertEqual(s.mult_type, 'c')
+        self.assertEqual(s.mult_not_used, True)
 
     def test_set_tile(self):
         t = Tile('a')

@@ -3,6 +3,7 @@ class Spot:
         self.tile = None
         self.mult_value = mult_value
         self.mult_type = mult_type
+        self.mult_not_used = True
 
     def set_tile(self, tile):
         self.tile = tile
