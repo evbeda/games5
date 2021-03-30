@@ -84,6 +84,7 @@ class Game:
         return self.players[self.current_turn].get_lenght()
 
     def end_turn(self):
+        self.board.current_play_score = 0
         self.players[self.current_turn].change_state()
         if self.valid_turn():
             self.players[self.current_turn].validate_turn()
