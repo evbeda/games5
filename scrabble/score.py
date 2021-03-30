@@ -12,7 +12,8 @@ class Score:
     # def search_vert_word(self):
     #     pass
 
-    def multiply_score(self, spots, word):
+    @staticmethod
+    def multiply_score(spots, word):
         score = 0
         word_mult = 1
         for spot, letter in zip(spots, word):
