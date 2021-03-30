@@ -74,4 +74,7 @@ class SetTiles():
             raise IndexError
 
     def put_tile(self, tile, index):
-        self.tiles.insert(index, tile)
+        if index < len(self.tiles):
+            self.tiles.insert(index, tile)
+        else:
+            self.tiles.append(tile)
