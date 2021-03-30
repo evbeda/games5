@@ -81,7 +81,7 @@ class TestQwixx(unittest.TestCase):
         (
             QWIXX_TURN_COLOR,
             'Choose in which row you want to mark acommon die with a colored die (0/3),'
-            'common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+            'common die (0/1) and color die(0/3) or Penalty (99/99)?',
         ),
     ])
     def test_next_turn_play(self, turn_color, expected):
@@ -90,8 +90,8 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(self.qwixx.next_turn(), expected)
 
     @parameterized.expand([
-        (2, 0, 5, 451),
-        (4, 3, 5, 451),
+        (2, 0, 5, 453),
+        (4, 3, 5, 453),
     ])
     def test_board(self, cant_score_pad, id_player, marks, cant_letter):
         qwixx = Qwixx()
