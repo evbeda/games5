@@ -310,7 +310,3 @@ class TestQwixx(unittest.TestCase):
         row.blocked_rows.extend(blocked_row)
         self.qwixx.you_can_play
         self.assertEqual(self.qwixx.is_playing, expected)
-
-if __name__ == '__main__':
-    unittest.main()
-
