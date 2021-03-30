@@ -1,5 +1,5 @@
-# class NotCanmark(Exception):
-#     pass
+class NotCanMark(Exception):
+    pass
 
 
 class Row:
@@ -39,7 +39,7 @@ class Row:
         ):
             return self.can_mark(number)
         else:
-            False
+            raise NotCanMark()
 
     def calculate_marks(self):
         set_marks = (
