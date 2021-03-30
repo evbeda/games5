@@ -15,7 +15,7 @@ QWIXX_TURN_COLOR = 'color'
 
 game_state_next_turn = {
     QWIXX_STATE_START: 'Enter number of players',
-    QWIXX_STATE_OPTION: 'Game option :\n1) play \n2) pass',
+    QWIXX_STATE_OPTION: 'Game option:\n1) play \n2) pass',
 }
 game_state_color_next_turn = {
     QWIXX_TURN_WHITE:
@@ -154,50 +154,50 @@ class Qwixx:
     def board(self):
         output = " "
         if self.score_pad:
-            output += "Dice: white->{}".format(self.dice_set.get_value_of_die('white_1'))
             output += "\n"
-            output += "      white->{}".format(self.dice_set.get_value_of_die('white_2'))
-            output += "\n"
-            output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
-            output += "\n"
-            output += "      green->{}".format(self.dice_set.get_value_of_die('green'))
-            output += "\n"
-            output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
-            output += "\n"
-            output += "      yellow->{}".format(self.dice_set.get_value_of_die('yellow'))
-            output += "\n"
-            output += "the player who plays :{} ".format(self.score_pad[self.current_player].id_player)
-            output += "color :{}".format(self.turn_color)
-            output += "\n"
-            output += "score pad "
+            output += "------------------------------------------------------------\n"
+            output += "     BOARD PLAYER: {}     ".format(self.score_pad[self.current_player].id_player)
+            output += "TURN: {}    ".format(self.turn_color)
+            output += "PENALTY: {}\n".format(str(self.score_pad[self.current_player].penalty))
+            output += "------------------------------------------------------------\n"
             output += "\n"
             for row in self.score_pad[self.current_player].rows.values():
                 output += self.output_row(row)
+            output += "------------------------------------------------------------\n"
+            output += "SCORE: {}".format(str(tuple(range(1, 13))))
             output += "\n"
-            output += "penalty"
-            output += " {}".format(str(self.score_pad[self.current_player].penalty))
+            output += "       (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)\n"
             output += "\n"
-            output += "score :"
-            output += " {}".format(str(tuple(range(1, 13))))
+            output += "DICES:\n"
+            output += "     (1)WHITE: {}  ".format(self.dice_set.get_value_of_die('white_1')).ljust(10)
+            output += "(2)WHITE: {}  ".format(self.dice_set.get_value_of_die('white_2')).ljust(10)
+            output += "(1)RED: {}  ".format(self.dice_set.get_value_of_die('red')).ljust(10)
+            output += "(2)YELLOW: {}  ".format(self.dice_set.get_value_of_die('yellow')).ljust(10)
+            output += "(3)BLUE: {}  ".format(self.dice_set.get_value_of_die('blue')).ljust(10)
+            output += "(4)GREEN: {}  ".format(self.dice_set.get_value_of_die('green')).ljust(10)
             output += "\n"
-            output += "       (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
+            
         return output
 
     def is_locked(self, row):
         if row.color in row.blocked_rows:
-            return "is loked"
+            return "is locked"
         else:
-            return "not loked"
+            return "not locked"
 
     def output_row(self, row):
         output = ' '
-        output += '{}'.format(row.color)
+        output += '{}'.format(row.color.upper()).ljust(8)
+        output += '|'
         output += '{}'.format(row.numbers)
+        output += '| '
+        output += '{}'.format(self.is_locked(row)).rjust(10)
         output += "\n"
-        output += '{}'.format(row.marks)
-        output += "\n"
-        output += '{}'.format(self.is_locked(row))
-        output += "\n"
+        output += " ".ljust(9)
+        output += '|'
+        output += '{}'.format(row.marks).ljust(36)
+        output += '| '
+        output += "\n\n"
         return output
 
     @property
