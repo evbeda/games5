@@ -95,6 +95,7 @@ class Qwixx:
         second_die = self.dice_set.get_value_of_die('white_2')
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
+        self.next_turn()
 
     def set_next_player(self):
         self.game_state = QWIXX_STATE_OPTION
@@ -147,16 +148,16 @@ class Qwixx:
     @property
     def board(self):
         output = " "
-        output += "Dice: white->{}".format(self.dice_set.get_value_of_die('white_1'))
-        output += "\n"
-        output += "      white->{}".format(self.dice_set.get_value_of_die('white_2'))
-        output += "\n"
-        output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
-        output += "\n"
-        output += "      red->{}".format(self.dice_set.get_value_of_die('green'))
-        output += "\n"
-        output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
         if self.score_pad:
+            output += "Dice: white->{}".format(self.dice_set.get_value_of_die('white_1'))
+            output += "\n"
+            output += "      white->{}".format(self.dice_set.get_value_of_die('white_2'))
+            output += "\n"
+            output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
+            output += "\n"
+            output += "      red->{}".format(self.dice_set.get_value_of_die('green'))
+            output += "\n"
+            output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
             output += "\n"
             output += "the player who plays :{} ".format(self.score_pad[self.current_player].id_player)
             output += "color :" + self.turn_color
