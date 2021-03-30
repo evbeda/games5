@@ -11,7 +11,7 @@ class Board():
     def get_board(self):
         return '\n'.join([
             f'{index}: {tile_set.get_tiles()}'
-            for index, tile_set in self.sets.items()
+            for index, tile_set in self.temp_sets.items()
         ])
 
     def get_reused_tiles(self, start_index):
