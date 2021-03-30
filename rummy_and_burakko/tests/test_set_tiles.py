@@ -133,12 +133,18 @@ class TestSetTiles(unittest.TestCase):
         with self.assertRaises(IndexError):
             set_tile.extract_one_tile(index)
 
-    def test_put_tile(self):
+    @parameterized.expand([
+        # (input_index, output_index)
+        (0, 0),
+        (2, 2),
+        (3, 3),
+        (4, 3),
+    ])
+    def test_put_tile(self, input_index, output_index):
         # data
         set_tile = SetTiles([Tile('r', 3), Tile('b', 3), Tile('y', 3)])
         tile = Tile('w', 3)
-        index = 0
         # process
-        set_tile.put_tile(tile, index)
+        set_tile.put_tile(tile, input_index)
         # assert
-        self.assertEqual(set_tile.tiles[0], tile)
+        self.assertEqual(set_tile.tiles[output_index], tile)
