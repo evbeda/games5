@@ -115,10 +115,8 @@ class Scrabble:
         x = int(x)
         y = int(y)
         h = h == 'h'
-        if self.game.place_word(x, y, h, word):
-            self.game_state = GAME_STATE_ASK_CHALLENGE
-        # else:
-        #     return 'Invalid placement'
+        self.game.place_word(x, y, h, word)
+        self.game_state = GAME_STATE_ASK_CHALLENGE
 
     def play_change_letters(self, *letters):
         self.game.change_player_tiles(letters)

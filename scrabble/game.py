@@ -44,13 +44,10 @@ class Game:
             self.tile_bag, letters)
 
     def place_word(self, x, y, direction, word):
-        if self.board.place_word(
+        self.board.place_word(
             word, y, x, direction, self.players[self.current_player]
-        ):
-            self.players[self.current_player].full_draw(self.tile_bag)
-            return True
-        else:
-            return False
+        )
+        self.players[self.current_player].full_draw(self.tile_bag)
 
     @property
     def player_count(self):
