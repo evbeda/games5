@@ -177,3 +177,18 @@ class TestBoard(unittest.TestCase):
         self.board.reused_tiles = lenght
         result = self.board.all_reused_tiles()
         self.assertEqual(result, expected)
+
+    @patch.object(SetTiles, 'put_tile')
+    def test_put_a_tile_calls(self, mock):
+        # data
+        tile = Tile('r', 5)
+        set_id = 1
+        index = 3
+        self.board.temp_sets = {1: SetTiles(
+            [Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)]
+        )
+        }
+        # process
+        self.board.put_a_tile(tile, set_id, index)
+        # assert
+        mock.assert_called_once_with(tile, index)

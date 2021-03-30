@@ -61,4 +61,4 @@ class Board():
         return False
 
     def put_a_tile(self, tile, set_id, index):
-        pass
+        self.temp_sets[set_id].put_tile(tile, index)
