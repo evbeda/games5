@@ -170,6 +170,6 @@ class TestScore(unittest.TestCase):
                 word.append(spot)
             words.append(word)
 
-        with patch.object(Score, 'search_words', return_value=words):
+        with patch.object(Score, 'define_direction', return_value=words):
             score = Score.get_score('word', 'col', 'row', 'direction', 'spots')
             self.assertEqual(score, expected)
