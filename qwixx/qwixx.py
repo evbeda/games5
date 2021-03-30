@@ -176,7 +176,7 @@ class Qwixx:
             output += "(3)BLUE: {}  ".format(self.dice_set.get_value_of_die('blue')).ljust(10)
             output += "(4)GREEN: {}  ".format(self.dice_set.get_value_of_die('green')).ljust(10)
             output += "\n"
-            
+
         return output
 
     def is_locked(self, row):
