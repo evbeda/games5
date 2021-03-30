@@ -20,14 +20,8 @@ jobs:
           name: Install dependencies
           command: pip install -r requirements.txt
       - run:
-          name: Running Tests Qwixx
-          command: python -m qwixx.tests.test_qwixx
-      - run:
           name: Running Tests
-          command: |
-              set -e
-              python -m test_suite
-              coverage run -m test_suite && coverage xml --omit=env/*,tests/*
+          command: coverage run -m unittest && coverage xml --omit=env/*,tests/*
       - run:
           name: Update CodeClimate coverage report
           command: |
