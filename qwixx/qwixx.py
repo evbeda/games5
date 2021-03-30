@@ -37,8 +37,8 @@ COLOR_ROW = {
 }
 
 COLOR_DICE = {
-    1: 'white_1',
-    2: 'white_2'
+    1: 'white1',
+    2: 'white2'
 }
 
 
@@ -193,7 +193,7 @@ class Qwixx:
     def output_row(self, row):
         output = ' '
         output += '{}'.format(row.color)
-        output += '{}'.format(str(tuple(range(2, 13))))
+        output += '{}'.format(row.numbers)
         output += "\n"
         output += '{}'.format(row.marks)
         output += "\n"
