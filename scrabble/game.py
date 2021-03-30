@@ -1,6 +1,7 @@
 from .board import Board
 from .tile_bag import TileBag
 from .player import Player
+from random import shuffle
 
 
 class Game:
@@ -11,6 +12,7 @@ class Game:
         self.board = Board()
         self.tile_bag = TileBag()
         self.players = self.create_player(name_players)
+        shuffle(self.players)
         self.first = 0
         self.skipped_turns = 0
         self.lost_turns = []
