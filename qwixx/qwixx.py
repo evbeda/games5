@@ -1,7 +1,7 @@
 from .score_pad import (
     ScorePad,
     ReachPenaltyLimit,
-    ItCannotBeMarked,
+    # ItCannotBeMarked,
 )
 from .set_dices import SetDices
 from .row import Row
@@ -87,10 +87,10 @@ class Qwixx:
         first_die = self.dice_set.get_value_of_die(COLOR_DICE[white_index])
         second_die = self.dice_set.get_value_of_die(color)
         total = first_die + second_die
-        try:
-            s_pad.mark_number_in_row(total, color)
-        except ItCannotBeMarked:
-            return 'it cannot be marked'
+        # try:
+        s_pad.mark_number_in_row(total, color)
+        # except ItCannotBeMarked:
+        #     return 'it cannot be marked'
         self.set_next_player()
 
     def mark_with_white(self, color_index):
