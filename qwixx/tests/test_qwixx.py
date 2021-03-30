@@ -93,13 +93,16 @@ class TestQwixx(unittest.TestCase):
     @parameterized.expand([
         (
             QWIXX_TURN_WHITE,
-            'Choose in which row you want to mark the common dice (1): red, 2): yellow, '
-            '3): blue, 4): green) or pass ?',
+            'Choose in which row you want to mark the common dice\n'
+            '1) red\n'
+            '2) yellow\n'
+            '3) blue\n'
+            '4) green\n',
         ),
         (
             QWIXX_TURN_COLOR,
-            'Choose in which row you want to mark acommon die with a colored die (0/3),'
-            'common die (0/1) and color die(0/3) or Penalty (99/99)?',
+            'Choose a white and color die\n'
+            '1-2) white die   1-4)color die',
         ),
     ])
     def test_next_turn_play(self, turn_color, expected):
