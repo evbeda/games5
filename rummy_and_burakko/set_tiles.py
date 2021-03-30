@@ -72,3 +72,6 @@ class SetTiles():
             return self.tiles.pop(index)
         except IndexError:
             raise IndexError
+
+    def put_tile(self, tile, index):
+        pass
