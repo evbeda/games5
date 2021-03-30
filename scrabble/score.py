@@ -14,13 +14,10 @@ class Score:
         score = 0
         word_mult = 1
         for spot in spots:
-            if spot.mult_not_used:
-                if spot.mult_type == 'w':
-                    word_mult *= spot.mult_value
-                if spot.mult_type == 'l':
-                    score += spot.tile.score * spot.mult_value
-                else:
-                    score += spot.tile.score
+            if spot.mult_not_used and spot.mult_type == 'w':
+                word_mult *= spot.mult_value
+            if spot.mult_not_used and spot.mult_type == 'l':
+                score += spot.tile.score * spot.mult_value
             else:
                 score += spot.tile.score
             spot.mult_not_used = False
