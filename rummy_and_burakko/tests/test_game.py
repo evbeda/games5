@@ -40,12 +40,12 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self.game.current_turn, next_turn)
 
     @patch.object(Player, "temporary_hand")
-    @patch.object(Board, "temporary_sets")
+    @patch.object(Board, "temp_board")
     @patch.object(Player, "change_state")
     def test_next_turn_calls(
         self,
         m_change_state,
-        m_temporary_sets,
+        m_temporary_board,
         m_temporary_hand,
     ):
         # data
@@ -54,7 +54,7 @@ class TestGame(unittest.TestCase):
         self.game.next_turn()
         # assert
         m_change_state.assert_called_once_with()
-        m_temporary_sets.assert_called_once_with()
+        m_temporary_board.assert_called_once_with()
         m_temporary_hand.assert_called_once_with()
 
     @patch.object(TileBag, "assign_tiles")

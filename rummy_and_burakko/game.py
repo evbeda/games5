@@ -26,8 +26,8 @@ class Game:
         self.current_turn = (self.current_turn + 1) % len(self.players)
         self.board.current_play_score = 0
         self.players[self.current_turn].change_state()
-        self.board.temporary_sets()
         self.players[self.current_turn].temporary_hand()
+        self.board.temp_board()
 
     def show_game(self):
         player = self.players[self.current_turn]
@@ -40,14 +40,16 @@ class Game:
             self.board.get_reused_tiles(player.get_lenght()),
         ])
 
+    # pass
     def make_play(self, option, args):
         options = {
             1: self.put_new_set,
-            # 2: self.board.put_a_tile,
+            # 2: self.put_a_tile,
             3: self.board.give_one_tile_from_board,
         }
         options[option](*args)
 
+    # Option 1
     def put_new_set(self, *indexes):
         # intercambiar indices por tiles (copiando)
         tiles = self.make_tile_array(indexes)
@@ -80,6 +82,13 @@ class Game:
                 player.remove_tile(index)
             else:
                 self.board.remove_reused_tile(index - max_index_hand)
+
+    # Option 2
+    def put_a_tile(self, my_tile, set_id, index_id):
+        # search and retrieve tile
+        # clean tile
+        # put tile
+        pass
 
     def quantity_of_tiles(self):
         return self.players[self.current_turn].get_lenght()
