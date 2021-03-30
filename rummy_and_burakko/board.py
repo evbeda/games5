@@ -8,6 +8,7 @@ class Board():
         self.temp_sets = {}
         self.last_id = 0
         self.reused_tiles = []
+        self.current_play_score = 0
 
     def get_board(self):
         return '\n'.join([
@@ -44,6 +45,7 @@ class Board():
         self.last_id = self.last_id + 1
         for tile in tiles:
             tile.set_id = self.last_id
+            self.current_play_score += tile.number
         self.temp_sets[self.last_id] = SetTiles(tiles)
 
     def get_a_reused_tile(self, index):

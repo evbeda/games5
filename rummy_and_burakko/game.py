@@ -33,7 +33,7 @@ class Game:
         return "\n".join([
             "Mesa",
             self.board.get_board(),
-            "Mano",
+            "Mano\n",
             self.players[self.current_turn].get_hand(),
             "Fichas sueltas\n",
             self.board.get_reused_tiles(player.get_lenght()),
@@ -41,13 +41,13 @@ class Game:
 
     def make_play(self, option, args):
         options = {
-            1: self.put_new_set,
+            # 1: self.put_new_set(args),
             # 2: self.board.put_a_tile(player, *args),
-            3: self.board.give_one_tile_from_board,
+            3: self.board.give_one_tile_from_board(*args),
         }
-        options[option](*args)
+        options[option]
 
-    def put_new_set(self, *indexes):
+    def put_new_set(self, indexes):
         # intercambiar indices por tiles (copiando)
         tiles = self.make_tile_array(indexes)
         # eliminar tiles respecto a los indices
