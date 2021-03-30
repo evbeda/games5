@@ -41,12 +41,12 @@ class Score:
         sublist3 = []
         for i in range(col, -1, -1):
             if spots[row][i].tile is not None:
-                sublist1.append(spots[row][col])
+                sublist1.append(spots[row][i])
             else:
                 break
-        for i in range(col, 15, 1):
+        for i in range(col + 1, 15, 1):
             if spots[row][i].tile is not None:
-                sublist2.append(spots[row][col])
+                sublist2.append(spots[row][i])
             else:
                 break
         sublist3 = sublist1[::-1] + sublist2
@@ -59,12 +59,12 @@ class Score:
         sublist3 = []
         for i in range(row, -1, -1):
             if spots[i][col].tile is not None:
-                sublist1.append(spots[row][col])
+                sublist1.append(spots[i][col])
             else:
                 break
-        for i in range(row, 15, 1):
+        for i in range(row + 1, 15, 1):
             if spots[i][col].tile is not None:
-                sublist2.append(spots[row][col])
+                sublist2.append(spots[i][col])
             else:
                 break
         sublist3 = sublist1[::-1] + sublist2
