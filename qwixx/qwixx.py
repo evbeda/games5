@@ -126,6 +126,7 @@ class Qwixx:
             self.set_next_player()
         else:
             return 'Invalid Option'
+        return ''
 
     def play_turn(self, *args):
         if self.turn_color == QWIXX_TURN_WHITE:
@@ -142,13 +143,14 @@ class Qwixx:
         )
 
     def play(self, *args):
+        msg = ''
         if self.game_state == QWIXX_STATE_START:
             self.play_start(args[0])
         elif self.game_state == QWIXX_STATE_OPTION:
-            return self.play_option(args[0])
+            msg = self.play_option(args[0])
         elif self.game_state == QWIXX_STATE_PLAY:
             return self.play_turn(*args)
-        return ''
+        return msg
 
     @property
     def board(self):
