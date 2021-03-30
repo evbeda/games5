@@ -59,3 +59,6 @@ class Board():
         if len(self.reused_tiles) == 0:
             return True
         return False
+
+    def put_a_tile(self, tile, set_id, index):
+        pass

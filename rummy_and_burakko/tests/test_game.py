@@ -298,7 +298,7 @@ class TestGame(unittest.TestCase):
 
     @patch.object(Board, 'place_new_set')
     @patch.object(Game, 'clean')
-    @patch.object(Game, 'make_tile_array', return_value=(1, 2, 3))
+    @patch.object(Game, 'make_tile_array', return_value=[1, 2, 3])
     def test_put_new_set_calls(self, m_make, m_clean, m_place):
         # data
         indexes = (1, 2, 3, 4, 5)
@@ -307,7 +307,7 @@ class TestGame(unittest.TestCase):
         # assert
         m_make.assert_called_once_with(indexes)
         m_clean.assert_called_once_with(indexes)
-        m_place.assert_called_once_with((1, 2, 3))
+        m_place.assert_called_once_with(m_make.return_value)
 
     @parameterized.expand([
         (True, 30, True),
@@ -320,3 +320,19 @@ class TestGame(unittest.TestCase):
         self.game.players[0].first_move = is_first_play
         self.game.board.current_play_score = score
         self.assertEqual(self.game.validate_first_move(), expected)
+
+    @patch.object(Board, 'put_a_tile')
+    @patch.object(Game, 'clean')
+    @patch.object(Game, 'make_tile_array', return_value=[1])
+    def test_select_put_a_tile_calls(self, m_make, m_clean, m_put):
+        # data
+        my_tile = 3
+        set_id = 1
+        index = 3
+        args = (my_tile, set_id, index)
+        # process
+        self.game.select_put_a_tile(*args)
+        # assert
+        m_make.assert_called_once_with([my_tile])
+        m_clean.assert_called_once_with([my_tile])
+        m_put.assert_called_once_with(*m_make.return_value, set_id, index)
