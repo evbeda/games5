@@ -52,7 +52,6 @@ class Game:
     # Option 1
     def put_new_set(self, *indexes):
         # intercambiar indices por tiles (copiando)
-        print('bien 1')
         tiles = self.make_tile_array(indexes)
         # eliminar tiles respecto a los indices
         self.clean(indexes)
@@ -73,7 +72,6 @@ class Game:
                 tile = copy.deepcopy(self.board.get_a_reused_tile(index - max_index_hand))
 
             tiles.append(tile)
-            print('bien 2', index)
         return tiles
 
     def clean(self, indexes):
