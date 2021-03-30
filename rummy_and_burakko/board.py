@@ -33,9 +33,9 @@ class Board():
         self.sets = copy.deepcopy(self.temp_sets)
 
     def give_one_tile_from_board(self, set_id, index):
-        if len(self.sets[set_id].tiles) > 0:
+        if len(self.temp_sets[set_id].tiles) > 0:
             self.reused_tiles.append(
-                self.sets[set_id].extract_one_tile(index)
+                self.temp_sets[set_id].extract_one_tile(index)
             )
         else:
             raise Exception
@@ -51,3 +51,8 @@ class Board():
 
     def remove_reused_tile(self, index):
         self.reused_tiles.pop(index)
+
+    def all_reused_tiles(self):
+        if len(self.reused_tiles) == 0:
+            return True
+        return False

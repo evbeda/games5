@@ -102,7 +102,7 @@ class TestBoard(unittest.TestCase):
     def test_give_one_tile_from_board(
         self, set_tile, index, chosen_tile, mock
     ):
-        self.board.sets = {
+        self.board.temp_sets = {
             1: set_tile,
         }
         self.board.give_one_tile_from_board(1, index)
@@ -165,3 +165,13 @@ class TestBoard(unittest.TestCase):
         self.board.remove_reused_tile(index)
         # assert
         self.assertEqual(self.board.reused_tiles, expected)
+
+    @parameterized.expand([
+        ([1, 2, 3], False),
+        ([], True),
+        ([1], False),
+    ])
+    def test_all_reused_tiles(self, lenght, expected):
+        self.board.reused_tiles = lenght
+        result = self.board.all_reused_tiles()
+        self.assertEqual(result, expected)
