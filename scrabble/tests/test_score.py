@@ -23,6 +23,26 @@ class TestScore(unittest.TestCase):
             'a',
             1,
         ),
+        (
+            [
+                (0, 'c'),
+                (0, 'c'),
+                (0, 'c'),
+                (2, 'l'),
+            ],
+            'hola',
+            8,
+        ),
+        (
+            [
+                (0, 'c'),
+                (0, 'c'),
+                (0, 'c'),
+                (2, 'w'),
+            ],
+            'hola',
+            14,
+        ),
     ])
     def test_multiply_score(self, spot_values, word, expected):
         spots = [Spot(m_value, m_type) for m_value, m_type in spot_values]
