@@ -148,3 +148,8 @@ class TestSetTiles(unittest.TestCase):
         set_tile.put_tile(tile, input_index)
         # assert
         self.assertEqual(set_tile.tiles[output_index], tile)
+
+    def test_get_set_value(self):
+        set_tile = SetTiles([])
+        result = set_tile.get_set_value()
+        self.assertEqual(result, 0)

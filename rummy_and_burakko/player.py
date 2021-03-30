@@ -45,3 +45,6 @@ class Player:
     def change_first_move(self):
         if self.first_move:
             self.first_move = False
+
+    def get_first_move(self):
+        return self.first_move
