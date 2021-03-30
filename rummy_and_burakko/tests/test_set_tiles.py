@@ -132,3 +132,13 @@ class TestSetTiles(unittest.TestCase):
         set_tile = SetTiles([Tile(t[0], t[1]) for t in tiles])
         with self.assertRaises(IndexError):
             set_tile.extract_one_tile(index)
+
+    def test_put_tile(self):
+        # data
+        set_tile = SetTiles([Tile('r', 3), Tile('b', 3), Tile('y', 3)])
+        tile = Tile('w', 3)
+        index = 0
+        # process
+        set_tile.put_tile(tile, index)
+        # assert
+        self.assertEqual(set_tile.tiles[0], tile)
