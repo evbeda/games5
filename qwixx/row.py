@@ -1,3 +1,6 @@
+class NotCanmark(Exception):
+    pass
+
 
 class Row:
     blocked_rows = []
@@ -36,7 +39,7 @@ class Row:
         ):
             return self.can_mark(number)
         else:
-            return False
+            False
 
     def calculate_marks(self):
         set_marks = (
