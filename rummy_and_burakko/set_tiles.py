@@ -78,3 +78,6 @@ class SetTiles():
             self.tiles.insert(index, tile)
         else:
             self.tiles.append(tile)
+
+    def get_set_value(self):
+        return 0

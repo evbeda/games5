@@ -42,12 +42,12 @@ class Board():
         else:
             raise Exception
 
-    def place_new_set(self, tiles):
+    def place_new_set(self, tiles, is_first_move):
         self.last_id = self.last_id + 1
-        for tile in tiles:
-            tile.set_id = self.last_id
-            self.current_play_score += tile.number
         self.temp_sets[self.last_id] = SetTiles(tiles)
+        if is_first_move:
+            new_set = self.temp_sets[self.last_id]
+            self.current_play_score += new_set.get_set_value()
 
     def get_a_reused_tile(self, index):
         return self.reused_tiles[index]

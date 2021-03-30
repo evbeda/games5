@@ -56,7 +56,9 @@ class Game:
         # eliminar tiles respecto a los indices
         self.clean(indexes)
         # crear el set con las tiles
-        self.board.place_new_set(tiles)
+        self.board.place_new_set(
+            tiles, self.players[self.current_turn].get_first_move()
+        )
 
     def make_tile_array(self, indexes):
         tiles = []

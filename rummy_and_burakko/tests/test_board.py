@@ -130,14 +130,32 @@ class TestBoard(unittest.TestCase):
         # assert
         self.assertEqual(result, expected)
 
-    def test_place_new_set(self):
-        tiles_array = [Tile('r', 3), Tile('r', 4), Tile('r', 5)]
+    @parameterized.expand([
+        (False, 0),
+        (True, 32),
+    ])
+    @patch.object(SetTiles, 'get_set_value', return_value=32)
+    def test_place_new_set(
+        self,
+        is_first_move,
+        current_play_score,
+        m_get_set_value
+    ):
+        tiles_array = [
+            Tile('r', 3),
+            Tile('r', 4),
+            Tile('r', 5),
+            Tile('r', 6),
+            Tile('r', 7),
+            Tile('r', 8),
+        ]
         expected_sets = {
             1: SetTiles(tiles_array)
         }
-        self.board.place_new_set(tiles_array)
-
-        self.assertEqual(self.board.current_play_score, 12)
+        self.board.place_new_set(tiles_array, is_first_move)
+        if(is_first_move):
+            m_get_set_value.assert_called_once_with()
+        self.assertEqual(self.board.current_play_score, current_play_score)
         for index in range(len(tiles_array)):
             self.assertEqual(
                 self.board.temp_sets[1].tiles[index],

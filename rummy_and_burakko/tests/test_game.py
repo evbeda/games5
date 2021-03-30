@@ -307,7 +307,7 @@ class TestGame(unittest.TestCase):
         # assert
         m_make.assert_called_once_with(indexes)
         m_clean.assert_called_once_with(indexes)
-        m_place.assert_called_once_with(m_make.return_value)
+        m_place.assert_called_once_with(m_make.return_value, True)
 
     @parameterized.expand([
         (True, 30, True),
