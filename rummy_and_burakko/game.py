@@ -90,7 +90,7 @@ class Game:
         # clean tile
         self.clean([my_tile])
         # put tile
-        self.board.put_a_tile(tile[0])
+        self.board.put_a_tile(tile[0], set_id, index_id)
 
     def quantity_of_tiles(self):
         return self.players[self.current_turn].get_lenght()
