@@ -65,7 +65,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_board_format(self):
-        self.board.sets = {
+        self.board.temp_sets = {
             1: SetTiles([Tile('r', 5), Tile('b', 5), Tile('y', 5)]),
             2: SetTiles(
                 [
