@@ -136,6 +136,8 @@ class TestBoard(unittest.TestCase):
             1: SetTiles(tiles_array)
         }
         self.board.place_new_set(tiles_array)
+
+        self.assertEqual(self.board.current_play_score, 12)
         for index in range(len(tiles_array)):
             self.assertEqual(
                 self.board.temp_sets[1].tiles[index],
