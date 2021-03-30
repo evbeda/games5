@@ -39,7 +39,7 @@ class ScorePad:
         return score - penalty
 
     def mark_number_in_row(self, number, color):
-        # try:
-        self.rows[color].set_mark(number)
-        # except NotCanmark:
-        #     raise ItCannotBeMarked()
+        try:
+            self.rows[color].set_mark(number)
+        except Exception:
+            raise ItCannotBeMarked()
