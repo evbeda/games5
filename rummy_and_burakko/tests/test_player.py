@@ -45,7 +45,16 @@ class TestPlayer(unittest.TestCase):
     @parameterized.expand([
         # temp_hand, expected
         ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)], False),
-        ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0), Tile('r', 13)], False),
+        (
+            [
+                Tile('r', 7),
+                Tile('b', 4),
+                Tile('y', 5),
+                Tile('*', 0),
+                Tile('r', 13)
+            ],
+            False,
+        ),
         ([Tile('r', 7), Tile('b', 4)], True),
         ([], True),
     ])
@@ -105,3 +114,8 @@ class TestPlayer(unittest.TestCase):
         result = self.player.get_a_tile(index)
         # assert
         self.assertEqual(result, expected)
+
+    def test_change_first_move(self):
+        self.player.first_move = True
+        self.player.change_first_move()
+        self.assertFalse(self.player.first_move)

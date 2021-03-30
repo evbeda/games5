@@ -41,3 +41,7 @@ class Player:
 
     def get_lenght(self):
         return len(self.temp_hand)
+
+    def change_first_move(self):
+        if self.first_move:
+            self.first_move = False
