@@ -80,4 +80,15 @@ class SetTiles():
             self.tiles.append(tile)
 
     def get_set_value(self):
-        return 0
+        if self.is_a_leg():
+            return self.leg_value()
+        elif self.is_a_stair():
+            return self.stair_value()
+        else:
+            return 0
+
+    def leg_value(self):
+        pass
+
+    def stair_value(self):
+        pass
