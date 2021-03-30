@@ -88,7 +88,10 @@ class SetTiles():
             return 0
 
     def leg_value(self):
-        pass
+        value = self.tiles[0].get_number()
+        if value == 0:
+            value = self.tiles[1].get_number()
+        return value * len(self.tiles)
 
     def stair_value(self):
         pass
