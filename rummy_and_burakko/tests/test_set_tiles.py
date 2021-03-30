@@ -200,3 +200,17 @@ class TestSetTiles(unittest.TestCase):
         result = tiles_leg.leg_value()
         # assert
         self.assertEqual(result, expected)
+
+    @parameterized.expand([
+        # (tiles, expected)
+        ((('r', 5), ('r', 6), ('w', 7)), 18),
+        ((('*', 0), ('r', 10), ('b', 11)), 30),
+        ((('r', 2), ('b', 3), ('*', 0)), 9),
+    ])
+    def test_stair_value(self, tiles, expected):
+        # data
+        tiles_stair = SetTiles([Tile(t[0], t[1]) for t in tiles])
+        # process
+        result = tiles_stair.stair_value()
+        # assert
+        self.assertEqual(result, expected)
