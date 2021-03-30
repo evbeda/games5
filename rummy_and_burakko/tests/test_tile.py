@@ -29,3 +29,17 @@ class TestTiles(unittest.TestCase):
     ])
     def test_eq(self, t1, t2, expected):
         self.assertEqual(t1 == t2, expected)
+
+    @parameterized.expand([
+        # color, number
+        ('red', 5),  # Color case
+        ('yellow', 3),  # Number case
+        ('*', 0),  # Joker case
+    ])
+    def test_get_number(self, color, number):
+        # data
+        tile = Tile(color, number)
+        # process
+        result = tile.get_number()
+        # assert
+        self.assertEqual(result, number)
