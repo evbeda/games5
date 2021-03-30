@@ -133,3 +133,19 @@ class TestScore(unittest.TestCase):
         self.b.spots[8][7] = expected[3]
 
         self.assertEqual(Score.search_vert_word(row, col, self.b.spots), expected)
+
+    @parameterized.expand([
+        (True, True),
+        (False, False),
+    ])
+    @patch.object(Score, 'search_horiz_letter')
+    @patch.object(Score, 'search_vert_letter')
+    def test_define_direction(
+        self, direction, expected, mock_search_vert_letter, mock_search_horiz_letter
+    ):
+
+        Score.define_direction('word', 1, 3, direction, 'spots')
+        if expected:
+            mock_search_vert_letter.assert_called()
+        else:
+            mock_search_horiz_letter.assert_called()
