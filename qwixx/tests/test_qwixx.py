@@ -41,6 +41,24 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.remove_dice('blue')
         self.assertNotIn('blue', [dice.color for dice in self.qwixx.dice_set])
 
+    @parameterized.expand([
+        (0, Exception),
+        (6, Exception),
+    ])
+    def test_create_score_pad(self, n_player, expected):
+        with self.assertRaises(Exception):
+            self.qwixx.create_scored_pad(n_player)
+
+    @parameterized.expand([
+        (QWIXX_STATE_PLAY, QWIXX_TURN_COLOR, 2),
+        (QWIXX_STATE_PLAY, '', 1),
+        ('', QWIXX_TURN_COLOR, 1),
+    ])
+    def test_input_args(self, game_state, turn_color, expected):
+        self.qwixx.game_state = game_state
+        self.qwixx.turn_color = turn_color
+        self.assertEqual(self.qwixx.input_args, expected)
+
     def test_new_game_player_count(self):
         qwixx = Qwixx()
         qwixx.create_scored_pad(2)
