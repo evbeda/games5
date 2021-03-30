@@ -150,7 +150,7 @@ class TestScore(unittest.TestCase):
         else:
             mock_search_horiz_letter.assert_called()
 
-    def test_get_score(self):
+    @parameterized.expand([
         (
             [
                 'hola',
