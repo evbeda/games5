@@ -1,5 +1,6 @@
 from .spot import Spot
 from .tile import Tile
+from .score import Score
 from copy import deepcopy
 
 BOARD_MULT = (
@@ -89,9 +90,11 @@ class Board:
                     word, row, col, direction, range(len(word))
                 )
                 player.use_tiles(var2)
-                # spot_list = self.get_spots_to_place_word(
-                #     len(word), row, col, direction)
-                # player.add_points(self.calculate_score(spot_list, word))
+                word_spots = self.get_spots_to_place_word(
+                    len(word), row, col, direction)
+                player.add_points(
+                    Score.get_score(word_spots, row, col, direction, self.spots)
+                )
                 self.first = False
 
     def place_word(self, *args):
@@ -102,9 +105,9 @@ class Board:
             self.place_other_word(*args)
 
     def place_other_word(self, word, row, col, direction, player):
-        spot_list = self.get_spots_to_place_word(
+        word_spots = self.get_spots_to_place_word(
             len(word), row, col, direction)
-        existing_tiles = self.tiles_in_board(spot_list)
+        existing_tiles = self.tiles_in_board(word_spots)
         if self.can_place_word(word, existing_tiles):
             remain_tiles = self.tiles_diff(word, existing_tiles)
             unzipped_remain_tiles = zip(*remain_tiles)
@@ -116,7 +119,9 @@ class Board:
                     word, row, col, direction, unzipped_list[0]
                 )
                 player.use_tiles(var2)
-                # player.add_points(self.calculate_score(spot_list, word))
+                player.add_points(
+                    Score.get_score(word_spots, row, col, direction, self.spots)
+                )
 
     def can_place_first_word(self, word, row, col, direction):
         return (

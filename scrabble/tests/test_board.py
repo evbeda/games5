@@ -1,5 +1,6 @@
 import unittest
 from ..board import Board
+from ..score import Score
 from ..spot import Spot
 from ..tile import Tile
 from ..player import Player
@@ -173,9 +174,10 @@ class TestBoard(unittest.TestCase):
     ])
     @patch.object(Board, 'place_letters')
     @patch.object(Player, 'add_points')
+    @patch.object(Score, 'get_score')
     def test_place_other_word(
         self, word, row, col, direction, expected,
-        mock_add_points, mock_place_letters
+        mock_get_score, mock_add_points, mock_place_letters
     ):
         player = Player(0, 'andres')
         player.tiles_in_hand = [Tile(x) for x in ['n', 'd', 'a']]
@@ -199,9 +201,10 @@ class TestBoard(unittest.TestCase):
     ])
     @patch.object(Board, 'place_letters')
     @patch.object(Player, 'add_points')
+    @patch.object(Score, 'get_score')
     def test_place_first_word(
         self, word, row, col, direction, expected,
-        mock_add_points, mock_place_letters
+        mock_get_score, mock_add_points, mock_place_letters
     ):
         player = Player(0, 'andres')
         player.tiles_in_hand = [
