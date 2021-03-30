@@ -93,15 +93,13 @@ class Board:
                 #     len(word), row, col, direction)
                 # player.add_points(self.calculate_score(spot_list, word))
                 self.first = False
-                return True
-        return False
 
     def place_word(self, *args):
         self.spots_orig = deepcopy(self.spots)
         if self.first:
-            return self.place_first_word(*args)
+            self.place_first_word(*args)
         else:
-            return self.place_other_word(*args)
+            self.place_other_word(*args)
 
     def place_other_word(self, word, row, col, direction, player):
         spot_list = self.get_spots_to_place_word(
@@ -119,8 +117,6 @@ class Board:
                 )
                 player.use_tiles(var2)
                 # player.add_points(self.calculate_score(spot_list, word))
-                return True
-        return False
 
     def can_place_first_word(self, word, row, col, direction):
         return (
