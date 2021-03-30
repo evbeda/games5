@@ -103,17 +103,39 @@ class TestGame(unittest.TestCase):
 
     @patch.object(Player, "valid_hand", return_value=True)
     @patch.object(Board, "valid_sets", return_value=False)
-    def test_valid_turn(self, mock_valid_hand, mock_valid_sets):
+    @patch.object(Game, "validate_first_move", return_value=True)
+    def test_valid_turn(
+        self,
+        mock_first_move,
+        mock_valid_sets,
+        mock_valid_hand
+    ):
         # data
         expected = False
         # process
         self.game.create_players(["player_1", "player_2"])
         self.game.distribute_tiles()
+        self.game.board.current_play_score = 30
         result = self.game.valid_turn()
         # assert
         self.assertEqual(mock_valid_hand.call_count, 1)
         self.assertEqual(mock_valid_sets.call_count, 1)
         self.assertEqual(result, expected)
+
+    # @patch.object(Player, "valid_hand", return_value=True)
+    # @patch.object(Board, "valid_sets", return_value=True)
+    # @patch.object(Game, "validate_first_move", return_value=True)
+    # def test_valid_turn_first_move(self, mock_valid_hand, mock_valid_sets):
+    #     # data
+    #     expected = False
+    #     # process
+    #     self.game.create_players(["player_1", "player_2"])
+    #     self.game.distribute_tiles()
+    #     result = self.game.valid_turn()
+    #     # assert
+    #     self.assertEqual(mock_valid_hand.call_count, 1)
+    #     self.assertEqual(mock_valid_sets.call_count, 1)
+    #     self.assertEqual(result, expected)
 
     @parameterized.expand([
         # (option, call_count)
