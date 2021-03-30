@@ -3,7 +3,7 @@ from parameterized import parameterized
 from ..row import (
     Row,
     NotCanMark,
-    )
+)
 from unittest.mock import patch
 
 
@@ -58,7 +58,6 @@ class TestRow(unittest.TestCase):
         r.blocked_rows.append('green')
         r.check_row_lock(5)
         mock_can_mark.assert_called()
-
 
     @parameterized.expand([
         ('red', [2, 3, 6], 7, True),

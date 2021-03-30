@@ -3,9 +3,7 @@ from .score_pad import (
     ReachPenaltyLimit,
 )
 from .set_dices import SetDices
-from .row import (
-    Row,
-    )
+from .row import Row
 
 
 QWIXX_STATE_START = 'start_game'
@@ -91,7 +89,7 @@ class Qwixx:
         first_die = self.dice_set.get_value_of_die(COLOR_DICE[white_index])
         second_die = self.dice_set.get_value_of_die(color)
         total = first_die + second_die
-        s_pad.mark_number_in_row(total, color)  
+        s_pad.mark_number_in_row(total, color)
         self.set_next_player()
 
     def mark_with_white(self, color_index):
