@@ -23,7 +23,7 @@ game_state_color_next_turn = {
         '3): blue, 4): green) or pass ?',
     QWIXX_TURN_COLOR:
         'Choose in which row you want to mark acommon die with a colored die (0/3),'
-        'common die (0/1) andcolor die(0/3) or Penalty (99/99)?',
+        'common die (0/1) and color die(0/3) or Penalty (99/99)?',
 }
 OPTION_PLAY = 1
 OPTION_PASS = 2
@@ -87,6 +87,7 @@ class Qwixx:
         second_die = self.dice_set.get_value_of_die(color)
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
+        self.set_next_player()
 
     def mark_with_white(self, color_index):
         color = COLOR_ROW[color_index]
@@ -95,7 +96,7 @@ class Qwixx:
         second_die = self.dice_set.get_value_of_die('white_2')
         total = first_die + second_die
         s_pad.mark_number_in_row(total, color)
-        self.next_turn()
+        self.set_next_player()
 
     def set_next_player(self):
         self.game_state = QWIXX_STATE_OPTION
@@ -131,7 +132,7 @@ class Qwixx:
     @property
     def input_args(self):
         return (
-            3
+            2
             if self.game_state == QWIXX_STATE_PLAY and self.turn_color == QWIXX_TURN_COLOR
             else 1
         )
@@ -155,7 +156,7 @@ class Qwixx:
             output += "\n"
             output += "      blue->{}".format(self.dice_set.get_value_of_die('blue'))
             output += "\n"
-            output += "      red->{}".format(self.dice_set.get_value_of_die('green'))
+            output += "      green->{}".format(self.dice_set.get_value_of_die('green'))
             output += "\n"
             output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
             output += "\n"
