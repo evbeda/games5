@@ -151,15 +151,25 @@ class TestScore(unittest.TestCase):
             mock_search_horiz_letter.assert_called()
 
     def test_get_score(self):
+        (
+            [
+                'hola',
+                'sol',
+                'gato',
+            ],
+            15,
+        ),
+    ])
+    def test_get_score(self, words_str, expected):
         words = []
-        for _ in range(1):
+        for word_str in words_str:
             word = []
-            for _ in range(4):
+            for letter in word_str:
                 spot = Spot(1, 'c')
-                spot.set_tile(Tile('a'))
+                spot.set_tile(Tile(letter))
                 word.append(spot)
             words.append(word)
 
         with patch.object(Score, 'search_words', return_value=words):
             score = Score.get_score('word', 'col', 'row', 'direction', 'spots')
-            self.assertEqual(score, 4)
+            self.assertEqual(score, expected)
