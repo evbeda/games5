@@ -3,8 +3,8 @@ from ..spot import Spot
 from ..tile import Tile
 from ..board import Board
 import unittest
-from parameterized import parameterized
 from unittest.mock import patch
+from parameterized import parameterized
 
 
 class TestScore(unittest.TestCase):
@@ -149,3 +149,17 @@ class TestScore(unittest.TestCase):
             mock_search_vert_letter.assert_called()
         else:
             mock_search_horiz_letter.assert_called()
+
+    def test_get_score(self):
+        words = []
+        for _ in range(1):
+            word = []
+            for _ in range(4):
+                spot = Spot(1, 'c')
+                spot.set_tile(Tile('a'))
+                word.append(spot)
+            words.append(word)
+
+        with patch.object(Score, 'search_words', return_value=words):
+            score = Score.get_score('word', 'col', 'row', 'direction', 'spots')
+            self.assertEqual(score, 4)

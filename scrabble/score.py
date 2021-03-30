@@ -20,6 +20,15 @@ class Score:
                 list_words.append(Score.search_horiz_word(i, col + 1, spots))
         return list_words
 
+    @staticmethod
+    def get_score(*args):
+        words = Score.search_words(*args)
+        return sum([Score.multiply_score(word) for word in words])
+
+    @staticmethod
+    def search_words(*args):
+        pass
+
     # mi palabra original es horizontal
     @staticmethod
     def search_vert_letter(word, row, col, spots):
