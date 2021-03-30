@@ -94,5 +94,6 @@ class Game:
     def valid_turn(self):
         return (
             self.players[self.current_turn].valid_hand() and
-            self.board.valid_sets()
+            self.board.valid_sets() and
+            self.board.all_reused_tiles()
         )

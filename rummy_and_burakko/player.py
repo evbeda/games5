@@ -29,20 +29,8 @@ class Player:
 
     # valida si tengo menos fichas que antes y ni una nueva ficha en mano
     def valid_hand(self):
-        return self.q_tiles() and self.correct_tiles()
-
-    def q_tiles(self):
         if len(self.hand) <= len(self.temp_hand):
             return False
-        return True
-
-    def correct_tiles(self):
-        h_tiles_comp = self.hand.copy()
-        for t_tile in self.temp_hand:
-            try:
-                h_tiles_comp.remove(t_tile)
-            except Exception:
-                return False
         return True
 
     def validate_turn(self):

@@ -47,8 +47,6 @@ class TestPlayer(unittest.TestCase):
         ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)], False),
         ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0), Tile('r', 13)], False),
         ([Tile('r', 7), Tile('b', 4)], True),
-        ([Tile('r', 7), Tile('b', 4), Tile('y', 1)], False),
-        ([Tile('r', 7), Tile('b', 4), Tile('r', 7)], False),
         ([], True),
     ])
     def test_valid_hand(self, temp_hand, expected):
