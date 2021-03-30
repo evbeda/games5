@@ -1,40 +1,30 @@
 class Score:
 
-    # def score_word(self):
-    #     pass
-class Score:
-    #     def score_word(self):
-    #         pass
-    # para palabras horizontales, hacer verificacion horizontal para q no toque letra despues
-    # para palabras verticales, hacer verificacion vertical para q no toque otra letra despues
-
     # mi palabra original es vertical
     @staticmethod
-    def search_horiz_word(self, word, row, col):
+    def search_horiz_word(self, word, row, col, direccion, spots):
         len_word = len(word)
         end_word = row + len_word
         for i in range(row, end_word):
-            if [i][col - 1] == 'algo' or [i][col + 1] == 'algo':
-                # recorrer para izquierda
-                # luego recorrer para derecha
-                pass
+            if spots[i][col - 1].tile is not None:
+                self.metodo_nuevo(direccion, i, col - 1)
+            elif spots[i][col + 1].tile is not None:
+                self.metodo_nuevo(direccion, i, col + 1)
 
     # mi palabra original es horizontal
     @staticmethod
-    def search_vert_word(self, word, row, col):
+    def search_vert_word(self, word, row, col, direccion, spots):
         len_word = len(word)
-        end_word = row + len_word
+        end_word = col + len_word
         for i in range(row, end_word):
-            if [i][col - 1] == 'algo' or [i][col + 1] == 'algo':
-                # recorrer para izquierda
-                # luego recorrer para derecha
-                pass
+            if spots[row - 1][i].tile is not None:
+                self.metodo_nuevo(direccion, row - 1, i, spots)
+            elif spots[i][col + 1].tile is not None:
+                self.metodo_nuevo(direccion, row + 1, i, spots)
 
-    # def search_horiz_word(self):
-    #     pass
-
-    # def search_vert_word(self):
-    #     pass
+    @staticmethod
+    def nuevo_metodo(direccion, row, col, spots):
+        pass
 
     @staticmethod
     def multiply_score(spots):
