@@ -24,6 +24,7 @@ class Game:
 
     def next_turn(self):
         self.current_turn = (self.current_turn + 1) % len(self.players)
+        self.board.current_play_score = 0
         self.players[self.current_turn].change_state()
         self.board.temporary_sets()
         self.players[self.current_turn].temporary_hand()
@@ -84,9 +85,9 @@ class Game:
         return self.players[self.current_turn].get_lenght()
 
     def end_turn(self):
-        self.board.current_play_score = 0
         self.players[self.current_turn].change_state()
         if self.valid_turn():
+            self.players[self.current_turn].change_first_move()
             self.players[self.current_turn].validate_turn()
             self.board.validate_turn()
         else:
@@ -94,7 +95,14 @@ class Game:
 
     def valid_turn(self):
         return (
+            self.validate_first_move() and
             self.players[self.current_turn].valid_hand() and
             self.board.valid_sets() and
             self.board.all_reused_tiles()
+        )
+
+    def validate_first_move(self):
+        return (
+            not self.players[self.current_turn].first_move or
+            self.board.current_play_score >= 30
         )

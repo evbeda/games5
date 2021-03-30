@@ -103,17 +103,39 @@ class TestGame(unittest.TestCase):
 
     @patch.object(Player, "valid_hand", return_value=True)
     @patch.object(Board, "valid_sets", return_value=False)
-    def test_valid_turn(self, mock_valid_hand, mock_valid_sets):
+    @patch.object(Game, "validate_first_move", return_value=True)
+    def test_valid_turn(
+        self,
+        mock_first_move,
+        mock_valid_sets,
+        mock_valid_hand
+    ):
         # data
         expected = False
         # process
         self.game.create_players(["player_1", "player_2"])
         self.game.distribute_tiles()
+        self.game.board.current_play_score = 30
         result = self.game.valid_turn()
         # assert
         self.assertEqual(mock_valid_hand.call_count, 1)
         self.assertEqual(mock_valid_sets.call_count, 1)
         self.assertEqual(result, expected)
+
+    # @patch.object(Player, "valid_hand", return_value=True)
+    # @patch.object(Board, "valid_sets", return_value=True)
+    # @patch.object(Game, "validate_first_move", return_value=True)
+    # def test_valid_turn_first_move(self, mock_valid_hand, mock_valid_sets):
+    #     # data
+    #     expected = False
+    #     # process
+    #     self.game.create_players(["player_1", "player_2"])
+    #     self.game.distribute_tiles()
+    #     result = self.game.valid_turn()
+    #     # assert
+    #     self.assertEqual(mock_valid_hand.call_count, 1)
+    #     self.assertEqual(mock_valid_sets.call_count, 1)
+    #     self.assertEqual(result, expected)
 
     @parameterized.expand([
         # (option, call_count)
@@ -164,11 +186,13 @@ class TestGame(unittest.TestCase):
     @patch.object(Player, "validate_turn")
     @patch.object(Board, "validate_turn")
     @patch.object(Player, "change_state")
+    @patch.object(Player, "change_first_move")
     def test_end_turn(
         self,
         rv,
         call_count_1,
         call_count_2,
+        mock_player_change_first_move,
         mock_player_change_state,
         mock_board,
         mock_player_validate,
@@ -185,6 +209,10 @@ class TestGame(unittest.TestCase):
             self.assertEqual(mock_player_change_state.call_count, 1)
             self.assertEqual(mock_board.call_count, call_count_1)
             self.assertEqual(mock_player_validate.call_count, call_count_1)
+            self.assertEqual(
+                mock_player_change_first_move.call_count,
+                call_count_1,
+            )
             self.assertEqual(mock_bag.call_count, call_count_2)
             self.assertEqual(self.game.board.current_play_score, 0)
 
@@ -280,3 +308,15 @@ class TestGame(unittest.TestCase):
         m_make.assert_called_once_with(indexes)
         m_clean.assert_called_once_with(indexes)
         m_place.assert_called_once_with((1, 2, 3))
+
+    @parameterized.expand([
+        (True, 30, True),
+        (False, 30, True),
+        (True, 29, False),
+        (False, 30, True),
+    ])
+    def test_validate_first_turn(self, is_first_play, score, expected):
+        self.game.current_turn = 0
+        self.game.players[0].first_move = is_first_play
+        self.game.board.current_play_score = score
+        self.assertEqual(self.game.validate_first_move(), expected)
