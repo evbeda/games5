@@ -44,7 +44,7 @@ class Game:
     def make_play(self, option, args):
         options = {
             1: self.put_new_set,
-            # 2: self.put_a_tile,
+            # 2: self.select_put_a_tile,
             3: self.board.give_one_tile_from_board,
         }
         options[option](*args)
@@ -84,11 +84,13 @@ class Game:
                 self.board.remove_reused_tile(index - max_index_hand)
 
     # Option 2
-    def put_a_tile(self, my_tile, set_id, index_id):
+    def select_put_a_tile(self, my_tile, set_id, index_id):
         # search and retrieve tile
+        tile = self.make_tile_array([my_tile])
         # clean tile
+        self.clean([my_tile])
         # put tile
-        pass
+        self.board.put_a_tile(tile[0])
 
     def quantity_of_tiles(self):
         return self.players[self.current_turn].get_lenght()
