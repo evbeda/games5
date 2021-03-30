@@ -1,6 +1,5 @@
 class Score:
 
-    # mi palabra original es vertical
     @staticmethod
     def define_direction(word, row, col, direction, spots):
         if direction is True:
@@ -27,11 +26,6 @@ class Score:
         return sum([Score.multiply_score(word) for word in words])
 
     @staticmethod
-    def define_direction(*args):
-        return []
-
-    # mi palabra original es horizontal
-    @staticmethod
     def search_vert_letter(word, row, col, spots):
         len_word = len(word)
         end_word = col + len_word
@@ -43,7 +37,6 @@ class Score:
                 list_words.append(Score.search_vert_word(row + 1, i, spots))
         return list_words
 
-    # metodo para obtener nuevas palabras formadas
     @staticmethod
     def search_horiz_word(row, col, spots):
         sublist1 = []
