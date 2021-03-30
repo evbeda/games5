@@ -149,7 +149,7 @@ class Qwixx:
         elif self.game_state == QWIXX_STATE_OPTION:
             msg = self.play_option(args[0])
         elif self.game_state == QWIXX_STATE_PLAY:
-            return self.play_turn(*args)
+            self.play_turn(*args)
         return msg
 
     @property
