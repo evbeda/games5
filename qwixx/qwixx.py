@@ -90,7 +90,7 @@ class Qwixx:
         # try:
         s_pad.mark_number_in_row(total, color)
         # except ItCannotBeMarked:
-        #     pass  
+        #     pass
         self.set_next_player()
 
     def mark_with_white(self, color_index):
