@@ -165,8 +165,10 @@ class Qwixx:
             output += "\n"
             output += "      red->{}".format(self.dice_set.get_value_of_die('red'))
             output += "\n"
+            output += "      yellow->{}".format(self.dice_set.get_value_of_die('yellow'))
+            output += "\n"
             output += "the player who plays :{} ".format(self.score_pad[self.current_player].id_player)
-            output += "color :" + self.turn_color
+            output += "color :{}".format(self.turn_color)
             output += "\n"
             output += "score pad "
             output += "\n"
@@ -174,10 +176,10 @@ class Qwixx:
                 output += self.output_row(row)
             output += "\n"
             output += "penalty"
-            output += " " + str(self.score_pad[self.current_player].penalty)
+            output += " {}".format(str(self.score_pad[self.current_player].penalty))
             output += "\n"
             output += "score :"
-            output += "" + str(tuple(range(1, 13)))
+            output += " {}".format(str(tuple(range(1, 13))))
             output += "\n"
             output += "       (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 70)"
         return output
