@@ -81,7 +81,6 @@ class Board:
         self.spots = self.spots_orig
 
     def place_first_word(self, word, row, col, direction, player):
-        self.spots_orig = deepcopy(self.spots)
         if self.can_place_first_word(word, row, col, direction):
             var = sorted([tile.letter for tile in player.tiles_in_hand])
             var2 = sorted(list(word))
@@ -89,12 +88,14 @@ class Board:
                 self.place_letters(
                     word, row, col, direction, range(len(word))
                 )
+                player.use_tiles(var2)
                 # spot_list = self.get_spots_to_place_word(
                 #     len(word), row, col, direction)
                 # player.add_points(self.calculate_score(spot_list, word))
                 self.first = False
 
     def place_word(self, *args):
+        self.spots_orig = deepcopy(self.spots)
         if self.first:
             self.place_first_word(*args)
         else:
@@ -114,6 +115,7 @@ class Board:
                 self.place_letters(
                     word, row, col, direction, unzipped_list[0]
                 )
+                player.use_tiles(var2)
                 # player.add_points(self.calculate_score(spot_list, word))
 
     def can_place_first_word(self, word, row, col, direction):
@@ -136,9 +138,9 @@ class Board:
     def place_letters(self, word, row, col, direction, indexes):
         for i in indexes:
             if direction:
-                self.spots[row][col + i].set_tile(word[i])
+                self.spots[row][col + i].set_tile(Tile(word[i]))
             else:
-                self.spots[row + i][col].set_tile(word[i])
+                self.spots[row + i][col].set_tile(Tile(word[i]))
 
     def word_to_tile(self, word):
         return [Tile(letter) for letter in word]

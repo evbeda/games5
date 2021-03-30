@@ -47,6 +47,7 @@ class Game:
         self.board.place_word(
             word, y, x, direction, self.players[self.current_player]
         )
+        self.players[self.current_player].full_draw(self.tile_bag)
 
     @property
     def player_count(self):
@@ -60,7 +61,7 @@ class Game:
                 raise Exception
         else:
             self.board.revert_board()
-            self.players[self.current_player].revert_points()
+            self.players[self.current_player].revert_play()
 
     def get_current_player_hand(self):
         curr_player = self.players[self.current_player]

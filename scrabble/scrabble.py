@@ -145,5 +145,4 @@ class Scrabble:
     def play(self, *args):
         method_name = f'play_{self.game_state}'
         method = getattr(self, method_name)
-        method(*args)
-        return ''
+        return method(*args) or ''

@@ -1,26 +1,26 @@
-class Tile:
+TILE_POINTS = (
+    (list('aeoisnlrut'), 1),
+    (list('dg'), 2),
+    (list('cbmp'), 3),
+    (list('hfvy'), 4),
+    ('ch-q'.split('-'), 5),
+    ('j-ll-ñ-rr-x'.split('-'), 8),
+    (list('z'), 10)
+)
 
-    set_tile = (('aeoisnlrut', 1),
-                ('dg', 2),
-                ('cbmp', 3),
-                ('hfvy', 4),
-                ('ch-q'.split('-'), 5),
-                ('j-ll-ñ-rr-x'.split('-'), 8),
-                ('z', 10)
-                )
+
+class Tile:
 
     def __init__(self, letter):
         self.letter = letter
         self.score = 0
-        for t in Tile.set_tile:
-            if letter in t[0]:
-                self.score = t[1]
+        for tiles, score in TILE_POINTS:
+            if letter in tiles:
+                self.score = score
                 break
 
-    @property
-    def order(self):
-
-        return ord(self.letter[0]) - ord('a')
-
     def __eq__(self, other):
-        return self.letter == other.letter
+        if isinstance(other, Tile):
+            return self.letter == other.letter
+        else:
+            return self.letter == other

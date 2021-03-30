@@ -89,7 +89,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.b.can_place_word(word, tiles_in_board), expected)
 
     def test_place_letters(self):  # , word, row, col, direction):
-        word = self.b.word_to_tile('hola')
+        word = 'hola'
         row = 4
         col = 8
         direction = True
@@ -97,9 +97,9 @@ class TestBoard(unittest.TestCase):
 
         for i in range(len(word)):
             if direction:
-                self.assertEqual(self.b.spots[row][col + i].tile, word[i])
+                self.assertEqual(self.b.spots[row][col + i].tile, Tile(word[i]))
             else:
-                self.assertEqual(self.b.spots[row + i][col].tile, word[i])
+                self.assertEqual(self.b.spots[row + i][col].tile, Tile(word[i]))
 
     def test_word_to_tile(self):
         word = 'hola'
