@@ -1,5 +1,5 @@
-class NotCanmark(Exception):
-    pass
+# class NotCanmark(Exception):
+#     pass
 
 
 class Row:
