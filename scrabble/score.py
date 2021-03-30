@@ -2,28 +2,35 @@ class Score:
 
     # mi palabra original es vertical
     @staticmethod
-    def search_horiz_letter(self, word, row, col, direction, spots):
+    def define_direction(word, row, col, direction, spots):
+        if direction is True:
+            return Score.search_vert_letter(word, row, col, spots)
+        else:
+            return Score.search_horiz_letter(word, row, col, spots)
+
+    @staticmethod
+    def search_horiz_letter(word, row, col, spots):
         len_word = len(word)
         end_word = row + len_word
         list_words = []
         for i in range(row, end_word):
             if spots[i][col - 1].tile is not None:
-                list_words.append(self.search_horiz_word(i, col - 1, spots))
+                list_words.append(Score.search_horiz_word(i, col - 1, spots))
             elif spots[i][col + 1].tile is not None:
-                list_words.append(self.search_horiz_word(i, col + 1, spots))
+                list_words.append(Score.search_horiz_word(i, col + 1, spots))
         return list_words
 
     # mi palabra original es horizontal
     @staticmethod
-    def search_vert_letter(self, word, row, col, direction, spots):
+    def search_vert_letter(word, row, col, spots):
         len_word = len(word)
         end_word = col + len_word
         list_words = []
         for i in range(row, end_word):
             if spots[row - 1][i].tile is not None:
-                list_words.append(self.search_vert_word(row - 1, i, spots))
+                list_words.append(Score.search_vert_word(row - 1, i, spots))
             elif spots[i][col + 1].tile is not None:
-                list_words.append(self.search_vert_word(row + 1, i, spots))
+                list_words.append(Score.search_vert_word(row + 1, i, spots))
         return list_words
 
     # metodo para obtener nuevas palabras formadas
