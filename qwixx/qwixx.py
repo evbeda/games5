@@ -3,7 +3,10 @@ from .score_pad import (
     ReachPenaltyLimit,
 )
 from .set_dices import SetDices
-from .row import Row
+from .row import (
+    Row,
+    NotCanMark,
+)
 
 
 QWIXX_STATE_START = 'start_game'
@@ -42,6 +45,8 @@ COLOR_DICE = {
     1: 'white_1',
     2: 'white_2'
 }
+
+ERROR_MESSAGE = 'Row cannot be marked'
 
 
 class Qwixx:
@@ -89,7 +94,10 @@ class Qwixx:
         first_die = self.dice_set.get_value_of_die(COLOR_DICE[white_index])
         second_die = self.dice_set.get_value_of_die(color)
         total = first_die + second_die
-        s_pad.mark_number_in_row(total, color)
+        try:
+            s_pad.mark_number_in_row(total, color)
+        except NotCanMark:
+            pass
         self.set_next_player()
 
     def mark_with_white(self, color_index):
@@ -98,7 +106,10 @@ class Qwixx:
         first_die = self.dice_set.get_value_of_die('white_1')
         second_die = self.dice_set.get_value_of_die('white_2')
         total = first_die + second_die
-        s_pad.mark_number_in_row(total, color)
+        try:
+            s_pad.mark_number_in_row(total, color)
+        except NotCanMark:
+            pass
         self.set_next_player()
 
     def set_next_player(self):
