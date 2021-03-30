@@ -186,3 +186,17 @@ class TestSetTiles(unittest.TestCase):
         self.assertEqual(mock_leg.call_count, cc_1)
         self.assertEqual(mock_stair.call_count, cc_2)
         self.assertEqual(result, expected)
+
+    @parameterized.expand([
+        # (tiles, expected)
+        ((('r', 5), ('b', 5), ('w', 5)), 15),
+        ((('*', 0), ('r', 2), ('b', 2)), 6),
+        ((('r', 8), ('b', 8), ('*', 0)), 24),
+    ])
+    def test_leg_value(self, tiles, expected):
+        # data
+        tiles_leg = SetTiles([Tile(t[0], t[1]) for t in tiles])
+        # process
+        result = tiles_leg.leg_value()
+        # assert
+        self.assertEqual(result, expected)
