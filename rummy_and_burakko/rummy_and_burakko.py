@@ -125,7 +125,7 @@ class RummyAndBurakko():
             return message
 
     def play_input_verification(self, *moves):
-        message = self.game.move_verif(self.option, moves)
+        message = self.game.move_verification(self.option, moves)
         if message == '':
             self.game_state = GAME_STATE_MAKE_MOVE
             self.move = moves
