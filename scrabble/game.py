@@ -42,11 +42,13 @@ class Game:
     def change_player_tiles(self, letters):
         self.players[self.current_player].put_t_draw_t(
             self.tile_bag, letters)
+        self.skipped_turns = 0
 
     def place_word(self, x, y, direction, word):
         self.board.place_word(
             word, y, x, direction, self.players[self.current_player]
         )
+        self.skipped_turns = 0
 
     @property
     def player_count(self):
