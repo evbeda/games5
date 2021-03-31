@@ -44,6 +44,6 @@ class Player:
         self.tiles_in_hand = self.prev_tiles_in_hand
 
     def use_tiles(self, tiles):
-        self.prev_tiles_in_hand = self.tiles_in_hand
+        self.prev_tiles_in_hand = self.tiles_in_hand.copy()
         for tile in tiles:
             self.tiles_in_hand.remove(Tile(tile))
