@@ -35,12 +35,9 @@ class Board():
         self.sets = copy.deepcopy(self.temp_sets)
 
     def give_one_tile_from_board(self, set_id, index):
-        if len(self.temp_sets[set_id].tiles) > 0:
-            self.reused_tiles.append(
-                self.temp_sets[set_id].extract_one_tile(index)
-            )
-        else:
-            raise Exception
+        self.reused_tiles.append(
+            self.temp_sets[set_id].extract_one_tile(index)
+        )
 
     def place_new_set(self, tiles, is_first_move):
         self.last_id = self.last_id + 1
