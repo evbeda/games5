@@ -171,5 +171,11 @@ class TestScore(unittest.TestCase):
             words.append(word)
 
         with patch.object(Score, 'define_direction', return_value=words[1:]):
-            score = Score.get_score(words[0], 'col', 'row', 'direction', 'spots')
+            score = Score.get_score(
+                words[0],
+                'col', 'row',
+                'direction',
+                'spots',
+                'spots_orig'
+            )
             self.assertEqual(score, expected)
