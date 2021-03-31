@@ -127,15 +127,12 @@ class Game:
     def get_current_player(self):
         return self.players[self.current_turn]
 
-    def move_verif(self, option, moves):
+    def move_verification(self, option, moves):
         options = {
             1: self.players[self.current_turn].valid_tiles_in_hand,
-            # 2: self.valid_input_put_a_tile,
-            # 3: self.board.give_one_tile_from_board,
+            2: self.valid_input_put_a_tile,
+            3: self.board.valid_set_index,
         }
-        # 1) Testear indices de mi mano
-        # 2) Testear set existente
-        # 3) Testear indice en el set existente elegido
         return options[option](*moves)
 
     def valid_input_put_a_tile(self, index_hand, set_id, set_index):
