@@ -128,6 +128,5 @@ class Game:
         return self.players[self.current_turn]
 
     def move_verif(self, option, moves):
-        if option < 2:
-            return True
-        return False
+        return True
+

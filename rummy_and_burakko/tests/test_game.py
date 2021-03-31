@@ -348,6 +348,6 @@ class TestGame(unittest.TestCase):
         self.assertEqual(player.name, 'Pedro')
 
     def test_move_verif(self):
-        expected = False
+        expected = True
         result = self.game.move_verif(3, 4)
         self.assertEqual(result, expected)
