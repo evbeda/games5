@@ -56,7 +56,7 @@ class Board:
         self.revert_first = True
 
     def set_spots(self):
-        return [[Spot(*self.multiplier(x, y))
+        return [[Spot(*self.multiplier(x, y), y, x)
                 for y in range(15)] for x in range(15)]
 
     def multiplier(self, x, y):
