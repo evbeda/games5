@@ -146,3 +146,12 @@ class TestPlayer(unittest.TestCase):
             self.assertTrue(result)
         else:
             self.assertFalse(result)
+
+    @parameterized.expand([
+        # (indexes, expected)
+        ([5, 3, 2, 10], True)
+    ])
+    def test_tiles_in_hand(self, indexes, expected):
+        self.player.temp_hand = list(range(13))
+        result = self.player.tiles_in_hand(*indexes)
+        self.assertEqual(result, expected)

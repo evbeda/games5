@@ -20,7 +20,7 @@ game_state_next_turn = {
         '\n2)Put a tile from hand in a existing set'
         '\n3)Take a tile from a set\n4)End turn'
     ),
-    GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
+    GAME_STATE_NEW_SET_Q: 'How many tiles will have the set?',
     GAME_STATE_NEW_SET_TILES: (
         'Put the index of tiles to play in the correct order'
     ),
@@ -119,6 +119,10 @@ class RummyAndBurakko():
         if 3 <= quantity <= limit:
             self.input_q_tiles = quantity
             self.game_state = GAME_STATE_NEW_SET_TILES
+        else:
+            message = '\nWrong input'
+            message += f'Have to play between 3 and {limit} tiles\n'
+            return message
 
     def play_input_verification(self, *moves):
         if self.game.move_verif(self.option, moves):
