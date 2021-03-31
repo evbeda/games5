@@ -161,7 +161,7 @@ class Qwixx:
             msg = self.play_option(args[0])
         elif self.game_state == QWIXX_STATE_PLAY:
             msg = self.play_turn(*args)
-        return msg
+        return msg if msg is not None else ''
 
     @property
     def board(self):
