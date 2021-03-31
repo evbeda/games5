@@ -59,6 +59,20 @@ class TestRow(unittest.TestCase):
         r.check_row_lock(5)
         mock_can_mark.assert_called()
 
+    @patch.object(Row, 'can_mark_last')
+    @patch.object(Row, 'is_number_last', return_value=True)
+    def test_can_mark_can_mark_last(self, mock_is_number_last, mock_can_mark_last):
+        r = Row('red')
+        r.can_mark(12)
+        mock_is_number_last.assert_called_once_with(12)
+
+    @patch.object(Row, 'can_mark_common')
+    @patch.object(Row, 'is_number_last', return_value=False)
+    def test_can_mark_can_mark_common(self, mock_is_number_common, mock_can_mark_common):
+        r = Row('red')
+        r.can_mark(4)
+        mock_is_number_common.assert_called_once_with(4)
+
     @parameterized.expand([
         ('red', [2, 3, 6], 7, True),
         ('red', [2, 4, 6], 3, False),
@@ -69,11 +83,11 @@ class TestRow(unittest.TestCase):
         ('green', [], 6, True),
         ('red', [], 7, True),
     ])
-    def test_can_mark(self, color, marks, number, expected):
+    def test_can_mark_common(self, color, marks, number, expected):
         r = Row(color)
         r.marks = marks
 
-        self.assertEqual(r.can_mark(number), expected)
+        self.assertEqual(r.can_mark_common(number), expected)
 
     @parameterized.expand([
         ('red', [2, 3, 6], 6),
