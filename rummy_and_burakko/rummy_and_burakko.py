@@ -32,7 +32,7 @@ game_state_next_turn = {
         'Taking a tile: Select the set, select the index in the chosen set'
     ),
     GAME_STATE_END_TURN: 'Turn Ended',
-    GAME_STATE_MAKE_MOVE: 'Making move',
+    GAME_STATE_MAKE_MOVE: 'Confirm: Y/N',
     GAME_STATE_END_GAME: 'WE HAVE A WINNER! Congratulations ',
 }
 
@@ -50,6 +50,7 @@ class RummyAndBurakko():
             GAME_STATE_NEW_SET_TILES: self.input_q_tiles,
             GAME_STATE_PUT_A_TILE: 3,
             GAME_STATE_GET_A_TILE: 2,
+            GAME_STATE_MAKE_MOVE: 1,
         }
         return game_state_args[self.game_state]
 
@@ -67,6 +68,7 @@ class RummyAndBurakko():
         self.input_q_tiles = 0
         self.option = 0
         self.input_are_ints = True
+        self.move = None
 
     # game creation
     def play_start_game(self, players_q):
@@ -121,13 +123,17 @@ class RummyAndBurakko():
     def play_input_verification(self, *moves):
         if self.game.move_verif(self.option, moves):
             self.game_state = GAME_STATE_MAKE_MOVE
+            self.move = moves
+            self.input_are_ints = False
         else:
             self.game_state = GAME_STATE_SELECT_OPTION
-            return 'Bad input, select a option again'
+            return 'wrong input, select a option again'
 
     def play_make_move(self, *moves):
-        self.game.make_play(self.option, moves)
+        self.game.make_play(self.option, self.move)
         self.game_state = GAME_STATE_SELECT_OPTION
+        self.input_are_ints = True
+        return 'Movement made'
 
     def play(self, *args):
         if (self.game_state in [
@@ -138,4 +144,4 @@ class RummyAndBurakko():
             self.game_state = GAME_STATE_INPUT_VERIFICATION
 
         method = getattr(self, 'play_' + self.game_state)
-        method(*args)
+        return method(*args)
