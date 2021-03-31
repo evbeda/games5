@@ -371,3 +371,15 @@ class TestGame(unittest.TestCase):
         self.assertEqual(mock_hand.call_count, call_count[0])
         self.assertEqual(mock_put_a_tile.call_count, call_count[1])
         self.assertEqual(mock_set.call_count, call_count[2])
+
+    @patch.object(Board, 'valid_set_index', return_value='Error_2')
+    @patch.object(Player, 'valid_tiles_in_hand', return_value='Error_1\n')
+    def test_input_put_a_tile_calls(self, mock_hand, mock_set):
+        index_hand = 3
+        set_id = 1
+        set_index = 4
+        expected = 'Error_1\n' + 'Error_2'
+        result = self.game.valid_input_put_a_tile(index_hand, set_id, set_index)
+        self.assertEqual(result, expected)
+        mock_hand.assert_called_once_with(index_hand)
+        mock_set.assert_called_once_with(set_id, set_index)
