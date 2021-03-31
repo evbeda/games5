@@ -57,8 +57,10 @@ class Scrabble:
             GAME_STATE_INPUT_PLAYERS: 'Enter player names',
             GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?',
             GAME_STATE_PLAY_WORD: (
-                'Enter start coordinates, orientation and word\n'
-                'x  y  h/v  word'
+                'Enter all in a line: \n:'
+                '- start position of word (nº of row and nº of column) \n'
+                '- direction(h --> horizontal or v --> vertical)\n'
+                '- the word\n'
             ),
             GAME_STATE_ASK_CHALLENGE: 'Any player wants to challenge',
             GAME_STATE_IN_CHALLENGE: (
@@ -113,12 +115,17 @@ class Scrabble:
         self.game = Game(player_names)
         self.game_state = GAME_STATE_SELECT_ACTION
 
-    def play_play_word(self, x, y, h, word):
-        x = int(x)
-        y = int(y)
-        h = h == 'h'
-        self.game.place_word(x, y, h, word)
-        self.game_state = GAME_STATE_ASK_CHALLENGE
+    def play_play_word(self, row, col, direction, word):
+        row = int(row)
+        col = int(col)
+        if direction == 'h':
+            self.game.place_word(col, row, True, word)
+            self.game_state = GAME_STATE_ASK_CHALLENGE
+        elif direction == 'v':
+            self.game.place_word(col, row, False, word)
+            self.game_state = GAME_STATE_ASK_CHALLENGE
+        else:
+            return 'This is not a valid direction'
 
     def play_change_letters(self, *letters):
         self.game.change_player_tiles(letters)

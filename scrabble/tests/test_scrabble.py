@@ -140,8 +140,10 @@ class TestScrabble(unittest.TestCase):
         ('create_game', 'Enter number of players'),
         ('input_players', 'Enter player names'),
         ('change_letters', 'Which letters do you want to change?'),
-        ('play_word', 'Enter start coordinates, orientation and word\n'
-            'x  y  h/v  word'),
+        ('play_word', 'Enter all in a line: \n:'
+            '- start position of word (nº of row and nº of column) \n'
+            '- direction(h --> horizontal or v --> vertical)\n'
+            '- the word\n'),
         ('ask_challenge', 'Any player wants to challenge'),
         ('in_challenge', 'Look up new words in a dictionary. '
             'Are they correct?'),
