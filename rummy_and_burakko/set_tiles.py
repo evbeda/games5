@@ -24,30 +24,6 @@ class SetTiles():
 
         return dif_color and same_digit
 
-    # def is_a_stair(self):
-    #     number = sorted(list([t.number for t in self.tiles]))
-    #     size = len(number)
-    #     joker_tiles_quantity = number.count(0)
-    #     if size < 3 or size > 13:
-    #         return False
-    #     for i in range(size - 1):
-    #         if number[i] != number[i + 1] - 1 and number[i] != 0:
-    #             if joker_tiles_quantity > 0:
-    #                 joker_tiles_quantity - 1
-    #             else:
-    #                 return False
-    #     colors = list([c.color for c in self.tiles])
-    #     if colors.count('*') == 1:
-    #         if colors[0] == '*' and colors.count(colors[1]) == len(colors) - 1:
-    #             return True
-    #         elif colors.count(colors[0]) == len(colors) - 1:
-    #             return True
-    #     elif colors.count('*') == 0 and colors.count(colors[0]) == len(colors):
-    #         return True
-    #     else:
-    #         return False
-
-    # def is_a_stair_2(self):
     def is_a_stair(self):
         size = len(self.tiles)
         if size < 3 or size > 13:
