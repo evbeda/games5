@@ -17,3 +17,7 @@ class Spot:
             f'{self.mult_value}x{self.mult_type.upper()}'
             if self.mult_type != 'c' else '   '
         )
+
+    def __eq__(self, other):
+        if isinstance(other, Spot):
+            return self.x == other.x and self.y == other.y
