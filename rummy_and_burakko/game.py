@@ -120,3 +120,9 @@ class Game:
             not self.players[self.current_turn].first_move or
             self.board.current_play_score >= 30
         )
+
+    def check_is_game_alive(self):
+        return self.players[self.current_turn].has_tiles()
+
+    def get_current_player(self):
+        return self.players[self.current_turn]

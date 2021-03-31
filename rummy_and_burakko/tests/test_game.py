@@ -336,3 +336,13 @@ class TestGame(unittest.TestCase):
         m_make.assert_called_once_with([my_tile])
         m_clean.assert_called_once_with([my_tile])
         m_put.assert_called_once_with(*m_make.return_value, set_id, index)
+
+    @patch.object(Player, 'has_tiles')
+    def test_check_is_game_alive(self, m_has_tiles):
+        self.game.check_is_game_alive()
+        m_has_tiles.assert_called_once_with()
+
+    def test_get_current_player(self):
+        self.game.current_turn = 0
+        player = self.game.get_current_player()
+        self.assertEqual(player.name, 'Pedro')

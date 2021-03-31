@@ -25,27 +25,36 @@ class SetTiles():
         return dif_color and same_digit
 
     def is_a_stair(self):
-        number = sorted(list([t.number for t in self.tiles]))
-        size = len(number)
-        joker_tiles_quantity = number.count(0)
+        size = len(self.tiles)
         if size < 3 or size > 13:
             return False
-        for i in range(size - 1):
-            if number[i] != number[i + 1] - 1 and number[i] != 0:
-                if joker_tiles_quantity > 0:
-                    joker_tiles_quantity - 1
-                else:
+
+        has_joker = False
+        start = 0
+        value_1 = self.tiles[start].get_number()
+        if value_1 == 0:
+            has_joker = True
+            start = 1
+            value_1 = self.tiles[start].get_number()
+        color_ref = self.tiles[start].color
+
+        for i in range(start + 1, size):
+            value_2 = self.tiles[i].get_number()
+            color = self.tiles[i].color
+            # joker verification
+            if value_2 == 0:
+                if has_joker:
                     return False
-        colors = list([c.color for c in self.tiles])
-        if colors.count('*') == 1:
-            if colors[0] == '*' and colors.count(colors[1]) == len(colors) - 1:
-                return True
-            elif colors.count(colors[0]) == len(colors) - 1:
-                return True
-        elif colors.count('*') == 0 and colors.count(colors[0]) == len(colors):
-            return True
-        else:
+                else:
+                    has_joker = True
+                    value_1 = value_1 + 1
+                    continue
+            # values and color verification
+            if (value_2 == (value_1 + 1)) and color == color_ref:
+                value_1 = value_2
+                continue
             return False
+        return True
 
     def remove_tile(self, tile):
         self.tiles.remove(tile)

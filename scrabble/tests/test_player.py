@@ -97,6 +97,8 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player_test.tiles_in_hand, ['a', 'b', 'c', 'd', 'e', 'f', 'g'])
 
     def test_use_tiles(self):
-        self.player_test.tiles_in_hand = [Tile(t) for t in ['a', 'b', 'c']]
+        tiles = [Tile(t) for t in ['a', 'b', 'c']]
+        self.player_test.tiles_in_hand = tiles.copy()
         self.player_test.use_tiles(['a', 'c'])
         self.assertEqual(self.player_test.tiles_in_hand, [Tile('b')])
+        self.assertEqual(self.player_test.prev_tiles_in_hand, tiles)

@@ -53,6 +53,7 @@ class Board:
         self.spots = self.set_spots()
         self.spots_orig = None
         self.first = True
+        self.revert_first = True
 
     def set_spots(self):
         return [[Spot(*self.multiplier(x, y))
@@ -80,6 +81,7 @@ class Board:
 
     def revert_board(self):
         self.spots = self.spots_orig
+        self.first = self.revert_first
 
     def place_first_word(self, word, row, col, direction, player):
         if self.can_place_first_word(word, row, col, direction):
@@ -122,6 +124,7 @@ class Board:
                 player.add_points(
                     Score.get_score(word_spots, row, col, direction, self.spots)
                 )
+                self.revert_first = False
 
     def can_place_first_word(self, word, row, col, direction):
         return (

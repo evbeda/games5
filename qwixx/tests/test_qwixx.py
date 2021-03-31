@@ -323,3 +323,19 @@ class TestQwixx(unittest.TestCase):
         row.blocked_rows.extend(blocked_row)
         self.qwixx.you_can_play
         self.assertEqual(self.qwixx.is_playing, expected)
+
+    def _get_id_of_players(self, players):
+        return [player.id_player for player in players]
+
+    @patch.object(ScorePad, 'calculate_score', side_effect=[50, 90, 100])
+    def test_get_winners(self, mock_calculate_score):
+        initial_id_player = [0, 1, 2]
+        final_id_player = [2, 1, 0]
+        n_players = 3
+        self.qwixx.play_start(n_players)
+        ranking_players = self.qwixx.get_winners()
+
+        self.assertTrue(all(isinstance(player, ScorePad) for player in ranking_players))
+        self.assertEqual(mock_calculate_score.call_count, n_players)
+        self.assertEqual(self._get_id_of_players(self.qwixx.score_pad), initial_id_player)
+        self.assertEqual(self._get_id_of_players(ranking_players), final_id_player)

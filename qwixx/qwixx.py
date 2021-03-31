@@ -219,3 +219,7 @@ class Qwixx:
             self.is_playing = True
         else:
             self.is_playing = False
+
+    def get_winners(self):
+        players = self.score_pad.copy()
+        return sorted(players, key=lambda x: x.calculate_score(), reverse=True)

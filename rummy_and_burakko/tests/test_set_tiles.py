@@ -49,6 +49,7 @@ class TestSetTiles(unittest.TestCase):
         (False, (('red', 5), ('blue', 6), ('green', 5))),
         (True, (('blue', 1), ('blue', 2), ('blue', 3))),
         (True, (('*', 0), ('blue', 5), ('blue', 6))),
+        (False, (('*', 0), ('blue', 5), ('blue', 6), ('*', 0))),
         (False, (('*', 0), ('blue', 5), ('green', 5), ('*', 0))),
         (False, (('red', 5), ('red', 6))),
         (False, (
