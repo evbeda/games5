@@ -224,9 +224,10 @@ class Qwixx:
         rankig_players = self.get_winners()
         msg = ''
         msg += 'WINNERS TABLE \n'
+        msg += "------------------------------------------------------------\n"
         for player in rankig_players:
             msg += 'PLAYER {}'.format(player.id_player).ljust(8)
-            msg += '|'
-            msg += 'SCORE {}'.format(player.calculate_score()).rjust(10)
-            msg += "\n------------------------------------------------------------"
+            msg += ' | '
+            msg += 'SCORE {}\n'.format(player.calculate_score()).rjust(10)
+        msg += "------------------------------------------------------------"
         return msg

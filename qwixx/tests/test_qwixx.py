@@ -363,8 +363,9 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(
             result,
             'WINNERS TABLE \n'
-            'PLAYER 0'.ljust(8) + '|' + 'SCORE 100'.rjust(10) +
-            "\n------------------------------------------------------------"
+            "------------------------------------------------------------\n"
+            'PLAYER 0'.ljust(8) + ' | ' + 'SCORE 100\n'.rjust(10) +
+            "------------------------------------------------------------"
         )
         self.assertEqual(mock_calculate_score.call_count, 1)
         self.assertEqual(mock_get_winners.call_count, 1)
