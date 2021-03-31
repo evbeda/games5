@@ -267,7 +267,7 @@ class TestQwixx(unittest.TestCase):
         msg = 'You cannot mark that row, the number must be on the right of the last mark!'
         self.qwixx.score_pad[0].rows['red'].marks.append(10)
         self.assertEqual(self.qwixx.mark_with_color(1, 1), msg)
-    
+
     def test_mark_with_color_error_row_is_locked(self):
         self.qwixx.score_pad = [ScorePad()]
         msg = 'It cannot be marked because the row is locked!'
