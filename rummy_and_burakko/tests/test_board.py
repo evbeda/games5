@@ -219,15 +219,27 @@ class TestBoard(unittest.TestCase):
 
     @patch.object(SetTiles, 'put_tile')
     def test_put_a_tile_calls(self, mock):
-        # data
         tile = Tile(RED, 5)
         set_id = 1
         index = 3
-        self.board.temp_sets = {1: SetTiles(
-            [Tile(RED, 3), Tile(RED, 4), Tile(RED, 5), Tile(RED, 6)]
-        )
+        self.board.temp_sets = {
+            1: SetTiles([Tile(RED, 3), Tile(RED, 4), Tile(RED, 5), Tile(RED, 6)])
         }
-        # process
         self.board.put_a_tile(tile, set_id, index)
-        # assert
         mock.assert_called_once_with(tile, index)
+
+    @parameterized.expand([
+        # (set_id, index, expected)
+        (1, 4, True),  # Valid set, in the valid max index
+        (1, 5, False),  # Valid set, in the invalid max index
+        (3, 1, False),  # non-existent set
+        (2, -1, False),  # Valid set, invalid index below 0
+    ])
+    def test_valid_set_index(self, set_id, index, expected):
+        self.board.temp_sets = {
+            1: SetTiles([Tile(RED, 3), Tile(RED, 4), Tile(RED, 5), Tile(RED, 6)]),
+            2: SetTiles([Tile(RED, 7), Tile(BLUE, 7), Tile(GREEN, 7)]),
+        }
+        message = self.board.valid_set_index(set_id, index)
+        result = True if 'Error' not in message else False
+        self.assertEqual(result, expected)

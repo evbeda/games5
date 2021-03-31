@@ -171,8 +171,8 @@ class TestPlayer(unittest.TestCase):
         ([5, -1, 1], False),  # One index in the min limit out
         ([5, 1, 1], False),  # Repeated index
     ])
-    def test_tiles_in_hand(self, indexes, expected):
+    def test_valid_tiles_in_hand(self, indexes, expected):
         self.player.temp_hand = list(range(13))
-        result = self.player.tiles_in_hand(*indexes)
+        result = self.player.valid_tiles_in_hand(*indexes)
         test = False if 'Error' in result else True
         self.assertEqual(test, expected)
