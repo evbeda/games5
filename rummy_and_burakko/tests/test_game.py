@@ -382,4 +382,4 @@ class TestGame(unittest.TestCase):
         result = self.game.valid_input_put_a_tile(index_hand, set_id, set_index)
         self.assertEqual(result, expected)
         mock_hand.assert_called_once_with(index_hand)
-        mock_set.assert_called_once_with(set_id, set_index)
+        mock_set.assert_called_once_with(set_id, set_index - 1)
