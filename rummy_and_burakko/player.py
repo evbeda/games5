@@ -48,3 +48,6 @@ class Player:
 
     def get_first_move(self):
         return self.first_move
+
+    def has_tiles(self):
+        return (len(self.hand) > 0)

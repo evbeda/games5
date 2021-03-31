@@ -8,22 +8,31 @@ GAME_STATE_NEW_SET_TILES = 'new_set_tiles'
 GAME_STATE_PUT_A_TILE = 'put_a_tile'
 GAME_STATE_GET_A_TILE = 'get_a_tile'
 GAME_STATE_END_TURN = 'end_turn'
-
+GAME_STATE_END_GAME = 'end_game'
 GAME_STATE_MAKE_MOVE = 'make_move'
 
 game_state_next_turn = {
     GAME_STATE_START_GAME: 'Enter number of players',
     GAME_STATE_PLAYERS_INPUT: 'Enter player names',
     GAME_STATE_SELECT_OPTION: (
-        'Game Options:\n1)Enter a complete new set\n2)Put a tile from hand in a existing set\n'
-        '3)Take a tile from a set\n4)End turn'
+        'Game Options:\n1)Enter a complete new set'
+        '\n2)Put a tile from hand in a existing set'
+        '\n3)Take a tile from a set\n4)End turn'
     ),
     GAME_STATE_NEW_SET_Q: 'Enter quantity of tiles to play',
-    GAME_STATE_NEW_SET_TILES: 'Put the index of tiles to play in the correct order',
-    GAME_STATE_PUT_A_TILE: 'Puting a tile: Select a tile, select the set, select the index in the chosen set',
-    GAME_STATE_GET_A_TILE: 'Taking a tile: Select the set, select the index in the chosen set',
+    GAME_STATE_NEW_SET_TILES: (
+        'Put the index of tiles to play in the correct order'
+    ),
+    GAME_STATE_PUT_A_TILE: (
+        'Puting a tile: Select a tile, select the set,'
+        ' select the index in the chosen set'
+    ),
+    GAME_STATE_GET_A_TILE: (
+        'Taking a tile: Select the set, select the index in the chosen set'
+    ),
     GAME_STATE_END_TURN: 'Turn Ended',
     GAME_STATE_MAKE_MOVE: 'Making move',
+    GAME_STATE_END_GAME: 'WE HAVE A WINNER! Congratulations ',
 }
 
 
@@ -72,15 +81,37 @@ class RummyAndBurakko():
         self.input_are_ints = True
         self.game.next_turn()
 
+    # def next_turn(self):
+    #     message = '\n'
+    #     if self.game_state == GAME_STATE_END_TURN:
+    #         self.game.end_turn()
+    #         self.is_playing = self.game.check_is_game_alive()
+    #         if self.is_playing:
+    #             self.game.next_turn()
+    #             message += self.game.show_game()
+    #             self.game_state = GAME_STATE_SELECT_OPTION
+    #             message += game_state_next_turn[self.game_state]
+    #         else:
+    #             self.game_state = GAME_STATE_END_GAME
+    #             message += self.game_state
+    #     return message
+
     def next_turn(self):
         message = '\n'
+        winner_name = ''
         if self.game_state == GAME_STATE_END_TURN:
             self.game.end_turn()
-            self.game.next_turn()
-            message += self.game.show_game()
-            self.game_state = GAME_STATE_SELECT_OPTION
+            self.is_playing = self.game.check_is_game_alive()
+            if self.is_playing:
+                self.game.next_turn()
+                message += self.game.show_game()
+                self.game_state = GAME_STATE_SELECT_OPTION
+            else:
+                winner_name = self.game.get_current_player()
+                self.game_state = GAME_STATE_END_GAME
 
         message += game_state_next_turn[self.game_state]
+        message += winner_name
         return message
 
     # play
