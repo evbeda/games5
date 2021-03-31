@@ -204,16 +204,16 @@ class TestRummyAndBurakko(unittest.TestCase):
 
     @parameterized.expand([
         # (verif_result, game_state, return)
-        (True, 'make_move', None),
-        (False, 'select_option', 'wrong input, select a option again'),
+        ('', 'make_move', 'Input is valid'),
+        ('Error', 'select_option', 'Error'),
     ])
     def test_play_input_verification(self, result, state, expected):
         players = ["player_1", "player_2", 'player_3']
         self.rummy.game = Game(players)
-        self.rummy.option = 3
+        self.rummy.option = 1
         data = (0, 1, 3, 5)
         with patch.object(Game, 'move_verif', return_value=result) as mock:
             result = self.rummy.play_input_verification(*data)
-            mock.assert_called_once_with(3, data)
+            mock.assert_called_once_with(1, data)
             self.assertEqual(result, expected)
             self.assertEqual(self.rummy.game_state, state)

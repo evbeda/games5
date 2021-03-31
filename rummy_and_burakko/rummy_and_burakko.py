@@ -125,13 +125,15 @@ class RummyAndBurakko():
             return message
 
     def play_input_verification(self, *moves):
-        if self.game.move_verif(self.option, moves):
+        message = self.game.move_verif(self.option, moves)
+        if message == '':
             self.game_state = GAME_STATE_MAKE_MOVE
             self.move = moves
             self.input_are_ints = False
+            return 'Input is valid'
         else:
             self.game_state = GAME_STATE_SELECT_OPTION
-            return 'wrong input, select a option again'
+            return message
 
     def play_make_move(self, confirm):
         self.game_state = GAME_STATE_SELECT_OPTION
