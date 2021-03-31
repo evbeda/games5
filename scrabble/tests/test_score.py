@@ -5,6 +5,7 @@ from ..board import Board
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized
+from copy import deepcopy
 
 
 class TestScore(unittest.TestCase):
@@ -160,7 +161,8 @@ class TestScore(unittest.TestCase):
             15,
         ),
     ])
-    def test_get_score(self, words_str, expected):
+    @patch.object(Score, 'define_direction')
+    def test_get_score(self, words_str, expected, define_direction_patched):
         words = []
         for word_str in words_str:
             word = []
@@ -170,12 +172,32 @@ class TestScore(unittest.TestCase):
                 word.append(spot)
             words.append(word)
 
-        with patch.object(Score, 'define_direction', return_value=words[1:]):
+        with patch.object(Score, 'filter_unchanged', return_value=words):
             score = Score.get_score(
-                words[0],
+                'word',
                 'col', 'row',
                 'direction',
                 'spots',
                 'spots_orig'
             )
             self.assertEqual(score, expected)
+
+    def test_filter_unchanged(self):
+        board = Board()
+        board.set_spots()
+        board.spots[7][7].set_tile(Tile('h'))
+        board.spots[7][8].set_tile(Tile('o'))
+        board.spots[7][9].set_tile(Tile('l'))
+        board.spots[7][10].set_tile(Tile('a'))
+        board.spots_orig = deepcopy(board.spots)
+        board.spots[6][8].set_tile(Tile('s'))
+        board.spots[8][8].set_tile(Tile('l'))
+        words = [
+            [board.spots[row][col] for row, col in [(7, 7), (7, 8), (7, 9), (7, 10)]],
+            [board.spots[row][col] for row, col in [(6, 8), (7, 8), (8, 8)]],
+        ]
+        changed_words = Score.filter_unchanged(words, board.spots_orig)
+        expected = [
+            [board.spots[row][col] for row, col in [(6, 8), (7, 8), (8, 8)]],
+        ]
+        self.assertEqual(changed_words, expected)
