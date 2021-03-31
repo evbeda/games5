@@ -35,3 +35,8 @@ class TestSpot(unittest.TestCase):
         if tile:
             s.set_tile(tile)
         self.assertEqual(s.get_spot(), expected)
+
+    def test_spot_eq(self):
+        spot_1 = Spot(1, 'c', 3, 4)
+        spot_2 = Spot(1, 'c', 3, 4)
+        self.assertTrue(spot_1 == spot_2)
