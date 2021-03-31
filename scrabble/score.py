@@ -29,13 +29,19 @@ class Score:
     ):
         words = Score.define_direction(placed_word, row, col, direction, spots)
         words.append(placed_word)
-        Score.filter_unchanged(words, spots_orig)
-        return sum([Score.multiply_score(word) for word in words])
+        changed_words = Score.filter_unchanged(words, spots_orig)
+        return sum([Score.multiply_score(word) for word in changed_words])
 
     @staticmethod
     def filter_unchanged(words, board):
+        changed_words = []
         for word in words:
-            pass
+            if not all([
+                spot.tile == board[spot.row][spot.col].tile
+                for spot in word
+            ]):
+                changed_words.append(word)
+        return changed_words
 
     @staticmethod
     def search_vert_letter(word, row, col, spots):
