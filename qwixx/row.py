@@ -5,7 +5,7 @@ class NotCanMark(Exception):
 
 class CantBeLocked(Exception):
     def __init__(self):
-        super().__init__('You have more than 5 marks!')
+        super().__init__('You have less than 5 marks!')
 
 
 class RowIsLocked(Exception):
@@ -82,8 +82,8 @@ class Row:
         )
 
     def can_mark_last(self):
-        if len(self.marks) > 5:
-            True
+        if len(self.marks) >= 5:
+            return True
         else:
             raise CantBeLocked()
 
