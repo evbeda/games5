@@ -46,7 +46,7 @@ COLOR_DICE = {
     2: 'white_2'
 }
 
-ERROR_MESSAGE = 'Row cannot be marked'
+ERROR_MESSAGE = 'You cannot mark that row, if you need the number to be to the right of the last mark'
 
 
 class Qwixx:
@@ -97,7 +97,7 @@ class Qwixx:
         try:
             s_pad.mark_number_in_row(total, color)
         except NotCanMark:
-            pass
+            return ERROR_MESSAGE
         self.set_next_player()
 
     def mark_with_white(self, color_index):
@@ -109,7 +109,7 @@ class Qwixx:
         try:
             s_pad.mark_number_in_row(total, color)
         except NotCanMark:
-            pass
+            return ERROR_MESSAGE
         self.set_next_player()
 
     def set_next_player(self):
@@ -141,9 +141,9 @@ class Qwixx:
 
     def play_turn(self, *args):
         if self.turn_color == QWIXX_TURN_WHITE:
-            self.mark_with_white(args[0])
+            return self.mark_with_white(args[0])
         else:
-            self.mark_with_color(args[0], args[1])
+            return self.mark_with_color(args[0], args[1])
 
     @property
     def input_args(self):
@@ -160,7 +160,7 @@ class Qwixx:
         elif self.game_state == QWIXX_STATE_OPTION:
             msg = self.play_option(args[0])
         elif self.game_state == QWIXX_STATE_PLAY:
-            self.play_turn(*args)
+            msg = self.play_turn(*args)
         return msg
 
     @property
