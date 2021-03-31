@@ -54,10 +54,12 @@ class TestTileBag(unittest.TestCase):
         # (0, 0, 0)  #  esto genera un raise exception
     ])
     def test_give_one_tile(self, top, e_remaining, e_hand):
-        # data
         self.t_bag.remaining_tiles = self.t_bag.remaining_tiles[:top]
-        # process
         self.t_bag.give_one_tile(self.players[2])
-        # assert
         self.assertEqual(len(self.players[2].hand), e_hand)
         self.assertEqual(len(self.t_bag.remaining_tiles), e_remaining)
+
+    def test_give_one_tile_fail(self):
+        self.t_bag.remaining_tiles = []
+        with self.assertRaises(Exception):
+            self.t_bag.give_one_tile(self.players[2])
