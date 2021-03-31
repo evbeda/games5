@@ -59,3 +59,13 @@ class Board():
 
     def put_a_tile(self, tile, set_id, index):
         self.temp_sets[set_id].put_tile(tile, index)
+
+    def valid_set_index(self, set_id, index):
+        message = ''
+        if set_id not in self.temp_sets:
+            message += 'Error, select the index of an existing set'
+        elif index > len(self.temp_sets[set_id].tiles):
+            message += 'Error, index in set to high'
+        elif index < 0:
+            message += 'Error, index below 0'
+        return message

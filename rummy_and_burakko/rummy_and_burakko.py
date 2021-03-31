@@ -32,7 +32,7 @@ game_state_next_turn = {
         'Taking a tile: Select the set, select the index in the chosen set'
     ),
     GAME_STATE_END_TURN: 'Turn Ended',
-    GAME_STATE_MAKE_MOVE: 'Confirm: Y/N',
+    GAME_STATE_MAKE_MOVE: 'Confirm: y/n',
     GAME_STATE_END_GAME: 'WE HAVE A WINNER! Congratulations ',
 }
 
