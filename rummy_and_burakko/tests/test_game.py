@@ -357,29 +357,37 @@ class TestGame(unittest.TestCase):
     ])
     @patch.object(Board, 'valid_set_index')
     @patch.object(Game, 'valid_input_put_a_tile')
-    @patch.object(Player, 'valid_tiles_in_hand')
+    @patch.object(Game, 'valid_tiles')
     def test_move_verification_calls(
         self,
         option,
         call_count,
-        mock_hand,
+        mock_tiles,
         mock_put_a_tile,
         mock_set,
     ):
         moves = (1, 2, 3)
         self.game.move_verification(option, moves)
-        self.assertEqual(mock_hand.call_count, call_count[0])
+        self.assertEqual(mock_tiles.call_count, call_count[0])
         self.assertEqual(mock_put_a_tile.call_count, call_count[1])
         self.assertEqual(mock_set.call_count, call_count[2])
 
     @patch.object(Board, 'valid_set_index', return_value='Error_2')
-    @patch.object(Player, 'valid_tiles_in_hand', return_value='Error_1\n')
-    def test_input_put_a_tile_calls(self, mock_hand, mock_set):
+    @patch.object(Game, 'valid_tiles', return_value='Error_1\n')
+    def test_input_put_a_tile_calls(self, mock_tiles, mock_set):
         index_hand = 3
         set_id = 1
         set_index = 4
         expected = 'Error_1\n' + 'Error_2'
         result = self.game.valid_input_put_a_tile(index_hand, set_id, set_index)
         self.assertEqual(result, expected)
-        mock_hand.assert_called_once_with(index_hand)
+        mock_tiles.assert_called_once_with(index_hand)
         mock_set.assert_called_once_with(set_id, set_index - 1)
+
+    @patch.object(Player, 'valid_tiles_in_hand')
+    def test_valid_tiles(self, mock_player):
+        self.game.board.reused_tiles = [1, 2, 3, 4]
+        size = len(self.game.board.reused_tiles)
+        moves = (1, 2, 3)
+        self.game.valid_tiles(*moves)
+        mock_player.assert_called_once_with(size, moves)
