@@ -129,14 +129,19 @@ class Game:
 
     def move_verification(self, option, moves):
         options = {
-            1: self.players[self.current_turn].valid_tiles_in_hand,
+            1: self.valid_tiles,
             2: self.valid_input_put_a_tile,
             3: self.board.valid_set_index,
         }
         return options[option](*moves)
 
+    def valid_tiles(self, *moves):
+        loose_tiles = len(self.board.reused_tiles)
+        player = self.players[self.current_turn]
+        return player.valid_tiles_in_hand(loose_tiles, moves)
+
     def valid_input_put_a_tile(self, index_hand, set_id, set_index):
-        message = self.players[self.current_turn].valid_tiles_in_hand(index_hand)
+        message = self.valid_tiles(index_hand)
         # -1 so we can use the same method to validate for putting and taking a tile
         message += self.board.valid_set_index(set_id, set_index - 1)
         return message

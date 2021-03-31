@@ -171,8 +171,22 @@ class TestPlayer(unittest.TestCase):
         ([5, -1, 1], False),  # One index in the min limit out
         ([5, 1, 1], False),  # Repeated index
     ])
-    def test_valid_tiles_in_hand(self, indexes, expected):
+    def test_valid_tiles_in_hand_with_0_loose_tiles(self, indexes, expected):
         self.player.temp_hand = list(range(13))
-        result = self.player.valid_tiles_in_hand(*indexes)
+        loose_tiles = 0
+        result = self.player.valid_tiles_in_hand(loose_tiles, *indexes)
+        test = False if 'Error' in result else True
+        self.assertEqual(test, expected)
+
+    @parameterized.expand([
+        # (indexes, expected)
+        ([5, 3, 10], True),  # All index in hand
+        ([5, 3, 15], True),  # One index in the max limit in
+        ([5, 3, 16], False),  # One index in the max limit out
+    ])
+    def test_valid_tiles_in_hand_with_loose_tiles(self, indexes, expected):
+        self.player.temp_hand = list(range(13))
+        loose_tiles = 3
+        result = self.player.valid_tiles_in_hand(loose_tiles, *indexes)
         test = False if 'Error' in result else True
         self.assertEqual(test, expected)
