@@ -27,7 +27,6 @@ class Player:
     def temporary_hand(self):
         self.temp_hand = self.hand.copy()
 
-    # valida si tengo menos fichas que antes y ni una nueva ficha en mano
     def valid_hand(self):
         if len(self.hand) <= len(self.temp_hand):
             return False
@@ -51,3 +50,9 @@ class Player:
 
     def has_tiles(self):
         return (len(self.hand) > 0)
+
+    def tiles_in_hand(self, *indexes):
+        return (
+            True if max(indexes) < len(self.temp_hand)
+            else False
+        )

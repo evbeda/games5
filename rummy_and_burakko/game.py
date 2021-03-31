@@ -128,4 +128,12 @@ class Game:
         return self.players[self.current_turn]
 
     def move_verif(self, option, moves):
-        return True
+        options = {
+            1: self.players[self.current_turn].tiles_in_hand,
+            # 2: self.select_put_a_tile,
+            # 3: self.board.give_one_tile_from_board,
+        }
+        # 1) Testear indices de mi mano
+        # 2) Testear set existente
+        # 3) Testear indice en el set existente elegido
+        return options[option](*moves)

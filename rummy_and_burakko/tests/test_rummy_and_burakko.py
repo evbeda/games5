@@ -72,7 +72,7 @@ class TestRummyAndBurakko(unittest.TestCase):
     @parameterized.expand([
         # (game_state, expected)
         ('start_game', '\nEnter number of players'),
-        ('new_set_q', '\nEnter quantity of tiles to play'),
+        ('new_set_q', '\nHow many tiles will have the set?'),
         # ('end_turn', '\nTurn Ended'),
     ])
     @patch.object(Game, 'check_is_game_alive', return_value=True)
