@@ -98,13 +98,16 @@ class Board:
                     Score.get_score(word_spots, row, col, direction, self.spots)
                 )
                 self.first = False
+                return True
+        return False
 
     def place_word(self, *args):
         self.spots_orig = deepcopy(self.spots)
         if self.first:
-            self.place_first_word(*args)
+            placed = self.place_first_word(*args)
         else:
-            self.place_other_word(*args)
+            placed = self.place_other_word(*args)
+        return placed
 
     def place_other_word(self, word, row, col, direction, player):
         word_spots = self.get_spots_to_place_word(
@@ -125,6 +128,8 @@ class Board:
                     Score.get_score(word_spots, row, col, direction, self.spots)
                 )
                 self.revert_first = False
+                return True
+        return False
 
     def can_place_first_word(self, word, row, col, direction):
         return (

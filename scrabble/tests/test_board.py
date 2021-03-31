@@ -232,3 +232,13 @@ class TestBoard(unittest.TestCase):
         self.b.first = False
         self.b.place_word('word', 7, 7, True, Player(0, "player"))
         place_other_word_patched.assert_called_once()
+
+    @patch.object(Board, 'can_place_first_word', return_value=False)
+    def test_first_word_invalid(self, can_place_patched):
+        placed = self.b.place_first_word('word', 0, 0, True, 'player')
+        self.assertFalse(placed)
+
+    @patch.object(Board, 'can_place_word', return_value=False)
+    def test_other_word_invalid(self, can_place_patched):
+        placed = self.b.place_other_word('word', 0, 0, True, 'player')
+        self.assertFalse(placed)
