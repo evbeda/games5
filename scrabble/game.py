@@ -38,9 +38,9 @@ class Game:
     def ask_challenge_show_players(self):
         msg = ''
         for count, player in enumerate(self.players):
-            if count == self.current.player:
+            if count == self.current_player:
                 continue
-            msg.append(f'{count} - {player}\n')
+            msg += (f'{count} - {player}\n')
         return msg
 
     def print_board(self):
