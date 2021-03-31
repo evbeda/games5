@@ -257,3 +257,16 @@ class TestScrabble(unittest.TestCase):
             mock_place_word.assert_called()
         else:
             mock_place_word.assert_not_called()
+
+    @parameterized.expand([
+        (True, 'ask_challenge', ''),
+        (False, 'change_turn', 'Invalid word position'),
+    ])
+    def test_play_play_word_place_result(self, place_word_result, expected_state, expected_msg):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game_state = 'play_word'
+        with patch.object(Game, 'place_word', return_value=place_word_result):
+            msg = self.scrabble.play('5', '7', 'h', 'word')
+            self.assertEqual(self.scrabble.game_state, expected_state)
+            self.assertEqual(msg, expected_msg)
