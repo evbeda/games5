@@ -133,6 +133,6 @@ class RummyAndBurakko():
         method(*args)
 
     def esto_no_esta_testeado(self):
-        x= 1
-        y= 2
-        c = 'sin test, a ver circle como haces'
+        x = 1
+        y = 2
+        return x + y
