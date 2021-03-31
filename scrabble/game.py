@@ -47,7 +47,6 @@ class Game:
         self.board.place_word(
             word, y, x, direction, self.players[self.current_player]
         )
-        self.players[self.current_player].full_draw(self.tile_bag)
 
     @property
     def player_count(self):
@@ -68,6 +67,7 @@ class Game:
         return f'{curr_player.name}:\n{curr_player.get_hand()}'
 
     def change_turn(self):
+        self.players[self.current_player].full_draw(self.tile_bag)
         self.current_player = (self.current_player + 1) % self.player_count
         if self.current_player in self.lost_turns:
             self.lost_turns.remove(self.current_player)
