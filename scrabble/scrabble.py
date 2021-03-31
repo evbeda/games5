@@ -53,32 +53,28 @@ class Scrabble:
 
     def next_turn_state_query(self):
         game_state_next_turn = {
-            GAME_STATE_CREATE_GAME: 'Enter number of players',
-            GAME_STATE_INPUT_PLAYERS: 'Enter player names',
-            GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?',
+            GAME_STATE_CREATE_GAME: 'Enter number of players\n',
+            GAME_STATE_INPUT_PLAYERS: 'Enter player names\n',
+            GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?\n',
             GAME_STATE_PLAY_WORD: (
                 'Enter all in a line: \n:'
                 '- start position of word (nº of row and nº of column) \n'
                 '- direction(h --> horizontal or v --> vertical)\n'
                 '- the word\n'
             ),
-            GAME_STATE_ASK_CHALLENGE: 'Any player wants to challenge',
+            GAME_STATE_ASK_CHALLENGE: 'Select the challenger player:\n',
             GAME_STATE_IN_CHALLENGE: (
-                'Look up new words in a dictionary. Are they correct?'
+                'Look up new words in a dictionary. Are they correct?\n'
             ),
             GAME_STATE_SELECT_ACTION: (
-                'Enter "play" to play a new word, "pass" to end your turn '
-                'or any number to change that amount of tiles'
+                'Enter "play" to play a new word, "pass" to end your turn \n'
+                'or any number to change that amount of tiles\n'
             ),
         }
         return game_state_next_turn[self.game_state]
 
     def next_turn_show_hand(self):
         return self.game.get_current_player_hand()
-
-    def ask_challenge_show_players(self, self.game.game_players):
-        for i in self.game.game_players:
-            return
 
     def next_turn(self):
         query = '\n'
@@ -104,8 +100,7 @@ class Scrabble:
                 query += self.next_turn_show_hand() + '\n\n'
             query += self.next_turn_state_query()
             if self.game_state == GAME_STATE_ASK_CHALLENGE:
-                query += 'Select the challenger player:\n'
-                query += self.ask_challenge_show_players() + '\n'
+                query += self.game.ask_challenge_show_players() + '\n'
             else:
                 query += self.game.get_game_results()
 

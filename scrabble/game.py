@@ -35,6 +35,13 @@ class Game:
     #         value = player.tiles_in_hand[0].order
     #         ref.append((value))
     #     return ref.index(min(ref))
+    def ask_challenge_show_players(self):
+        msg = ''
+        for count, player in enumerate(self.players):
+            if count == self.current.player:
+                continue
+            msg.append(f'{count} - {player}\n')
+        return msg
 
     def print_board(self):
         return self.board.get_board()
