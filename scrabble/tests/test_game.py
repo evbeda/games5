@@ -64,6 +64,12 @@ class TestGame(unittest.TestCase):
         t_game.change_turn()
         self.assertEqual(t_game.current_player, next_player)
 
+    def test_change_turn_refill_hand(self):
+        player = self.t_game.players[self.t_game.current_player]
+        player.tiles_in_hand.pop()
+        self.t_game.change_turn()
+        self.assertEqual(len(player.tiles_in_hand), 7)
+
     def test_change_turn_skip_lost(self):
         self.t_game.current_player = 0
         self.t_game.lost_turns = [1]
