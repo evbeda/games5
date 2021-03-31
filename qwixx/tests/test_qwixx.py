@@ -82,6 +82,13 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.mark_with_white(1)
         self.assertEqual(self.qwixx.mark_with_white(1), msg)
 
+    def test_mark_with_white_error_row_is_locked(self):
+        self.qwixx.score_pad = [ScorePad()]
+        msg = 'It cannot be marked because the row is locked!'
+        row = Row('blue')
+        row.blocked_rows.append('blue')
+        self.assertEqual(self.qwixx.mark_with_white(3), msg)
+
     @patch.object(Qwixx, "create_scored_pad")
     @patch.object(SetDices, "roll_dices")
     def test_play_players(self, mock_roll, mock_create):
@@ -255,11 +262,18 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.mark_with_color(1, 1)
         self.assertEqual(self.qwixx.score_pad[0].rows['red'].marks, [4])
 
-    def test_mark_with_color_error(self):
+    def test_mark_with_color_error_not_can_mark(self):
         self.qwixx.score_pad = [ScorePad()]
         msg = 'You cannot mark that row, the number must be on the right of the last mark!'
         self.qwixx.score_pad[0].rows['red'].marks.append(10)
         self.assertEqual(self.qwixx.mark_with_color(1, 1), msg)
+    
+    def test_mark_with_color_error_row_is_locked(self):
+        self.qwixx.score_pad = [ScorePad()]
+        msg = 'It cannot be marked because the row is locked!'
+        row = Row('blue')
+        row.blocked_rows.append('blue')
+        self.assertEqual(self.qwixx.mark_with_color(1, 3), msg)
 
     @patch.object(Qwixx, 'mark_with_white')
     def test_play_play_color(self, patched_mark_with_white):
