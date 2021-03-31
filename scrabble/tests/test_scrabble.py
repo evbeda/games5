@@ -12,11 +12,13 @@ class TestScrabble(unittest.TestCase):
     def setUp(self):
         self.scrabble = Scrabble()
 
+    @patch.object(Game, 'print_scores')
     @patch.object(Game, 'print_board')
-    def test_board(self, print_board_patched):
+    def test_board(self, print_board_patched, print_scores_patched):
         self.scrabble.game = Game(["Pedro"])
         self.scrabble.board
         print_board_patched.assert_called()
+        print_scores_patched.assert_called()
 
     @parameterized.expand([
         ('create_game', 1),
