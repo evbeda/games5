@@ -109,17 +109,6 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(self.board.reused_tiles, [chosen_tile])
 
-    @parameterized.expand([
-        (SetTiles([Tile('r', 3), Tile('r', 4)]), 3),
-        (SetTiles([]), 3),
-    ])
-    def test_give_one_tile_from_board_fail(self, set_tile, index):
-        self.board.sets = {
-            1: set_tile,
-        }
-        with self.assertRaises(Exception):
-            self.board.give_one_tile_from_board(1, index)
-
     def test_get_reused_tiles(self):
         # data
         self.board.reused_tiles = [Tile('r', 3), Tile('r', 4), Tile('r', 5)]
@@ -160,6 +149,20 @@ class TestBoard(unittest.TestCase):
             self.assertEqual(
                 self.board.temp_sets[1].tiles[index],
                 expected_sets[1].tiles[index]
+            )
+
+    def test_validate_turn(self):
+        tiles = [Tile('r', 3), Tile('r', 4), Tile('r', 5), Tile('r', 6)]
+        size = len(tiles)
+        self.board.temp_sets = {1: SetTiles(tiles)}
+
+        self.board.validate_turn()
+
+        self.assertNotEqual(self.board.temp_board, self.board.sets)
+        for i in range(size):
+            self.assertEqual(
+                self.board.temp_sets[1].tiles[i],
+                self.board.sets[1].tiles[i]
             )
 
     def test_get_a_reused_tile(self):
