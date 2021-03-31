@@ -31,6 +31,8 @@ class Row:
     def set_mark(self, number):
         if self.check_row_lock(number):
             return self.marks.append(number)
+        else:
+            raise NotCanMark
 
     def check_row_lock(self, number):
         if (
