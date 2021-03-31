@@ -2,7 +2,6 @@ import unittest
 from parameterized import parameterized
 from ..row import (
     Row,
-    NotCanMark,
     CantBeLocked,
     RowIsLocked,
 )
@@ -129,7 +128,7 @@ class TestRow(unittest.TestCase):
 
     @parameterized.expand([
         ('red', 'red'),
-        ('green',  'green'),
+        ('green', 'green'),
     ])
     def test_is_locked(self, row, rows):
         with self.assertRaises(RowIsLocked):
