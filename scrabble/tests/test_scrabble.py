@@ -43,8 +43,9 @@ class TestScrabble(unittest.TestCase):
 
     def test_play_create_game_invalid(self):
         player_count = 5
-        self.scrabble.play(player_count)
+        resp = self.scrabble.play(player_count)
         self.assertEqual(self.scrabble.input_player_args, 0)
+        self.assertEqual(resp, 'The number of players is wrong, please enter the number again')
         self.assertEqual(self.scrabble.game_state, 'create_game')
 
     def test_play_setup_players(self):
