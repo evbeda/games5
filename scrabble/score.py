@@ -20,10 +20,22 @@ class Score:
         return list_words
 
     @staticmethod
-    def get_score(placed_word, *args):
-        words = Score.define_direction(placed_word, *args)
+    def get_score(
+        placed_word,
+        row, col,
+        direction,
+        spots,
+        spots_orig,
+    ):
+        words = Score.define_direction(placed_word, row, col, direction, spots)
         words.append(placed_word)
+        Score.filter_unchanged(words, spots_orig)
         return sum([Score.multiply_score(word) for word in words])
+
+    @staticmethod
+    def filter_unchanged(words, board):
+        for word in words:
+            pass
 
     @staticmethod
     def search_vert_letter(word, row, col, spots):

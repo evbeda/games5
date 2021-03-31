@@ -95,7 +95,13 @@ class Board:
                 word_spots = self.get_spots_to_place_word(
                     len(word), row, col, direction)
                 player.add_points(
-                    Score.get_score(word_spots, row, col, direction, self.spots)
+                    Score.get_score(
+                        word_spots,
+                        row, col,
+                        direction,
+                        self.spots,
+                        self.spots_orig,
+                    )
                 )
                 self.first = False
                 return True
@@ -125,7 +131,13 @@ class Board:
                 )
                 player.use_tiles(var2)
                 player.add_points(
-                    Score.get_score(word_spots, row, col, direction, self.spots)
+                    Score.get_score(
+                        word_spots,
+                        row, col,
+                        direction,
+                        self.spots,
+                        self.spots_orig,
+                    )
                 )
                 self.revert_first = False
                 return True
