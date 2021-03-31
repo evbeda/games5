@@ -225,3 +225,9 @@ class TestGame(unittest.TestCase):
         for score, player in zip(scores, game.players):
             player.score = score
         self.assertEqual(game.print_scores(), expected)
+
+    def test_ask_challenge_show_players(self):
+        self.t_game.player = ['Andres', 'Nacho', 'Lucho', 'Enzo']
+        self.t_game.current_player = 1
+        expected = '0 - Andres\n2 - Nacho\n3 - Lucho\n'
+        self.assertEqual(self.t_game.ask_challenge_show_players(), expected)
