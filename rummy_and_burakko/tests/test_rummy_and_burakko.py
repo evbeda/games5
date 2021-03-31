@@ -212,7 +212,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.rummy.game = Game(players)
         self.rummy.option = 1
         data = (0, 1, 3, 5)
-        with patch.object(Game, 'move_verif', return_value=result) as mock:
+        with patch.object(Game, 'move_verification', return_value=result) as mock:
             result = self.rummy.play_input_verification(*data)
             mock.assert_called_once_with(1, data)
             self.assertEqual(result, expected)
