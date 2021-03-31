@@ -129,4 +129,3 @@ class Game:
 
     def move_verif(self, option, moves):
         return True
-
