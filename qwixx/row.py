@@ -25,9 +25,6 @@ class Row:
         if self.color in self.blocked_rows:
             return True
 
-    def can_mark_last(self):
-        return len(self.marks) >= 5
-
     def set_mark(self, number):
         if self.check_row_lock(number):
             return self.marks.append(number)
@@ -64,6 +61,17 @@ class Row:
                 return mark[1]
 
     def can_mark(self, number):
+        return(
+            self.can_mark_last(number)
+            if self.is_number_last(number)
+            else
+            self.can_mark_common(number)
+        )
+
+    def can_mark_last(self):
+        return len(self.marks) >= 5
+
+    def can_mark_common(self, number):
         return(
             self.marks == []
         ) or (
