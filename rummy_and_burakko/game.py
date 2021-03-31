@@ -65,10 +65,11 @@ class Game:
         player = self.players[self.current_turn]
         max_index_hand = player.get_lenght()
         for index in indexes:
+
             if index < max_index_hand:
                 tile = copy.deepcopy(player.get_a_tile(index))
             else:
-                tile = copy.deepcopy(self.board.get_a_reused_tile(index))
+                tile = copy.deepcopy(self.board.get_a_reused_tile(index - max_index_hand))
 
             tiles.append(tile)
         return tiles
