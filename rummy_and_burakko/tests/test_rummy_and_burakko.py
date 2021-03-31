@@ -190,15 +190,15 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.rummy.game = Game(players)
 
         self.rummy.option = 3
-        data = [0, 1, 3, 5]
-        self.rummy.play_make_move(*data)
-        m_give_one.assert_called_once_with(*data)
+        self.rummy.move = (0, 1, 3, 5)
+        self.rummy.play_make_move()
+        m_give_one.assert_called_once_with(*self.rummy.move)
         self.assertEqual(self.rummy.game_state, 'select_option')
 
     @parameterized.expand([
         # (verif_result, game_state, return)
         (True, 'make_move', None),
-        (False, 'select_option', 'Bad input, select a option again'),
+        (False, 'select_option', 'wrong input, select a option again'),
     ])
     def test_play_input_verification(self, result, state, expected):
         players = ["player_1", "player_2", 'player_3']
