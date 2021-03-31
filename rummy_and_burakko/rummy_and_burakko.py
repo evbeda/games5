@@ -10,6 +10,7 @@ GAME_STATE_GET_A_TILE = 'get_a_tile'
 GAME_STATE_END_TURN = 'end_turn'
 GAME_STATE_END_GAME = 'end_game'
 GAME_STATE_MAKE_MOVE = 'make_move'
+GAME_STATE_INPUT_VERIFICATION = 'input_verification'
 
 game_state_next_turn = {
     GAME_STATE_START_GAME: 'Enter number of players',
@@ -117,17 +118,24 @@ class RummyAndBurakko():
             self.input_q_tiles = quantity
             self.game_state = GAME_STATE_NEW_SET_TILES
 
+    def play_input_verification(self, *moves):
+        if self.game.move_verif(self.option, moves):
+            self.game_state = GAME_STATE_MAKE_MOVE
+        else:
+            self.game_state = GAME_STATE_SELECT_OPTION
+            return 'Bad input, select a option again'
+
     def play_make_move(self, *moves):
         self.game.make_play(self.option, moves)
         self.game_state = GAME_STATE_SELECT_OPTION
 
     def play(self, *args):
-        if self.game_state in [
+        if (self.game_state in [
             GAME_STATE_NEW_SET_TILES,
             GAME_STATE_PUT_A_TILE,
             GAME_STATE_GET_A_TILE,
-        ]:
-            self.game_state = GAME_STATE_MAKE_MOVE
+        ]):
+            self.game_state = GAME_STATE_INPUT_VERIFICATION
 
         method = getattr(self, 'play_' + self.game_state)
         method(*args)

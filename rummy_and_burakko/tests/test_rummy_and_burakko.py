@@ -165,7 +165,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         ('put_a_tile', (0, 0, 1)),
         ('new_set_tiles', (0, 0, 1)),
     ])
-    @patch.object(RummyAndBurakko, 'play_make_move')
+    @patch.object(RummyAndBurakko, 'play_input_verification')
     @patch.object(RummyAndBurakko, 'play_players_input')
     @patch.object(RummyAndBurakko, 'play_start_game')
     def test_play(
@@ -174,28 +174,39 @@ class TestRummyAndBurakko(unittest.TestCase):
         call_count,
         mock_start,
         mock_players,
-        mock_make_move,
+        mock_verification,
     ):
-        # data
         args = [1, 2, 3, 4]
         self.rummy.game_state = game_state
-        # process
-        self.rummy.play(args)
-        # assert
+        self.rummy.play(*args)
+
         self.assertEqual(mock_start.call_count, call_count[0])
         self.assertEqual(mock_players.call_count, call_count[1])
-        self.assertEqual(mock_make_move.call_count, call_count[2])
+        self.assertEqual(mock_verification.call_count, call_count[2])
 
     @patch.object(Board, 'give_one_tile_from_board')
     def test_play_make_move(self, m_give_one):
-        # data
         players = ["player_1", "player_2", 'player_3']
         self.rummy.game = Game(players)
 
         self.rummy.option = 3
         data = [0, 1, 3, 5]
-        # process
         self.rummy.play_make_move(*data)
-        # assert
         m_give_one.assert_called_once_with(*data)
         self.assertEqual(self.rummy.game_state, 'select_option')
+
+    @parameterized.expand([
+        # (verif_result, game_state, return)
+        (True, 'make_move', None),
+        (False, 'select_option', 'Bad input, select a option again'),
+    ])
+    def test_play_input_verification(self, result, state, expected):
+        players = ["player_1", "player_2", 'player_3']
+        self.rummy.game = Game(players)
+        self.rummy.option = 3
+        data = (0, 1, 3, 5)
+        with patch.object(Game, 'move_verif', return_value=result) as mock:
+            result = self.rummy.play_input_verification(*data)
+            mock.assert_called_once_with(3, data)
+            self.assertEqual(result, expected)
+            self.assertEqual(self.rummy.game_state, state)
