@@ -339,3 +339,18 @@ class TestQwixx(unittest.TestCase):
         self.assertEqual(mock_calculate_score.call_count, n_players)
         self.assertEqual(self._get_id_of_players(self.qwixx.score_pad), initial_id_player)
         self.assertEqual(self._get_id_of_players(ranking_players), final_id_player)
+
+    @patch.object(ScorePad, 'calculate_score', return_value=100)
+    @patch.object(Qwixx, 'get_winners')
+    def test_show_winners(self, mock_get_winners, mock_calculate_score):
+        self.qwixx.play_start(1)
+        mock_get_winners.return_value = [self.qwixx.score_pad[0]]
+        result = self.qwixx.show_winners()
+        self.assertEqual(
+            result,
+            'WINNERS TABLE \n'
+            'PLAYER 0'.ljust(8) + '|' + 'SCORE 100'.rjust(10) +
+            "\n------------------------------------------------------------"
+        )
+        self.assertEqual(mock_calculate_score.call_count, 1)
+        self.assertEqual(mock_get_winners.call_count, 1)

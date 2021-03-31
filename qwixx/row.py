@@ -45,6 +45,7 @@ class Row:
 
     def calculate_marks(self):
         set_marks = (
+            (0, 0),
             (1, 1),
             (2, 3),
             (3, 6),

@@ -134,6 +134,7 @@ class Qwixx:
                     self.score_pad[self.current_player].add_penalty()
                 except ReachPenaltyLimit:
                     self.is_playing = False
+                    return self.show_winners()
             self.set_next_player()
         else:
             return 'Invalid Option'
@@ -223,3 +224,14 @@ class Qwixx:
     def get_winners(self):
         players = self.score_pad.copy()
         return sorted(players, key=lambda x: x.calculate_score(), reverse=True)
+
+    def show_winners(self):
+        rankig_players = self.get_winners()
+        msg = ''
+        msg += 'WINNERS TABLE \n'
+        for player in rankig_players:
+            msg += 'PLAYER {}'.format(player.id_player).ljust(8)
+            msg += '|'
+            msg += 'SCORE {}'.format(player.calculate_score()).rjust(10)
+            msg += "\n------------------------------------------------------------"
+        return msg
