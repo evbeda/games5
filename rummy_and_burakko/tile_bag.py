@@ -1,6 +1,11 @@
 from .tile import Tile
 import itertools
 import random
+from .tile import BLUE
+from .tile import YELLOW
+from .tile import GREEN
+from .tile import RED
+from .tile import JOKER
 
 
 class TileBag():
@@ -9,10 +14,11 @@ class TileBag():
 
     def create_tiles(self):
         temp_tiles = list(itertools.chain(
-            *[[Tile(color, number) for color in ['b', 'r', 'y', 'w'] * 2] for
+            *[[Tile(color, number) for
+                color in [BLUE, RED, YELLOW, GREEN] * 2] for
                 number in range(1, 14)]
         ))
-        temp_tiles += [Tile('*', 0), Tile('*', 0)]
+        temp_tiles += [Tile(JOKER, 0), Tile(JOKER, 0)]
         return temp_tiles
 
     def assign_tiles(self, players):

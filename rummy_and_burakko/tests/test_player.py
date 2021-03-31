@@ -2,6 +2,10 @@ import unittest
 from ..player import Player
 from ..tile import Tile
 from parameterized import parameterized
+from ..tile import BLUE
+from ..tile import YELLOW
+from ..tile import RED
+from ..tile import JOKER
 
 
 class TestPlayer(unittest.TestCase):
@@ -38,33 +42,39 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.temp_hand, expected)
 
     def test_hand_format(self):
-        self.player.temp_hand = [Tile('r', 7), Tile('b', 4), Tile('y', 5)]
+        self.player.temp_hand = [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5)]
 
-        self.assertEqual(self.player.get_hand(), 'Pedro> 0:r7 1:b4 2:y5')
+        self.assertEqual(
+            self.player.get_hand(),
+            'Pedro> 0:{}7 1:{}4 2:{}5'.format(RED, BLUE, YELLOW)
+        )
 
     @parameterized.expand([
         # temp_hand, expected
-        ([Tile('r', 7), Tile('b', 4), Tile('y', 5), Tile('*', 0)], False),
+        (
+            [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5), Tile(JOKER, 0)],
+            False
+        ),
         (
             [
-                Tile('r', 7),
-                Tile('b', 4),
-                Tile('y', 5),
-                Tile('*', 0),
-                Tile('r', 13)
+                Tile(RED, 7),
+                Tile(BLUE, 4),
+                Tile(YELLOW, 5),
+                Tile(JOKER, 0),
+                Tile(RED, 13)
             ],
             False,
         ),
-        ([Tile('r', 7), Tile('b', 4)], True),
+        ([Tile(RED, 7), Tile(BLUE, 4)], True),
         ([], True),
     ])
     def test_valid_hand(self, temp_hand, expected):
         # data
         self.player.hand = [
-            Tile('r', 7),
-            Tile('b', 4),
-            Tile('y', 5),
-            Tile('*', 0)
+            Tile(RED, 7),
+            Tile(BLUE, 4),
+            Tile(YELLOW, 5),
+            Tile(JOKER, 0)
         ]
         self.player.temp_hand = temp_hand
         # process
@@ -89,10 +99,10 @@ class TestPlayer(unittest.TestCase):
     def test_get_lenght(self):
         # data
         self.player.temp_hand = [
-            Tile('r', 7),
-            Tile('b', 4),
-            Tile('y', 5),
-            Tile('*', 0),
+            Tile(RED, 7),
+            Tile(BLUE, 4),
+            Tile(YELLOW, 5),
+            Tile(JOKER, 0),
         ]
         expected = 4
         # process
@@ -103,13 +113,13 @@ class TestPlayer(unittest.TestCase):
     def test_get_a_tile(self):
         # data
         self.player.temp_hand = [
-            Tile('r', 7),
-            Tile('b', 4),
-            Tile('y', 5),
-            Tile('*', 0),
+            Tile(RED, 7),
+            Tile(BLUE, 4),
+            Tile(YELLOW, 5),
+            Tile(JOKER, 0),
         ]
         index = 3
-        expected = Tile('*', 0)
+        expected = Tile(JOKER, 0)
         # process
         result = self.player.get_a_tile(index)
         # assert
@@ -122,7 +132,7 @@ class TestPlayer(unittest.TestCase):
 
     @parameterized.expand([
         (
-            [Tile('r', 7), Tile('b', 4), Tile('y', 5)],
+            [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5)],
             True,
         ),
         (

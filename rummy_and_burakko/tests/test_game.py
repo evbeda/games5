@@ -125,7 +125,9 @@ class TestGame(unittest.TestCase):
     # @patch.object(Player, "valid_hand", return_value=True)
     # @patch.object(Board, "valid_sets", return_value=True)
     # @patch.object(Game, "validate_first_move", return_value=True)
-    # def test_valid_turn_first_move(self, mock_valid_hand, mock_valid_sets):
+    # def test_valid_turn_first_move(
+    #     self, mock_valid_hand, mock_valid_sets, mock_player
+    # ):
     #     # data
     #     expected = False
     #     # process
