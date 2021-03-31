@@ -112,3 +112,6 @@ class Game:
             f'{pos+1}: {self.players[result[0]].name} - {result[1]}'
             for pos, result in enumerate(self.game_results)
         ])
+
+    def print_scores(self):
+        return ' - '.join([f'{player.name}: {player.score}' for player in self.players])
