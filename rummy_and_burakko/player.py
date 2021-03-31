@@ -18,11 +18,35 @@ class Player:
     def get_a_tile(self, index):
         return self.temp_hand[index]
 
+    # def get_hand(self):
+    #     return f'{self.name}> ' + ' '.join([
+    #         f'{index}:{tile.color}{tile.number}'
+    #         for index, tile in enumerate(self.temp_hand)
+    #     ])
+
     def get_hand(self):
-        return f'{self.name}> ' + ' '.join([
-            f'{index}:{tile.color}{tile.number}'
+        hand = ''
+        indexes = ''
+        hand = f'{self.name}> ' + ' '.join([
+            f'{tile.color}{tile.number}'
             for index, tile in enumerate(self.temp_hand)
         ])
+
+        for char in self.name:
+            indexes += ' '
+        indexes += '   '
+
+        for index, tile in enumerate(self.temp_hand):
+            if tile.number < 10 and index > 9:
+                indexes += f'{index}  '
+            elif tile.number < 10 and index < 10:
+                indexes += f'{index}   '
+            elif tile.number > 9 and index > 9:
+                indexes += f'{index}   '
+            else:
+                indexes += f'{index}    '
+
+        return f'{hand}\n{indexes}'
 
     def temporary_hand(self):
         self.temp_hand = self.hand.copy()

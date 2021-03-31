@@ -41,12 +41,27 @@ class TestPlayer(unittest.TestCase):
         # assert
         self.assertEqual(self.player.temp_hand, expected)
 
-    def test_hand_format(self):
-        self.player.temp_hand = [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5)]
+    # def test_hand_format(self):
+    #     self.player.temp_hand = [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5)]
 
+    #     self.assertEqual(
+    #         self.player.get_hand(),
+    #         'Pedro> 0:{}7 1:{}4 2:{}5'.format(RED, BLUE, YELLOW)
+    #     )
+
+    @parameterized.expand([
+        (
+            [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5)],
+            'Pedro> {}7 {}4 {}5'
+            '\n'
+            '        0   1   2   '.format(RED, BLUE, YELLOW),
+        ),
+    ])
+    def test_hand_format(self, tiles, expected):
+        self.player.temp_hand = [Tile(RED, 7), Tile(BLUE, 4), Tile(YELLOW, 5)]
         self.assertEqual(
             self.player.get_hand(),
-            'Pedro> 0:{}7 1:{}4 2:{}5'.format(RED, BLUE, YELLOW)
+            expected
         )
 
     @parameterized.expand([
