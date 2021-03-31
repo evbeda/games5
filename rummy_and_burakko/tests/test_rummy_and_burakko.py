@@ -185,15 +185,22 @@ class TestRummyAndBurakko(unittest.TestCase):
         self.assertEqual(mock_verification.call_count, call_count[2])
 
     @patch.object(Board, 'give_one_tile_from_board')
-    def test_play_make_move(self, m_give_one):
+    def test_play_make_move_confirmed(self, m_give_one):
         players = ["player_1", "player_2", 'player_3']
         self.rummy.game = Game(players)
-
+        confirm = 'y'
         self.rummy.option = 3
         self.rummy.move = (0, 1, 3, 5)
-        self.rummy.play_make_move()
+        self.rummy.play_make_move(confirm)
         m_give_one.assert_called_once_with(*self.rummy.move)
         self.assertEqual(self.rummy.game_state, 'select_option')
+
+    def test_play_make_move_not_confirmed(self):
+        confirm = 'n'
+        expected = 'Discarded movement, select a new one'
+
+        result = self.rummy.play_make_move(confirm)
+        self.assertEqual(result, expected)
 
     @parameterized.expand([
         # (verif_result, game_state, return)

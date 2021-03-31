@@ -129,11 +129,14 @@ class RummyAndBurakko():
             self.game_state = GAME_STATE_SELECT_OPTION
             return 'wrong input, select a option again'
 
-    def play_make_move(self, *moves):
-        self.game.make_play(self.option, self.move)
+    def play_make_move(self, confirm):
         self.game_state = GAME_STATE_SELECT_OPTION
         self.input_are_ints = True
-        return 'Movement made'
+        if confirm == "y":
+            self.game.make_play(self.option, self.move)
+            return 'Movement made'
+        else:
+            return 'Discarded movement, select a new one'
 
     def play(self, *args):
         if (self.game_state in [
