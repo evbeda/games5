@@ -131,3 +131,8 @@ class RummyAndBurakko():
 
         method = getattr(self, 'play_' + self.game_state)
         method(*args)
+
+    def esto_no_esta_testeado(self):
+        x= 1
+        y= 2
+        c = 'sin test, a ver circle como haces'
