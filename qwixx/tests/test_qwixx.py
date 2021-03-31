@@ -333,7 +333,7 @@ class TestQwixx(unittest.TestCase):
         final_id_player = [2, 1, 0]
         n_players = 3
         self.qwixx.play_start(n_players)
-        ranking_players = self.qwixx.get_winner()
+        ranking_players = self.qwixx.get_winners()
 
         self.assertTrue(all(isinstance(player, ScorePad) for player in ranking_players))
         self.assertEqual(mock_calculate_score.call_count, n_players)
