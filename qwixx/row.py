@@ -1,5 +1,16 @@
 class NotCanMark(Exception):
-    pass
+    def __init__(self):
+        super().__init__('You cannot mark that row, the number must be on the right of the last mark!')
+
+
+class CantBeLocked(Exception):
+    def __init__(self):
+        super().__init__('You have more than 5 marks!')
+
+
+class RowIsLocked(Exception):
+    def __init__(self):
+        super().__init__('It cannot be marked because the row is locked!')
 
 
 class Row:
@@ -23,7 +34,9 @@ class Row:
     @property
     def is_locked(self):
         if self.color in self.blocked_rows:
-            return True
+            raise RowIsLocked
+        else:
+            return False
 
     def set_mark(self, number):
         if self.check_row_lock(number):
@@ -33,7 +46,7 @@ class Row:
 
     def check_row_lock(self, number):
         if (
-            (self.is_locked is None)
+            (self.is_locked is False)
             and (number not in self.marks)
         ):
             return self.can_mark(number)
@@ -69,7 +82,10 @@ class Row:
         )
 
     def can_mark_last(self):
-        return len(self.marks) >= 5
+        if len(self.marks) > 5:
+            True
+        else:
+            raise CantBeLocked()
 
     def can_mark_common(self, number):
         return(
