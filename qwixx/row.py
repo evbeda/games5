@@ -79,3 +79,13 @@ class Row:
                 self.color in ['blue', 'green']
             )
         )
+
+    def is_number_last(self, number):
+        return (
+            (
+                self.color in ['red', 'yellow'] and number == 12
+            )
+            or (
+                self.color in ['blue', 'green'] and number == 2
+            )
+        )

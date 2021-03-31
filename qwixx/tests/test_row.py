@@ -100,3 +100,13 @@ class TestRow(unittest.TestCase):
         r.marks = marks
         with self.assertRaises(NotCanMark):
             r.set_mark(number)
+
+    @parameterized.expand([
+        ('red', 12),
+        ('yellow', 12),
+        ('blue', 2),
+        ('green', 2),
+    ])
+    def test_is_number_last(self, color, number):
+        r = Row(color)
+        self.assertEqual(r.is_number_last(number), True)
