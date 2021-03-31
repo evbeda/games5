@@ -81,21 +81,6 @@ class RummyAndBurakko():
         self.input_are_ints = True
         self.game.next_turn()
 
-    # def next_turn(self):
-    #     message = '\n'
-    #     if self.game_state == GAME_STATE_END_TURN:
-    #         self.game.end_turn()
-    #         self.is_playing = self.game.check_is_game_alive()
-    #         if self.is_playing:
-    #             self.game.next_turn()
-    #             message += self.game.show_game()
-    #             self.game_state = GAME_STATE_SELECT_OPTION
-    #             message += game_state_next_turn[self.game_state]
-    #         else:
-    #             self.game_state = GAME_STATE_END_GAME
-    #             message += self.game_state
-    #     return message
-
     def next_turn(self):
         message = '\n'
         winner_name = ''

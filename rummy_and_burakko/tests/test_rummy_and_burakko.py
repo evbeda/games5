@@ -10,8 +10,16 @@ class TestRummyAndBurakko(unittest.TestCase):
     def setUp(self):
         self.rummy = RummyAndBurakko()
 
-    def test_constructor(self):
-        pass
+    @parameterized.expand([
+        # (game_state, expected)
+        ('start_game', 1),
+        ('new_set_tiles', 0),
+        ('put_a_tile', 3),
+    ])
+    def test_input_args_property(self, game_state, expected):
+        self.rummy.game_state = game_state
+        result = self.rummy.input_args
+        self.assertEqual(result, expected)
 
     @patch.object(Game, "show_game", return_value="test")
     def test_board(self, mock):
