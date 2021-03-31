@@ -349,7 +349,25 @@ class TestGame(unittest.TestCase):
         player = self.game.get_current_player()
         self.assertEqual(player.name, 'Pedro')
 
-    # def test_move_verif(self):
-    #     expected = True
-    #     result = self.game.move_verif(3, 4)
-    #     self.assertEqual(result, expected)
+    @parameterized.expand([
+        # (option, call_count)
+        (1, (1, 0, 0)),
+        (2, (0, 1, 0)),
+        (3, (0, 0, 1)),
+    ])
+    @patch.object(Board, 'valid_set_index')
+    @patch.object(Game, 'valid_input_put_a_tile')
+    @patch.object(Player, 'valid_tiles_in_hand')
+    def test_move_verification_calls(
+        self,
+        option,
+        call_count,
+        mock_hand,
+        mock_put_a_tile,
+        mock_set,
+    ):
+        moves = (1, 2, 3)
+        self.game.move_verification(option, moves)
+        self.assertEqual(mock_hand.call_count, call_count[0])
+        self.assertEqual(mock_put_a_tile.call_count, call_count[1])
+        self.assertEqual(mock_set.call_count, call_count[2])
