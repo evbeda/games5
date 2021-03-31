@@ -45,10 +45,10 @@ class Game:
         # self.skipped_turns = 0
 
     def place_word(self, x, y, direction, word):
-        self.board.place_word(
+        self.skipped_turns = 0
+        return self.board.place_word(
             word, y, x, direction, self.players[self.current_player]
         )
-        self.skipped_turns = 0
 
     @property
     def player_count(self):
