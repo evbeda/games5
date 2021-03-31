@@ -199,3 +199,7 @@ class TestRummyAndBurakko(unittest.TestCase):
         # assert
         m_give_one.assert_called_once_with(*data)
         self.assertEqual(self.rummy.game_state, 'select_option')
+
+    def test_esto_no_esta_testeado(self):
+        result = self.rummy.esto_no_esta_testeado()
+        self.assertEqual(result, 3)
