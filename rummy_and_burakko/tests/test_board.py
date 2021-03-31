@@ -230,8 +230,8 @@ class TestBoard(unittest.TestCase):
 
     @parameterized.expand([
         # (set_id, index, expected)
-        (1, 4, True),  # Valid set, in the valid max index
-        (1, 5, False),  # Valid set, in the invalid max index
+        (1, 3, True),  # Valid set, in the valid max index
+        (1, 4, False),  # Valid set, in the invalid max index
         (3, 1, False),  # non-existent set
         (2, -1, False),  # Valid set, invalid index below 0
     ])

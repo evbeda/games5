@@ -137,5 +137,6 @@ class Game:
 
     def valid_input_put_a_tile(self, index_hand, set_id, set_index):
         message = self.players[self.current_turn].valid_tiles_in_hand(index_hand)
-        message += self.board.valid_set_index(set_id, set_index)
+        # -1 so we can use the same method to validate for putting and taking a tile
+        message += self.board.valid_set_index(set_id, set_index - 1)
         return message
