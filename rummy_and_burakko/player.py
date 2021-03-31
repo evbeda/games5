@@ -52,7 +52,11 @@ class Player:
         return (len(self.hand) > 0)
 
     def tiles_in_hand(self, *indexes):
-        return (
-            True if max(indexes) < len(self.temp_hand)
-            else False
-        )
+        message = ''
+        if max(indexes) < len(self.temp_hand):
+            message += '\nError, index too high'
+        if min(indexes) >= 0:
+            message += '\nError, index too low'
+        if len(indexes) != len(set(indexes)):
+            message += '\nError, repeated indexes'
+        return message
