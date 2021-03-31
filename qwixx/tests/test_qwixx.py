@@ -77,9 +77,10 @@ class TestQwixx(unittest.TestCase):
 
     def test_mark_with_white_error(self):
         self.qwixx.score_pad = [ScorePad()]
+        msg = 'You cannot mark that row, the number must be on the right of the last mark!'
         self.qwixx.score_pad[0].rows['red'].marks.append(10)
         self.qwixx.mark_with_white(1)
-        self.assertEqual(self.qwixx.mark_with_white(1), 'You cannot mark that row, the number must be on the right of the last mark!')
+        self.assertEqual(self.qwixx.mark_with_white(1), msg)
 
     @patch.object(Qwixx, "create_scored_pad")
     @patch.object(SetDices, "roll_dices")
