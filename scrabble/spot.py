@@ -20,4 +20,4 @@ class Spot:
 
     def __eq__(self, other):
         if isinstance(other, Spot):
-            return self.x == other.x and self.y == other.y
+            return self.row == other.row and self.col == other.col
