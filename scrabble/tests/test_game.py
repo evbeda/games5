@@ -198,10 +198,30 @@ class TestGame(unittest.TestCase):
         place_word_patched.assert_called_with('word', 6, 7, False, player)
         self.assertEqual(self.t_game.skipped_turns, expected)
 
+    # def change_player_tiles(self, letters):
+    #     self.players[self.current_player].put_t_draw_t(
+    #         self.tile_bag, letters)
+    #     self.skipped_turns = 0
 
-'''
-    def change_player_tiles(self, letters):
-        self.players[self.current_player].put_t_draw_t(
-            self.tile_bag, letters)
-        self.skipped_turns = 0
-'''
+    @parameterized.expand([
+        (
+            ['player_1', 'player_2'],
+            [20, 25],
+            'player_1: 20 - player_2: 25',
+        ),
+        (
+            ['player_1', 'player_2', 'player_3'],
+            [20, 25, 40],
+            'player_1: 20 - player_2: 25 - player_3: 40',
+        ),
+        (
+            ['player_1', 'player_2', 'player_3', 'player_4'],
+            [20, 25, 35, 30],
+            'player_1: 20 - player_2: 25 - player_3: 35 - player_4: 30',
+        ),
+    ])
+    def test_print_scores(self, players, scores, expected):
+        game = Game([p for p in players])
+        for score, player in zip(scores, game.players):
+            player.score = score
+        self.assertEqual(game.print_scores(), expected)
