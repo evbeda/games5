@@ -149,7 +149,11 @@ class TestPlayer(unittest.TestCase):
 
     @parameterized.expand([
         # (indexes, expected)
-        ([5, 3, 2, 10], True)
+        ([5, 3, 10], True),  # All index in hand
+        ([5, 3, 12], True),  # One index in the max limit in
+        ([5, 3, 13], False),  # One index in the max limit out
+        ([0, 4, 12], True),  # One index in the min limit in
+        ([5, 3, 13], False),  # One index in the min limit out
     ])
     def test_tiles_in_hand(self, indexes, expected):
         self.player.temp_hand = list(range(13))
