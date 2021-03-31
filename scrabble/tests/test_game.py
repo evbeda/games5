@@ -181,3 +181,9 @@ class TestGame(unittest.TestCase):
             player.score = score
 
         self.assertEqual(self.t_game.get_game_results(), expected)
+
+    @patch.object(Board, 'place_word')
+    def test_place_word(self, place_word_patched):
+        self.t_game.place_word(7, 6, False, 'word')
+        player = self.t_game.players[self.t_game.current_player]
+        place_word_patched.assert_called_with('word', 6, 7, False, player)
