@@ -6,6 +6,9 @@ from .set_dices import SetDices
 from .row import (
     Row,
     NotCanMark,
+    RowIsLoked,
+    CantBeLocked,
+
 )
 
 
@@ -46,7 +49,9 @@ COLOR_DICE = {
     2: 'white_2'
 }
 
-ERROR_MESSAGE = 'You cannot mark that row, if you need the number to be to the right of the last mark'
+ERROR_MESSAGE_NOTCANMARK = 'You cannot mark that row, if you need the number to be to the right of the last mark'
+ERROR_MESSAGE_CANTBELOCKED = 'You have more than 5 marks'
+ERROR_MESSAGE_ROWISLOCKED = 'It cannot be marked because the row is locked'
 
 
 class Qwixx:
@@ -97,7 +102,11 @@ class Qwixx:
         try:
             s_pad.mark_number_in_row(total, color)
         except NotCanMark:
-            return ERROR_MESSAGE
+            return ERROR_MESSAGE_NOTCANMARK
+        except RowIsLoked:
+            return ERROR_MESSAGE_ROWISLOCKED
+        except CantBeLocked:
+            return ERROR_MESSAGE_CANTBELOCKED
         self.set_next_player()
 
     def mark_with_white(self, color_index):
@@ -109,7 +118,11 @@ class Qwixx:
         try:
             s_pad.mark_number_in_row(total, color)
         except NotCanMark:
-            return ERROR_MESSAGE
+            return ERROR_MESSAGE_NOTCANMARK
+        except RowIsLoked:
+            return ERROR_MESSAGE_ROWISLOCKED
+        except CantBeLocked:
+            return ERROR_MESSAGE_CANTBELOCKED
         self.set_next_player()
 
     def set_next_player(self):
