@@ -74,7 +74,7 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.game_state = 'play_word'
         self.scrabble.play('5', '7', 'h', 'word')
         self.assertEqual(self.scrabble.game_state, 'ask_challenge')
-        play_word_patched.assert_called_with(5, 7, True, 'word')
+        play_word_patched.assert_called_with(7, 5, True, 'word')
 
     def test_play_action_pass(self):
         self.scrabble.game_state = 'select_action'
@@ -240,3 +240,18 @@ class TestScrabble(unittest.TestCase):
         self.scrabble.game = Game(player_names)
         self.scrabble.game.is_playing = False
         self.assertFalse(self.scrabble.is_playing)
+
+    @parameterized.expand([
+        ('7', '7', 'h', 'hola', True),
+        ('7', '7', 'v', 'hola', True),
+        ('7', '7', 'f', 'hola', False),
+    ])
+    @patch.object(Game, 'place_word')
+    def test_play_play_word(self, row, col, direction, word, expected, mock_place_word):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.play_play_word(col, row, direction, word)
+        if expected:
+            mock_place_word.assert_called()
+        else:
+            mock_place_word.assert_not_called()
