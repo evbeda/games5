@@ -346,3 +346,8 @@ class TestGame(unittest.TestCase):
         self.game.current_turn = 0
         player = self.game.get_current_player()
         self.assertEqual(player.name, 'Pedro')
+
+    def test_move_verif(self):
+        expected = False
+        result = self.game.move_verif(3, 4)
+        self.assertEqual(result, expected)
