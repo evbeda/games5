@@ -112,3 +112,4 @@ class SetTiles():
             start = end - q_tiles
 
         return sum(list(range(start, end)))
+
