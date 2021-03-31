@@ -76,6 +76,10 @@ class Scrabble:
     def next_turn_show_hand(self):
         return self.game.get_current_player_hand()
 
+    def ask_challenge_show_players(self, self.game.game_players):
+        for i in self.game.game_players:
+            return
+
     def next_turn(self):
         query = '\n'
 
@@ -99,8 +103,11 @@ class Scrabble:
             if self.game is not None:
                 query += self.next_turn_show_hand() + '\n\n'
             query += self.next_turn_state_query()
-        else:
-            query += self.game.get_game_results()
+            if self.game_state == GAME_STATE_ASK_CHALLENGE:
+                query += 'Select the challenger player:\n'
+                query += self.ask_challenge_show_players() + '\n'
+            else:
+                query += self.game.get_game_results()
 
         return query
 
