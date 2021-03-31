@@ -49,7 +49,7 @@ class Scrabble:
 
     @property
     def board(self):
-        return self.game.print_board() if self.game else ''
+        return f'{self.game.print_board()}\n\n{self.game.print_scores}' if self.game else ''
 
     def next_turn_state_query(self):
         game_state_next_turn = {
