@@ -119,13 +119,16 @@ class Scrabble:
         row = int(row)
         col = int(col)
         if direction == 'h':
-            self.game.place_word(col, row, True, word)
-            self.game_state = GAME_STATE_ASK_CHALLENGE
+            placed = self.game.place_word(col, row, True, word)
         elif direction == 'v':
-            self.game.place_word(col, row, False, word)
-            self.game_state = GAME_STATE_ASK_CHALLENGE
+            placed = self.game.place_word(col, row, False, word)
         else:
             return 'This is not a valid direction'
+        if placed:
+            self.game_state = GAME_STATE_ASK_CHALLENGE
+        else:
+            self.game_state = GAME_STATE_CHANGE_TURN
+            return 'Invalid word position'
 
     def play_change_letters(self, *letters):
         self.game.change_player_tiles(letters)
