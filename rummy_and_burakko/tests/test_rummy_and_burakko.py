@@ -67,14 +67,23 @@ class TestRummyAndBurakko(unittest.TestCase):
         ('new_set_q', '\nEnter quantity of tiles to play'),
         # ('end_turn', '\nTurn Ended'),
     ])
-    def test_next_turn_message(self, game_state, expected):
-        # data
+    @patch.object(Game, 'check_is_game_alive', return_value=True)
+    def test_next_turn_message(self, game_state, expected, mock_alive):
         players = ["player_1", "player_2", 'player_3']
         self.rummy.game = Game(players)
-        # process
         self.rummy.game_state = game_state
         result = self.rummy.next_turn()
-        # assert
+        self.assertEqual(result, expected)
+
+    @patch.object(Game, 'get_current_player', return_value='player_2')
+    @patch.object(Game, 'check_is_game_alive', return_value=False)
+    def test_next_turn_message_end_game(self, mock_alive, mock_player):
+        game_state = 'end_turn'
+        expected = '\nWE HAVE A WINNER! Congratulations {}'.format('player_2')
+        players = ["player_1", "player_2", "player_3"]
+        self.rummy.game = Game(players)
+        self.rummy.game_state = game_state
+        result = self.rummy.next_turn()
         self.assertEqual(result, expected)
 
     @parameterized.expand([
@@ -126,7 +135,8 @@ class TestRummyAndBurakko(unittest.TestCase):
     @patch.object(Game, 'show_game')
     @patch.object(Game, 'next_turn')
     @patch.object(Game, 'end_turn')
-    def test_next_turn(self, mock_end, mock_next, mock_show):
+    @patch.object(Game, 'check_is_game_alive', return_value=True)
+    def test_next_turn(self, mock_alive, mock_end, mock_next, mock_show):
         # data
         players = ["player_1", "player_2", 'player_3']
         self.rummy.game = Game(players)

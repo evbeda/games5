@@ -119,3 +119,20 @@ class TestPlayer(unittest.TestCase):
         self.player.first_move = True
         self.player.change_first_move()
         self.assertFalse(self.player.first_move)
+
+    @parameterized.expand([
+        (
+            [Tile('r', 7), Tile('b', 4), Tile('y', 5)],
+            True,
+        ),
+        (
+            [], False,
+        ),
+    ])
+    def test_has_tiles(self, tiles, are_there_tiles):
+        self.player.hand = tiles
+        result = self.player.has_tiles()
+        if are_there_tiles:
+            self.assertTrue(result)
+        else:
+            self.assertFalse(result)
