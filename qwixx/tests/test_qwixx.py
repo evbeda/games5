@@ -11,7 +11,6 @@ from ..qwixx import (
     QWIXX_TURN_COLOR,
     OPTION_PLAY,
     OPTION_PASS,
-    ERROR_MESSAGE,
 )
 from ..set_dices import SetDices
 from ..score_pad import ScorePad
@@ -80,13 +79,7 @@ class TestQwixx(unittest.TestCase):
         self.qwixx.score_pad = [ScorePad()]
         self.qwixx.score_pad[0].rows['red'].marks.append(10)
         self.qwixx.mark_with_white(1)
-        self.assertEqual(self.qwixx.mark_with_white(1), ERROR_MESSAGE)
-
-    def test_mark_with_color_error(self):
-        self.qwixx.score_pad = [ScorePad()]
-        self.qwixx.score_pad[0].rows['red'].marks.append(10)
-        self.qwixx.mark_with_color(1, 1)
-        self.assertEqual(self.qwixx.mark_with_white(1), ERROR_MESSAGE)
+        self.assertEqual(self.qwixx.mark_with_white(1), 'You cannot mark that row, the number must be on the right of the last mark!')
 
     @patch.object(Qwixx, "create_scored_pad")
     @patch.object(SetDices, "roll_dices")

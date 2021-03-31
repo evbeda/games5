@@ -3,6 +3,8 @@ from parameterized import parameterized
 from ..row import (
     Row,
     NotCanMark,
+    CantBeLocked,
+    RowIsLocked,
 )
 from unittest.mock import patch
 
@@ -27,25 +29,25 @@ class TestRow(unittest.TestCase):
         self.assertEqual(row_example.numbers, expected)
 
     def test_can_mark_last_more_5(self):
-        row_example = Row('red')
-        row_example.marks = [2, 3, 4, 5, 6]
-        result = row_example.can_mark_last()
-        self.assertTrue(result)
+        with self.assertRaises(CantBeLocked):
+            row_example = Row('red')
+            row_example.marks = [2, 3, 4, 5, 6]
+            row_example.can_mark_last()
 
     def test_cant_mark_last_less_5(self):
-        row_example = Row('red')
-        row_example.marks = [3]
-        result = row_example.can_mark_last()
-        self.assertFalse(result)
+        with self.assertRaises(CantBeLocked):
+            row_example = Row('red')
+            row_example.marks.clear()
+            self.assertTrue(row_example.can_mark_last())
 
     @parameterized.expand([
-        (0, 'rojo', NotCanMark),
-        (6, 'green', NotCanMark),
+        (0, 'rojo', RowIsLocked),
+        (6, 'green', RowIsLocked),
     ])
     def test_check_row_lock_exception(self, number, color, exception_NotCanMark):
         r = Row(color)
         r.blocked_rows.append(color)
-        with self.assertRaises(NotCanMark):
+        with self.assertRaises(exception_NotCanMark):
             r.check_row_lock(number)
 
     @parameterized.expand([
@@ -107,12 +109,12 @@ class TestRow(unittest.TestCase):
         self.assertEqual((r.marks), expected)
 
     @parameterized.expand([
-        ('green', [2], 7, NotCanMark),
+        ('green', [2], 7, RowIsLocked),
     ])
-    def test_set_mark_(self, color, marks, number, mock_check_row_lock):
+    def test_set_mark_not_can_mark(self, color, marks, number, mock_check_row_lock):
         r = Row(color)
         r.marks = marks
-        with self.assertRaises(NotCanMark):
+        with self.assertRaises(mock_check_row_lock):
             r.set_mark(number)
 
     @parameterized.expand([
@@ -124,3 +126,14 @@ class TestRow(unittest.TestCase):
     def test_is_number_last(self, color, number):
         r = Row(color)
         self.assertEqual(r.is_number_last(number), True)
+
+    @parameterized.expand([
+        ('red', 'red'),
+        ('green',  'green'),
+    ])
+    def test_is_locked(self, row, rows):
+        with self.assertRaises(RowIsLocked):
+            row = Row(row)
+            row.blocked_rows.clear()
+            row.blocked_rows.append(rows)
+            row.is_locked
