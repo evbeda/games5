@@ -106,6 +106,8 @@ class Scrabble:
         if 2 <= player_count <= 4:
             self.input_player_args = player_count
             self.game_state = GAME_STATE_INPUT_PLAYERS
+        else:
+            return 'The number of players is wrong, please enter the number again'
 
     def play_input_players(self, *player_names):
         self.game = Game(player_names)
