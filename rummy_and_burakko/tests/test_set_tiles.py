@@ -3,6 +3,11 @@ from unittest.mock import patch
 from ..set_tiles import SetTiles
 from ..tile import Tile
 from parameterized import parameterized
+from ..tile import BLUE
+from ..tile import YELLOW
+from ..tile import GREEN
+from ..tile import RED
+from ..tile import JOKER
 
 
 class TestSetTiles(unittest.TestCase):
@@ -44,23 +49,23 @@ class TestSetTiles(unittest.TestCase):
 
     # Procedure test to approve stair
     @parameterized.expand([
-        (True, (('red', 5), ('red', 6), ('red', 7))),
-        (False, (('red', 5), ('red', 6), ('red', 8))),
-        (False, (('red', 5), ('blue', 6), ('green', 5))),
-        (True, (('blue', 1), ('blue', 2), ('blue', 3))),
-        (True, (('*', 0), ('blue', 5), ('blue', 6))),
-        (False, (('*', 0), ('blue', 5), ('blue', 6), ('*', 0))),
-        (False, (('*', 0), ('blue', 5), ('green', 5), ('*', 0))),
-        (False, (('red', 5), ('red', 6))),
+        (True, ((RED, 5), (RED, 6), (RED, 7))),
+        (False, ((RED, 5), (RED, 6), (RED, 8))),
+        (False, ((RED, 5), (BLUE, 6), (GREEN, 5))),
+        (True, ((BLUE, 1), (BLUE, 2), (BLUE, 3))),
+        (True, ((JOKER, 0), (BLUE, 5), (BLUE, 6))),
+        (False, ((JOKER, 0), (BLUE, 5), (BLUE, 6), (JOKER, 0))),
+        (False, ((JOKER, 0), (BLUE, 5), (GREEN, 5), (JOKER, 0))),
+        (False, ((RED, 5), (RED, 6))),
         (False, (
-            ('red', 5), ('red', 6), ('red', 7), ('red', 5), ('red', 6),
-            ('red', 7), ('red', 5), ('red', 6), ('red', 7), ('red', 5),
-            ('red', 6), ('red', 7), ('blue', 6)
+            (RED, 5), (RED, 6), (RED, 7), (RED, 5), (RED, 6),
+            (RED, 7), (RED, 5), (RED, 6), (RED, 7), (RED, 5),
+            (RED, 6), (RED, 7), (BLUE, 6)
         )),
-        (True, (('blue', 1), ('blue', 2), ('*', 0), ('blue', 4), ('blue', 5))),
-        (True, (('blue', 1), ('blue', 2), ('blue', 3), ('*', 0), ('blue', 5))),
-        (True, (('blue', 1), ('*', 0), ('blue', 3), ('blue', 4), ('blue', 5))),
-        (True, (('blue', 2), ('*', 0), ('blue', 4), ('blue', 5), ('blue', 6))),
+        (True, ((BLUE, 1), (BLUE, 2), (JOKER, 0), (BLUE, 4), (BLUE, 5))),
+        (True, ((BLUE, 1), (BLUE, 2), (BLUE, 3), (JOKER, 0), (BLUE, 5))),
+        (True, ((BLUE, 1), (JOKER, 0), (BLUE, 3), (BLUE, 4), (BLUE, 5))),
+        (True, ((BLUE, 2), (JOKER, 0), (BLUE, 4), (BLUE, 5), (BLUE, 6))),
     ])
     def test_is_a_stair(self, expected, tiles):
         # set variables
@@ -73,15 +78,15 @@ class TestSetTiles(unittest.TestCase):
 
     # Pocedure test to approve a leg
     @parameterized.expand([
-        (True, (('red', 5), ('blue', 5), ('green', 5))),
-        (False, (('red', 5), ('blue', 6), ('green', 5))),
-        (False, (('red', 5), ('blue', 5), ('blue', 5))),
-        (True, (('*', 0), ('blue', 5), ('green', 5))),
-        (False, (('*', 0), ('blue', 5), ('green', 5), ('*', 0))),
-        (False, (('blue', 5), ('green', 5))),
-        (True, (('*', 0), ('blue', 5), ('green', 5), ('red', 5))),
-        (True, (('blue', 10), ('green', 10), ('red', 10), ('*', 0))),
-        (False, (('*', 0), ('blue', 5), ('green', 5), ('red', 5), ('red', 5))),
+        (True, ((RED, 5), (BLUE, 5), (GREEN, 5))),
+        (False, ((RED, 5), (BLUE, 6), (GREEN, 5))),
+        (False, ((RED, 5), (BLUE, 5), (BLUE, 5))),
+        (True, ((JOKER, 0), (BLUE, 5), (GREEN, 5))),
+        (False, ((JOKER, 0), (BLUE, 5), (GREEN, 5), (JOKER, 0))),
+        (False, ((BLUE, 5), (GREEN, 5))),
+        (True, ((JOKER, 0), (BLUE, 5), (GREEN, 5), (RED, 5))),
+        (True, ((BLUE, 10), (GREEN, 10), (RED, 10), (JOKER, 0))),
+        (False, ((JOKER, 0), (BLUE, 5), (GREEN, 5), (RED, 5), (RED, 5))),
     ])
     def test_is_a_leg(self, expected, tiles):
         # set variables
@@ -92,30 +97,30 @@ class TestSetTiles(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_remove_tile_from_set(self):
-        t1 = Tile('r', 3)
-        t2 = Tile('b', 3)
-        t3 = Tile('y', 3)
+        t1 = Tile(RED, 3)
+        t2 = Tile(BLUE, 3)
+        t3 = Tile(YELLOW, 3)
         tile_set = SetTiles([t1, t2, t3])
         tile_set.remove_tile(t2)
         self.assertNotIn(t2, tile_set.tiles)
 
     @parameterized.expand([
         (
-            SetTiles([Tile('r', 3), Tile('b', 3), Tile('y', 3)]),
-            'L[ 0:r3 1:b3 2:y3 ]'
+            SetTiles([Tile(RED, 3), Tile(BLUE, 3), Tile(YELLOW, 3)]),
+            'L[ 0:{}3 1:{}3 2:{}3 ]'.format(RED, BLUE, YELLOW)
         ),
         (
-            SetTiles([Tile('r', 3), Tile('r', 4), Tile('w', 5)]),
-            'Wrong[ 0:r3 1:r4 2:w5 ]'
+            SetTiles([Tile(RED, 3), Tile(RED, 4), Tile(GREEN, 5)]),
+            'Wrong[ 0:{}3 1:{}4 2:{}5 ]'.format(RED, RED, GREEN)
         ),
     ])
     def test_hand_format(self, tile_set, expected):
         self.assertEqual(tile_set.get_tiles(), expected)
 
     @parameterized.expand([
-        ((('blue', 1), ('blue', 2), ('blue', 3)), 2, ('blue', 3)),
-        ((('blue', 1), ('blue', 2), ('blue', 3)), 0, ('blue', 1)),
-        ((('blue', 1), ('blue', 2), ('blue', 3)), 1, ('blue', 2)),
+        (((BLUE, 1), (BLUE, 2), (BLUE, 3)), 2, (BLUE, 3)),
+        (((BLUE, 1), (BLUE, 2), (BLUE, 3)), 0, (BLUE, 1)),
+        (((BLUE, 1), (BLUE, 2), (BLUE, 3)), 1, (BLUE, 2)),
     ])
     def test_extract_one_tile(self, tiles, index, tile_expected):
         set_tile = SetTiles([Tile(t[0], t[1]) for t in tiles])
@@ -126,7 +131,7 @@ class TestSetTiles(unittest.TestCase):
         self.assertEqual(len(set_tile.tiles), temp_len - 1)
 
     @parameterized.expand([
-        ((('blue', 1), ('blue', 2), ('blue', 3)), 4),
+        (((BLUE, 1), (BLUE, 2), (BLUE, 3)), 4),
         # ((), 4),
     ])
     def test_extract_one_tile_fail(self, tiles, index):
@@ -143,8 +148,8 @@ class TestSetTiles(unittest.TestCase):
     ])
     def test_put_tile(self, input_index, output_index):
         # data
-        set_tile = SetTiles([Tile('r', 3), Tile('b', 3), Tile('y', 3)])
-        tile = Tile('w', 3)
+        set_tile = SetTiles([Tile(RED, 3), Tile(BLUE, 3), Tile(YELLOW, 3)])
+        tile = Tile(GREEN, 3)
         # process
         set_tile.put_tile(tile, input_index)
         # assert
@@ -156,7 +161,6 @@ class TestSetTiles(unittest.TestCase):
         self.assertEqual(result, 0)
 
     @parameterized.expand([
-        # (return_value_1, return_value_2, call_count_1, call_count_2, expected)
         (True, True, 1, 0, 25),
         (False, True, 0, 1, 30),
         (False, False, 0, 0, 0),
@@ -178,7 +182,7 @@ class TestSetTiles(unittest.TestCase):
         mock_is_stair,
     ):
         # data
-        set_tile = SetTiles([Tile('r', 3)])
+        set_tile = SetTiles([Tile(RED, 3)])
         mock_is_leg.return_value = rv_1
         mock_is_stair.return_value = rv_2
         # process
@@ -190,9 +194,9 @@ class TestSetTiles(unittest.TestCase):
 
     @parameterized.expand([
         # (tiles, expected)
-        ((('r', 5), ('b', 5), ('w', 5)), 15),
-        ((('*', 0), ('r', 2), ('b', 2)), 6),
-        ((('r', 8), ('b', 8), ('*', 0)), 24),
+        (((RED, 5), (BLUE, 5), (GREEN, 5)), 15),
+        (((JOKER, 0), (RED, 2), (BLUE, 2)), 6),
+        (((RED, 8), (BLUE, 8), (JOKER, 0)), 24),
     ])
     def test_leg_value(self, tiles, expected):
         # data
@@ -204,11 +208,11 @@ class TestSetTiles(unittest.TestCase):
 
     @parameterized.expand([
         # (tiles, expected)
-        ((('r', 5), ('r', 6), ('w', 7)), 18),
-        ((('*', 0), ('r', 10), ('b', 11)), 30),
-        ((('r', 2), ('b', 3), ('*', 0)), 9),
-        ((('r', 1), ('r', 2), ('*', 0), ('r', 4)), 10),
-        ((('r', 1), ('r', 2), ('*', 0), ('r', 4), ('r', 5)), 15),
+        (((RED, 5), (RED, 6), (GREEN, 7)), 18),
+        (((JOKER, 0), (RED, 10), (BLUE, 11)), 30),
+        (((RED, 2), (BLUE, 3), (JOKER, 0)), 9),
+        (((RED, 1), (RED, 2), (JOKER, 0), (RED, 4)), 10),
+        (((RED, 1), (RED, 2), (JOKER, 0), (RED, 4), (RED, 5)), 15),
     ])
     def test_stair_value(self, tiles, expected):
         # data

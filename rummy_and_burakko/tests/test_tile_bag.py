@@ -3,6 +3,11 @@ from unittest.mock import patch
 from ..player import Player
 from ..tile_bag import TileBag
 from parameterized import parameterized
+from ..tile import BLUE
+from ..tile import YELLOW
+from ..tile import GREEN
+from ..tile import RED
+from ..tile import JOKER
 
 
 class TestTileBag(unittest.TestCase):
@@ -17,11 +22,11 @@ class TestTileBag(unittest.TestCase):
         self.assertEqual(len(self.t_bag.remaining_tiles), 106)
 
         tile_list = {
-            'r': list(range(1, 14)),
-            'y': list(range(1, 14)),
-            'w': list(range(1, 14)),
-            'b': list(range(1, 14)),
-            '*': [0] * 2,
+            RED: list(range(1, 14)),
+            YELLOW: list(range(1, 14)),
+            GREEN: list(range(1, 14)),
+            BLUE: list(range(1, 14)),
+            JOKER: [0] * 2,
         }
 
         for color, number_list in tile_list.items():
