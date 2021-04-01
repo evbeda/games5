@@ -233,6 +233,7 @@ class TestBoard(unittest.TestCase):
         (1, 3, True),  # Valid set, in the valid max index
         (1, 4, False),  # Valid set, in the invalid max index
         (3, 1, False),  # non-existent set
+        (2, 0, True),  # Valid set, valid index 0
         (2, -1, False),  # Valid set, invalid index below 0
     ])
     def test_valid_set_index(self, set_id, index, expected):

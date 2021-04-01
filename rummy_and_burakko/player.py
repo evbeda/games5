@@ -75,7 +75,7 @@ class Player:
     def has_tiles(self):
         return (len(self.hand) > 0)
 
-    def valid_tiles_in_hand(self, loose_tiles, *indexes):
+    def valid_tiles_in_hand(self, loose_tiles, indexes):
         message = ''
         if max(indexes) >= len(self.temp_hand) + loose_tiles:
             message += '\nError, index too high'

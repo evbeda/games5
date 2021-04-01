@@ -143,5 +143,7 @@ class Game:
     def valid_input_put_a_tile(self, index_hand, set_id, set_index):
         message = self.valid_tiles(index_hand)
         # -1 so we can use the same method to validate for putting and taking a tile
-        message += self.board.valid_set_index(set_id, set_index - 1)
+        if set_index > 0:
+            set_index -= 1
+        message += self.board.valid_set_index(set_id, set_index)
         return message
