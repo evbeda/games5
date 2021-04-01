@@ -97,6 +97,7 @@ class RummyAndBurakko():
             self.is_playing = self.game.check_is_game_alive()
             if self.is_playing:
                 self.game.next_turn()
+                message = '\n\n*************************************************************\n'
                 message += self.game.show_game()
                 self.game_state = GAME_STATE_SELECT_OPTION
             else:
@@ -118,6 +119,7 @@ class RummyAndBurakko():
             }
             self.option = option
             self.game_state = options[option]
+            return f'\nSelected option {option}'
 
     def play_new_set_q(self, quantity):
         hand = self.game.quantity_of_tiles()
