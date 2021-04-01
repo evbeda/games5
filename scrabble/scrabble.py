@@ -86,15 +86,7 @@ class Scrabble:
         elif self.game_state == GAME_STATE_SKIP_TURN:
             self.game.skip_turn()
             self.game_state = GAME_STATE_SELECT_ACTION
-
-        if self.game_state in [
-            GAME_STATE_CHANGE_TURN,
-            GAME_STATE_CHANGED_LETTERS,
-            GAME_STATE_SKIP_TURN,
-        ]:
-            self.game.change_turn()
-            self.game_state = GAME_STATE_SELECT_ACTION
-
+        self.change_turn()
         if self.is_playing:
             if self.game is not None:
                 query += self.next_turn_show_hand() + '\n\n'
@@ -105,6 +97,15 @@ class Scrabble:
             query += self.game.get_game_results()
 
         return query
+
+    def change_turn(self):
+        if self.game_state in [
+            GAME_STATE_CHANGE_TURN,
+            GAME_STATE_CHANGED_LETTERS,
+            GAME_STATE_SKIP_TURN,
+        ]:
+            self.game.change_turn()
+            self.game_state = GAME_STATE_SELECT_ACTION
 
     def play_create_game(self, player_count):
         if 2 <= player_count <= 4:
