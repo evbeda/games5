@@ -174,7 +174,7 @@ class TestPlayer(unittest.TestCase):
     def test_valid_tiles_in_hand_with_0_loose_tiles(self, indexes, expected):
         self.player.temp_hand = list(range(13))
         loose_tiles = 0
-        result = self.player.valid_tiles_in_hand(loose_tiles, *indexes)
+        result = self.player.valid_tiles_in_hand(loose_tiles, indexes)
         test = False if 'Error' in result else True
         self.assertEqual(test, expected)
 
@@ -187,6 +187,6 @@ class TestPlayer(unittest.TestCase):
     def test_valid_tiles_in_hand_with_loose_tiles(self, indexes, expected):
         self.player.temp_hand = list(range(13))
         loose_tiles = 3
-        result = self.player.valid_tiles_in_hand(loose_tiles, *indexes)
+        result = self.player.valid_tiles_in_hand(loose_tiles, indexes)
         test = False if 'Error' in result else True
         self.assertEqual(test, expected)
