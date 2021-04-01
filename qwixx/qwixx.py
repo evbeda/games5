@@ -167,7 +167,7 @@ class Qwixx:
             output += "------------------------------------------------------------\n"
             output += "     BOARD PLAYER: {}     ".format(self.score_pad[self.current_player].id_player)
             output += "TURN: {}    ".format(self.turn_color)
-            output += "PENALTY: {}\n".format(str(self.score_pad[self.current_player].penalty))
+            output += "PENALTIES: {}\n".format(str(self.score_pad[self.current_player].penalty))
             output += "------------------------------------------------------------\n"
             output += "\n"
             for row in self.score_pad[self.current_player].rows.values():
