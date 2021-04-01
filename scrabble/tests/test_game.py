@@ -198,11 +198,6 @@ class TestGame(unittest.TestCase):
         place_word_patched.assert_called_with('word', 6, 7, False, player)
         self.assertEqual(self.t_game.skipped_turns, expected)
 
-    # def change_player_tiles(self, letters):
-    #     self.players[self.current_player].put_t_draw_t(
-    #         self.tile_bag, letters)
-    #     self.skipped_turns = 0
-
     @parameterized.expand([
         (
             ['player_1', 'player_2'],
@@ -227,7 +222,17 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.print_scores(), expected)
 
     def test_ask_challenge_show_players(self):
-        self.t_game.player = ['Andres', 'Nacho', 'Lucho', 'Enzo']
-        self.t_game.current_player = 1
-        expected = '0 - Andres\n2 - Nacho\n3 - Lucho\n'
-        self.assertEqual(self.t_game.ask_challenge_show_players(), expected)
+        player = ['Andres', 'Nacho', 'Lucho', 'Enzo']
+        t_game = Game(player)
+        t_game.current_player = 1
+        expected = '0 - Andres\n2 - Lucho\n3 - Enzo\n'
+        self.assertEqual(t_game.ask_challenge_show_players(), expected)
+
+    @patch.object(Player, 'put_t_draw_t')
+    def test_change_player_tiles(self, mock_put_t_draw_t):
+        self.t_game.skipped_turns = 3
+        self.t_game.players[
+            self.t_game.current_player].tiles_in_hand = [Tile(letter)for letter in ['a', 'b', 'c']]
+        self.t_game.change_player_tiles([Tile('a')])
+        mock_put_t_draw_t.assert_called()
+        self.assertEqual(self.t_game.skipped_turns, 0)
