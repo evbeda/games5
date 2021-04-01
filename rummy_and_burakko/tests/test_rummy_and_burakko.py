@@ -37,7 +37,7 @@ class TestRummyAndBurakko(unittest.TestCase):
     @parameterized.expand([
         # (input_players, assign_input, game_state, input_are_ints)
         (0, 0, 'start_game', True),
-        (1, 1, 'players_input', False),
+        (2, 2, 'players_input', False),
         (4, 4, 'players_input', False),
         (5, 0, 'start_game', True),
     ])

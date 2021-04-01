@@ -72,7 +72,7 @@ class RummyAndBurakko():
 
     # game creation
     def play_start_game(self, players_q):
-        if 1 <= players_q <= 4:
+        if 2 <= players_q <= 4:
             self.input_player_args, self.game_state = players_q, GAME_STATE_PLAYERS_INPUT
             self.input_are_ints = False
 
