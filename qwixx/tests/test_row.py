@@ -29,7 +29,7 @@ class TestRow(unittest.TestCase):
 
     def test_can_mark_last_more_5(self):
         row_example = Row('red')
-        row_example.marks = [2, 3, 4, 5, 6]
+        row_example.marks = [2, 3, 4, 5, 6, 6]
         row_example.can_mark_last()
 
     def test_cant_mark_last_less_5(self):
