@@ -56,9 +56,10 @@ class RummyAndBurakko():
 
     @property
     def board(self):
+        message = '\n\n*************************************************************\n'
         if self.game is None:
-            return "Starting..."
-        return self.game.show_game()
+            return message + "Starting..."
+        return message + self.game.show_game()
 
     def __init__(self):
         self.game = None

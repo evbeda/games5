@@ -27,7 +27,8 @@ class TestRummyAndBurakko(unittest.TestCase):
         players = ["test_1", "test_2", "test_3"]
         # process
         result = self.rummy.board
-        self.assertEqual(result, "Starting...")
+        message = '\n\n*************************************************************\n'
+        self.assertEqual(result, message + "Starting...")
 
         self.rummy.game = Game(players)
         result = self.rummy.board
