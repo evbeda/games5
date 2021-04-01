@@ -88,6 +88,7 @@ class TestScore(unittest.TestCase):
         self.b.spots[8][7].set_tile(Tile('l'))
         self.b.spots[9][7].set_tile(Tile('a'))
         self.b.spots[7][6].set_tile(Tile('r'))
+        self.b.spots[9][8].set_tile(Tile('r'))
         Score.search_horiz_letter(word, row, col, self.b.spots)
         mock_search_horiz_word.assert_called()
 
