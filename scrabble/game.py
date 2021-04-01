@@ -40,7 +40,7 @@ class Game:
         for count, player in enumerate(self.players):
             if count == self.current_player:
                 continue
-            msg += (f'{count} - {player}\n')
+            msg += (f'{count} - {player.name}\n')
         return msg
 
     def print_board(self):
@@ -49,7 +49,7 @@ class Game:
     def change_player_tiles(self, letters):
         self.players[self.current_player].put_t_draw_t(
             self.tile_bag, letters)
-        # self.skipped_turns = 0
+        self.skipped_turns = 0
 
     def place_word(self, x, y, direction, word):
         self.skipped_turns = 0
