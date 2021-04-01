@@ -58,7 +58,7 @@ class Scrabble:
             GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?\n',
             GAME_STATE_PLAY_WORD: (
                 'Enter all in a line: \n:'
-                '- start position of word (nº of row and nº of column) \n'
+                '- start position of word (nº of row and nº of column)\n'
                 '- direction(h --> horizontal or v --> vertical)\n'
                 '- the word\n'
             ),
@@ -67,7 +67,7 @@ class Scrabble:
                 'Look up new words in a dictionary. Are they correct?\n'
             ),
             GAME_STATE_SELECT_ACTION: (
-                'Enter "play" to play a new word, "pass" to end your turn \n'
+                'Enter "play" to play a new word, "pass" to end your turn '
                 'or any number to change that amount of tiles\n'
             ),
         }
@@ -101,8 +101,8 @@ class Scrabble:
             query += self.next_turn_state_query()
             if self.game_state == GAME_STATE_ASK_CHALLENGE:
                 query += self.game.ask_challenge_show_players() + '\n'
-            else:
-                query += self.game.get_game_results()
+        else:
+            query += self.game.get_game_results()
 
         return query
 
