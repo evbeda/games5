@@ -142,7 +142,7 @@ class TestScrabble(unittest.TestCase):
         ('create_game', 'Enter number of players\n'),
         ('input_players', 'Enter player names\n'),
         ('change_letters', 'Which letters do you want to change?\n'),
-        ('play_word', 'Enter all in a line: \n:'
+        ('play_word', 'Enter all in a line:\n'
             '- start position of word (nº of row and nº of column)\n'
             '- direction(h --> horizontal or v --> vertical)\n'
             '- the word\n'),
