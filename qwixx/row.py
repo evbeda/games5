@@ -82,7 +82,7 @@ class Row:
         )
 
     def can_mark_last(self):
-        if len(self.marks) >= 5:
+        if len(self.marks) > 5:
             return True
         else:
             raise CantBeLocked()
