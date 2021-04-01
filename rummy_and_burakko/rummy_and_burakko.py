@@ -75,6 +75,9 @@ class RummyAndBurakko():
         if 2 <= players_q <= 4:
             self.input_player_args, self.game_state = players_q, GAME_STATE_PLAYERS_INPUT
             self.input_are_ints = False
+            return f'Game created with {players_q} players'
+        else:
+            return 'Wrong input, choose between 2 and 4 players'
 
     def play_players_input(self, *player_names):
         self.game = Game(player_names)
@@ -83,6 +86,7 @@ class RummyAndBurakko():
         self.game_state = GAME_STATE_SELECT_OPTION
         self.input_are_ints = True
         self.game.next_turn()
+        return 'Names taken'
 
     def next_turn(self):
         message = '\n'
@@ -115,13 +119,16 @@ class RummyAndBurakko():
             self.game_state = options[option]
 
     def play_new_set_q(self, quantity):
-        limit = self.game.quantity_of_tiles()
+        hand = self.game.quantity_of_tiles()
+        loose_tiles = len(self.game.board.reused_tiles)
+        limit = hand + loose_tiles
         if 3 <= quantity <= limit:
             self.input_q_tiles = quantity
             self.game_state = GAME_STATE_NEW_SET_TILES
+            message = f'Creating a set with {quantity} tiles'
         else:
             message = '\nWrong input'
-            message += f'Have to play between 3 and {limit} tiles\n'
+            message += f'Have to play between 3 and {limit} tiles for a new set\n'
             return message
 
     def play_input_verification(self, *moves):
