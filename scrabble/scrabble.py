@@ -57,7 +57,7 @@ class Scrabble:
             GAME_STATE_INPUT_PLAYERS: 'Enter player names\n',
             GAME_STATE_CHANGE_LETTERS: 'Which letters do you want to change?\n',
             GAME_STATE_PLAY_WORD: (
-                'Enter all in a line: \n:'
+                'Enter all in a line:\n'
                 '- start position of word (nº of row and nº of column)\n'
                 '- direction(h --> horizontal or v --> vertical)\n'
                 '- the word\n'
