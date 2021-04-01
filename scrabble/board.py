@@ -101,7 +101,7 @@ class Board:
                         direction,
                         self.spots,
                         self.spots_orig,
-                    ) * 2
+                    )
                 )
                 self.first = False
                 return True
