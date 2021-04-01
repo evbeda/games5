@@ -41,6 +41,9 @@ class Score:
                 for spot in word
             ]):
                 changed_words.append(word)
+            #     print(f'Use word: {"".join([w.tile.letter for w in word])}')
+            # else:
+            #     print(f'Skip word: {"".join([w.tile.letter for w in word])}')
         return changed_words
 
     @staticmethod
@@ -48,10 +51,10 @@ class Score:
         len_word = len(word)
         end_word = col + len_word
         list_words = []
-        for i in range(row, end_word):
+        for i in range(col, end_word):
             if spots[row - 1][i].tile is not None:
                 list_words.append(Score.search_vert_word(row - 1, i, spots))
-            elif spots[i][col + 1].tile is not None:
+            elif spots[row + 1][i].tile is not None:
                 list_words.append(Score.search_vert_word(row + 1, i, spots))
         return list_words
 
