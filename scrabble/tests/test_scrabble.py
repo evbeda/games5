@@ -139,24 +139,32 @@ class TestScrabble(unittest.TestCase):
         self.assertEqual(self.scrabble.input_are_ints, expected)
 
     @parameterized.expand([
-        ('create_game', 'Enter number of players'),
-        ('input_players', 'Enter player names'),
-        ('change_letters', 'Which letters do you want to change?'),
+        ('create_game', 'Enter number of players\n'),
+        ('input_players', 'Enter player names\n'),
+        ('change_letters', 'Which letters do you want to change?\n'),
         ('play_word', 'Enter all in a line: \n:'
-            '- start position of word (nº of row and nº of column) \n'
+            '- start position of word (nº of row and nº of column)\n'
             '- direction(h --> horizontal or v --> vertical)\n'
             '- the word\n'),
-        ('ask_challenge', 'Any player wants to challenge'),
+        ('ask_challenge', 'Select the challenger player:\n'),
         ('in_challenge', 'Look up new words in a dictionary. '
-            'Are they correct?'),
+            'Are they correct?\n'),
         ('select_action', 'Enter "play" to play a new word, '
             '"pass" to end your turn or '
-            'any number to change that amount of tiles'),
+            'any number to change that amount of tiles\n'),
     ])
     def test_next_turn_state_query(self, state, expected):
         self.scrabble.game_state = state
         text = self.scrabble.next_turn_state_query()
         self.assertEqual(text, expected)
+
+    @patch.object(Game, 'ask_challenge_show_players')
+    def test_next_turn_ask_challenge(self, mock_ask_challenge_show_players):
+        player_names = ["Pedro", "Ricardo"]
+        self.scrabble.game = Game(player_names)
+        self.scrabble.game_state = 'ask_challenge'
+        self.scrabble.next_turn()
+        mock_ask_challenge_show_players.assert_called()
 
     @patch.object(Game, 'get_current_player_hand')
     def test_next_turn_show_hand(self, get_current_player_hand_patched):
