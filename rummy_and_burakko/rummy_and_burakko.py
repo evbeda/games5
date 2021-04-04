@@ -96,7 +96,7 @@ class RummyAndBurakko():
             self.game.end_turn()
             self.is_playing = self.game.check_is_game_alive()
             if self.is_playing:
-                self.game.next_turn()
+                # self.game.next_turn()
                 message = '\n\n****************************************************\n'
                 message += self.game.show_game()
                 self.game_state = GAME_STATE_SELECT_OPTION
