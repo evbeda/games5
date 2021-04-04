@@ -98,7 +98,7 @@ class RummyAndBurakko():
             if self.is_playing:
                 # self.game.next_turn()
                 message = '\n\n****************************************************\n'
-                message += self.game.show_game()
+                # message += self.game.show_game()
                 self.game_state = GAME_STATE_SELECT_OPTION
             else:
                 winner_name = self.game.get_current_player()
